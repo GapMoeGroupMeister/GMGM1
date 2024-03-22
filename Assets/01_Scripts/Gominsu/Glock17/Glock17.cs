@@ -1,0 +1,50 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+//1.탄창 18발
+
+//2.데미지 20
+
+//3.재장전시 소요 시간 3f;
+
+//4.탄속 1f;
+
+//5.사정거리 10타일(타일맵 기준)
+
+public class Glock17 : Gun
+{
+
+    private float currentTime = 0;
+    private float reloadTime = 3;
+
+    public override void Fire()
+    {
+        GameObject firePos = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity);
+        firePos.GetComponent<Bullet>().Direction = Vector2.up;
+
+        damage = 20;
+
+    }
+
+    public override void Reload()
+    {
+        
+
+        if (bulletCount >= 18)
+        {//재장전 시간
+             currentTime += Time.deltaTime;
+             reloadCheck = false;
+            if (currentTime >= reloadTime)
+            {
+                reloadCheck = true;
+                bulletCount = 0;
+                currentTime = 0;
+            }
+             
+
+
+
+        }
+    }
+}
