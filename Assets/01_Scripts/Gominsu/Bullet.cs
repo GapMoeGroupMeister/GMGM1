@@ -19,12 +19,6 @@ public class Bullet : MonoBehaviour
         transform.position += Direction * speed * Time.deltaTime;
 
 
-
-        //if (transform.position.y > (player.transform.position.y + 10))
-        //{
-        //    Destroy(gameObject);
-        //}
-
         currentTime += Time.deltaTime;
         if (currentTime >= creatTime)
         {

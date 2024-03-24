@@ -18,33 +18,64 @@ public class Glock17 : Gun
     private float currentTime = 0;
     private float reloadTime = 3;
 
+    private void Awake()
+    {
+        bulletCount = 18;
+        damage = 20;
+    }
+
     public override void Fire()
     {
         GameObject firePos = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity);
         firePos.GetComponent<Bullet>().Direction = Vector2.up;
+        
+        bulletCount--;
+        
 
-        damage = 20;
 
     }
 
     public override void Reload()
     {
-        
 
-        if (bulletCount >= 18)
-        {//재장전 시간
-             currentTime += Time.deltaTime;
-             reloadCheck = false;
+
+        if (bulletCount <= 0)
+        {
+            
+            
+            currentTime += Time.deltaTime;
+
+            reloadCheck = false;
+
+
             if (currentTime >= reloadTime)
-            {
+            {   
+                
                 reloadCheck = true;
-                bulletCount = 0;
+                bulletCount = 18;
                 currentTime = 0;
             }
-             
-
-
-
+            
         }
+
+
+        //if (bulletCount >= 18)
+        //{
+
+        //    currentTime += Time.deltaTime;
+
+        //    reloadCheck = false;
+
+
+        //    if (currentTime >= reloadTime)
+        //    {
+        //        reloadCheck = true;
+        //        bulletCount = 0;
+        //        currentTime = 0;
+        //    }
+        //}
+
+
+
     }
 }

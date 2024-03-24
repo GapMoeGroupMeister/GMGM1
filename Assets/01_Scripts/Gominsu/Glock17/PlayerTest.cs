@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerTest : MonoBehaviour
 {
     public Gun gun;
-
+    public Knife throwingknife;
     
 
 
@@ -18,7 +18,15 @@ public class PlayerTest : MonoBehaviour
         {
             
             gun.Fire(); 
-            gun.bulletCount++;   
+
+            
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+
+            throwingknife.Fire();
+
         }
         
     }
