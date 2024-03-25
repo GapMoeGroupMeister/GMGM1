@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerTest : MonoBehaviour
 {
     public Gun gun;
-    public Knife throwingknife;
+    public Knife knife;
     
 
 
@@ -25,7 +25,7 @@ public class PlayerTest : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
 
-            throwingknife.Fire();
+            knife.Slash();
 
         }
         

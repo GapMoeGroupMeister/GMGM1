@@ -26,8 +26,9 @@ public class Glock17 : Gun
 
     public override void Fire()
     {
-        GameObject firePos = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity);
-        firePos.GetComponent<Bullet>().Direction = Vector2.up;
+        GameObject bullet = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity);
+        //bullet.GetComponent<Bullet>().Direction = Vector3.up;
+        bullet.GetComponent<Bullet>().Fire(Vector2.up);
         
         bulletCount--;
         
@@ -57,25 +58,5 @@ public class Glock17 : Gun
             }
             
         }
-
-
-        //if (bulletCount >= 18)
-        //{
-
-        //    currentTime += Time.deltaTime;
-
-        //    reloadCheck = false;
-
-
-        //    if (currentTime >= reloadTime)
-        //    {
-        //        reloadCheck = true;
-        //        bulletCount = 0;
-        //        currentTime = 0;
-        //    }
-        //}
-
-
-
     }
 }

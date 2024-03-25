@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knife : Throwingknife
+public class SlashKnife : Knife
 {
     private float currentTime = 0;
     private float creatTime = 0.055f;
@@ -19,7 +19,7 @@ public class Knife : Throwingknife
         }
 
     }
-    public override void Fire()
+    public override void Slash()
     {
 
         damage = 50;
