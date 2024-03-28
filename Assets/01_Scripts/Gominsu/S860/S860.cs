@@ -34,8 +34,9 @@ public class S860 : Gun
         {
             Reload();
         }
-        for (int i = 0; i < 8; i++) 
-        {
+        for (int i = 0; i < 8; i++)
+        {   
+            //마우스의 위치에서 +-10의 랜덤한 각도를 direction에 저장하여 bullet에 전송
             direction = Quaternion.Euler(new Vector3(0,0,Random.Range(-10f, 10f))) * direction;
             GameObject bullet = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity);
             bullet.GetComponent<Bullet>().Fire(direction);

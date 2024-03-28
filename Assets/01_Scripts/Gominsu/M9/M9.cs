@@ -27,7 +27,8 @@ public class M9 : Gun
 
     public override void Fire(Vector2 direction)
     {
-        if (reloadCheck == false) return;
+        if (reloadCheck == false) return;//재장전 중이라면 아래코드들 실행안함
+        //총알의 방향 마우스 위치로 설정
         GameObject bullet = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity);
         bullet.GetComponent<Bullet>().Fire(direction);
         currentBulletCount--;
