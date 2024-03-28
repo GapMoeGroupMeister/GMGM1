@@ -17,7 +17,6 @@ public class Bullet : MonoBehaviour
     {
         Direction = dir;
         gunTipPosition = transform.position;
-
     }
 
     private void Update()

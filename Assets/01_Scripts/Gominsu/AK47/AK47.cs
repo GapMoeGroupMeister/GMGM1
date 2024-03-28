@@ -2,24 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//1.탄창 18발
-
-//2.데미지 20
-
-//3.재장전시 소요 시간 3f;
-
-//4.탄속 1f;
-
-//5.사정거리 10타일(타일맵 기준)
-
-public class Glock17 : Gun
+public class AK47 : Gun
 {
+
+//    1. 탄창 30발
+
+//2. 탄환 당 데미지 10
+
+//3. 재장전시 소요 시간 5f;
+
+//4. 탄속 1f;
+
+//5. 사정거리 12타일(타일맵 기준)
+
+//6. 발사 1 = 1 탄환
     protected override void Awake()
     {
         base.Awake();
-        maxBulletCount = 18;
+        maxBulletCount = 30;
         currentBulletCount = maxBulletCount;
-        damage = 20;
+        damage = 10;
+        reloadTime = 5;
+        bulletSpeed = 10;
+        destroyRange = 12;
     }
 
     public override void Fire(Vector2 direction)
@@ -32,6 +37,8 @@ public class Glock17 : Gun
         {
             Reload();
         }
+        bullet.GetComponent<Bullet>().speed = bulletSpeed;
+        bullet.GetComponent<Bullet>().destroyDistance = destroyRange;
     }
     public override void Reload()
     {
