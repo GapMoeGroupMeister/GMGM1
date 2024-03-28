@@ -29,20 +29,22 @@ public class S860 : Gun
     public override void Fire(Vector2 direction)
     {
         if (reloadCheck == false) return;
-        if (currentBulletCount == 0)
+        currentBulletCount--;
+        if (currentBulletCount <= 0)
         {
             Reload();
         }
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 8; i++) 
+        {
             direction = Quaternion.Euler(new Vector3(0,0,Random.Range(-10f, 10f))) * direction;
             GameObject bullet = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity);
             bullet.GetComponent<Bullet>().Fire(direction);
-            currentBulletCount--;
+            
 
             bullet.GetComponent<Bullet>().speed = bulletSpeed;
             bullet.GetComponent<Bullet>().destroyDistance = Random.Range(3f, 4f);
         }
-
+            
     }
     public override void Reload()
     {
