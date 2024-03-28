@@ -46,6 +46,10 @@ public class PlayerTest : MonoBehaviour
 
     private void Fire()
     {
+    //    Vector3 dir = Vector3.up;
+    //    dir = Quaternion.Euler(0, 0, 20f) * dir;
+
+    //    transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90f));
         Vector2 dir = mousePos - (Vector2)transform.position;
         gun.Fire(dir.normalized);
     }
