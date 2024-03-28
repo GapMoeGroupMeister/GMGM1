@@ -12,14 +12,17 @@ using UnityEngine;
 
 //5.사정거리 10타일(타일맵 기준)
 
-public class Glock17 : Gun
+public class M9 : Gun
 {
     protected override void Awake()
     {
         base.Awake();
-        maxBulletCount = 18;
+        maxBulletCount = 9;
         currentBulletCount = maxBulletCount;
-        damage = 20;
+        damage = 7;
+        bulletSpeed = 10;
+        destroyRange = 7;
+        reloadTime = 3;
     }
 
     public override void Fire(Vector2 direction)
@@ -32,6 +35,8 @@ public class Glock17 : Gun
         {
             Reload();
         }
+        bullet.GetComponent<Bullet>().speed = bulletSpeed;
+        bullet.GetComponent<Bullet>().destroyDistance = destroyRange;
     }
     public override void Reload()
     {
