@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Eneny : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     private enum Direction
     {
         Left,
         Right
-    }
-
-    private float _moveSpeed = 3;
-    private int _hp = 5;
-    private float _directionMoveDistance = 6;
+    }    
 
     [SerializeField] private int _enemyCode = 1;
 
@@ -23,24 +19,26 @@ public class Eneny : MonoBehaviour
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private LayerMask _wallLayer;
 
-    [SerializeField] private GameObject image01;
-    [SerializeField] private GameObject image02;
+    [SerializeField] private GameObject _findEnemyMark;
+    [SerializeField] private GameObject _findWallMark;
 
-
+    private float _moveSpeed = 3;
+    private int _hp = 5;
+    private float _directionMoveDistance = 6;
     private Vector2 moveRange;   
     private Direction _direction = Direction.Left;  
 
     void Start()
     {
-        var enemyData = EnemyTable.Instance.Find(_enemyCode);
+        EnemyTableData enemyData = EnemyTable.Instance.Find(_enemyCode);
         _hp = enemyData.Enemy_HP;
         _directionMoveDistance = enemyData.Enemy_RoamingRange;
         _moveSpeed = enemyData.Enemy_MoveSpeed;
 
-        image01.SetActive(false);
-        image02.SetActive(false);
+        _findEnemyMark.SetActive(false);
+        _findWallMark.SetActive(false);
 
-        var pos = transform.position;
+        Vector3 pos = transform.position;
         moveRange.x = pos.x - _directionMoveDistance;
         moveRange.y = pos.x + _directionMoveDistance;
     }
@@ -48,11 +46,11 @@ public class Eneny : MonoBehaviour
     void Update()
     {
 
-        var tr = transform;
+        Transform tr = transform;
         // 현재 에너미의 위치를 얻어옴
         Vector2 currentPosition = tr.position;
         // 현재 방향값 설정
-        var dir = _direction == Direction.Left ? -1f : 1f;
+        float dir = _direction == Direction.Left ? -1f : 1f;
 
         bool findWall = false;
         bool findPlayer = false;
@@ -72,26 +70,26 @@ public class Eneny : MonoBehaviour
 
         if (findPlayer && findWall )
         {
-            image01.SetActive(false);
-            image02.SetActive(true);
+            _findEnemyMark.SetActive(false);
+            _findWallMark.SetActive(true);
             return;
         }
         else if (findPlayer)
         {
-            image01.SetActive(true);
-            image02.SetActive(false);            
+            _findEnemyMark.SetActive(true);
+            _findWallMark.SetActive(false);            
             return;
         }
         else if (findWall)
         {
-            image01.SetActive(false);
-            image02.SetActive(false);
+            _findEnemyMark.SetActive(false);
+            _findWallMark.SetActive(false);
             dir = ChangeDirection();
         }
         else
         {
-            image01.SetActive(false);
-            image02.SetActive(false);
+            _findEnemyMark.SetActive(false);
+            _findWallMark.SetActive(false);
         }
 
         float move = dir * _moveSpeed * Time.deltaTime;

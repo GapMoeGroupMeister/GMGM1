@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 2243203}
   - component: {fileID: 2243204}
   m_Layer: 0
-  m_Name: image_01
+  m_Name: FindEnemyMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -249,12 +249,12 @@ GameObject:
   - component: {fileID: 311187280}
   - component: {fileID: 311187281}
   m_Layer: 0
-  m_Name: image_02
+  m_Name: FindWallMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &311187280
 Transform:
   m_ObjectHideFlags: 0
@@ -581,15 +581,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyCode: 1
   _sight: 2
-  _wallRaycastDistance: 1.5
+  _wallSight: 1
   _playerLayer:
     serializedVersion: 2
     m_Bits: 256
   _wallLayer:
     serializedVersion: 2
     m_Bits: 64
-  image01: {fileID: 2243202}
-  image02: {fileID: 311187279}
+  _findEnemyMark: {fileID: 2243202}
+  _findWallMark: {fileID: 311187279}
 --- !u!1 &1393596922
 GameObject:
   m_ObjectHideFlags: 0
