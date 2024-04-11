@@ -16,7 +16,7 @@ public class PlayerTest : MonoBehaviour
         fireDelay = gun.fireDelay;
     }
 
-    private void Update()
+    private void Update() 
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//마우스 위치를 월드 좌표로 변환
         Rotate();
