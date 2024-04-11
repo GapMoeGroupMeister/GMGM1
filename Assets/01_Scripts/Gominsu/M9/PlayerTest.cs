@@ -7,6 +7,10 @@ public class PlayerTest : MonoBehaviour
     public Gun gun;
     public Knife knife;
 
+
+    [SerializeField]
+    GameObject Player;
+
     private Vector2 mousePos;//마우스 위치
 
     public float fireDelay;
@@ -32,6 +36,15 @@ public class PlayerTest : MonoBehaviour
         if (Input.GetMouseButtonDown(1))//우클릭
         {
             knife.Slash();
+        }
+
+        if (Player.transform.position.x > mousePos.x)
+        {
+            transform.position = new Vector3(Player.transform.position.x + -0.7f, Player.transform.position.y, 0);
+        }
+        else
+        {
+            transform.position = new Vector3(Player.transform.position.x + 0.7f, Player.transform.position.y, 0);
         }
     }
 
