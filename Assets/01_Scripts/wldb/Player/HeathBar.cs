@@ -21,7 +21,7 @@ public class HeathBar : MonoBehaviour
     {
 
         HandleHp();
-
+        UseHeal();
 
     }
 
@@ -36,7 +36,7 @@ public class HeathBar : MonoBehaviour
         //    Debug.Log(currentHp);
         //}
 
-       if (currentHp <= 0)
+        if (currentHp <= 0)
         {
             Destroy(Player);
         }
@@ -45,6 +45,14 @@ public class HeathBar : MonoBehaviour
 
         //Vector3 PlayerPos = Player.transform.position;
         //transform.position = PlayerPos;
+    }
+
+    private void UseHeal()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            currentHp += 10;
+        }
     }
 
     //private void OnCollisionEnter2D(Collision2D collision)

@@ -17,23 +17,17 @@ public class PlayerControl : MonoBehaviour
 {
     [SerializeField]
     private PlayerState currentState;
-
-
-
-
-
     [SerializeField]
     private float _speed = 4f;  // 속도
     [SerializeField]
     private float _normalSpeed = 4f;
     [SerializeField]
-    private float _runSpeed = 7f;
+    private float _runSpeed = 8f;
     [SerializeField]
-    private float _sitSpeed = 1f;
+    private float _sitSpeed = 2f;
     [SerializeField]
-    private float _jumpPower = 6f;  // 점프 높이
-    [SerializeField]
-    private float _dashSpeed = 25f;
+    private float _jumpPower = 5f;  // 점프 높이
+    
     [SerializeField]
     private float inputx;
 
@@ -43,13 +37,11 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     private float _ray = 1f;
 
-
-
     public bool isGround;
 
-  
     private Rigidbody2D _rigid;  // Rigidbody 함수
     private SpriteRenderer SpriteRenderer;
+
     
 
 
@@ -76,12 +68,10 @@ public class PlayerControl : MonoBehaviour
 
         PlayerRoutine();
 
-        
         Flip();
     }
 
     
-
     private void CheckGround()
     {
         isGround = Physics2D.Raycast(transform.position, Vector2.down, _ray, _whatIsGround);
@@ -100,7 +90,7 @@ public class PlayerControl : MonoBehaviour
             currentState = PlayerState.Walk;
         }
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift)) // 뛰기
         {
             if (currentState == PlayerState.Walk)
             {
@@ -109,7 +99,7 @@ public class PlayerControl : MonoBehaviour
             
         }
 
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.LeftControl)) // 앉기
         {
             currentState = PlayerState.Sit;
 
@@ -122,11 +112,14 @@ public class PlayerControl : MonoBehaviour
             _rigid.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
 
             }
-            
-           
         }
 
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+            
+        //}
 
+        
     }
 
     
@@ -163,22 +156,17 @@ public class PlayerControl : MonoBehaviour
 
                 break;
 
-            case PlayerState.Jump:
-                if (isGround)
-                {
-                   
-                }
-                break;
-
             case PlayerState.Sit:
                 _speed = _sitSpeed;
                 _rigid.velocity = new Vector2(inputx * _speed, _rigid.velocity.y);
                 transform.Translate(Vector3.down * 0.5f * Time.deltaTime);
                 break;
 
-            case PlayerState.Dash:
+            //case PlayerState.UseHeal:
+                
 
-                break;
+
+                
         }
 
 
