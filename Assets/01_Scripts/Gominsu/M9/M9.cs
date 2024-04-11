@@ -17,12 +17,7 @@ public class M9 : Gun
     protected override void Awake()
     {
         base.Awake();
-        maxBulletCount = 9;
-        currentBulletCount = maxBulletCount;
-        damage = 7;
-        bulletSpeed = 10;
-        destroyRange = 7;
-        reloadTime = 3;
+        
     }
 
     public override void Fire(Vector2 direction)

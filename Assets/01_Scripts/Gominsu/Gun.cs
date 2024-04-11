@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Gun : MonoBehaviour
 {
+    
     public int damage = 0;//데미지
 
     public bool reloadCheck = true;//재장전 체크
@@ -20,6 +21,8 @@ public abstract class Gun : MonoBehaviour
 
     public float destroyRange;//사정거리
 
+    public GunSO gunSO;
+
     public GameObject bulletPrefab;//총얼 프리펩
 
     public Transform gunTip;//총구 위치
@@ -28,6 +31,16 @@ public abstract class Gun : MonoBehaviour
     protected virtual void Awake()
     {
         gunTip = transform.Find("GunTip");//총구의치 받아옴
+        fireDelay = gunSO.fireDelay;
+        damage = gunSO.damage;
+        maxBulletCount = gunSO.maxBulletCount;
+        reloadTime = gunSO.reloadTime;
+        bulletSpeed = gunSO.bulletSpeed;
+        destroyRange = gunSO.destroyRange;
+        bulletPrefab = gunSO.bulletPrefab;
+        currentBulletCount = maxBulletCount;
+
+
     }
 
     public virtual void Reload()

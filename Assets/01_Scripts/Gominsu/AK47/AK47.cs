@@ -19,12 +19,7 @@ public class AK47 : Gun
     protected override void Awake()
     {
         base.Awake();
-        maxBulletCount = 30;
-        currentBulletCount = maxBulletCount;
-        damage = 10;
-        reloadTime = 5;
-        bulletSpeed = 10;
-        destroyRange = 12;
+        
     }
 
     public override void Fire(Vector2 direction)

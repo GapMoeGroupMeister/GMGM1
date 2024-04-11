@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29090e9a05e0aa54a8d61332eec4523b, type: 3}
+  m_Name: AK47
+  m_EditorClassIdentifier: 
+  damage: 10
+  maxBulletCount: 30
+  fireDelay: 0.1
+  reloadTime: 5
+  bulletSpeed: 30
+  destroyRange: 12
+  bulletPrefab: {fileID: 6347915103290359698, guid: d260880515a2db1408bbbbca3a0183c9, type: 3}
