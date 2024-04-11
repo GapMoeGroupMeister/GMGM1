@@ -1227,6 +1227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gun: {fileID: 2087393153}
   knife: {fileID: 2087393148}
+  Player: {fileID: 1970317082}
   fireDelay: 0
 --- !u!212 &2087393151
 SpriteRenderer:
@@ -1289,7 +1290,7 @@ Transform:
   m_GameObject: {fileID: 2087393147}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.66, y: 0.17, z: 0}
+  m_LocalPosition: {x: 0.7, y: 0.17, z: 0}
   m_LocalScale: {x: 0.54627, y: 0.54627, z: 0.54627}
   m_ConstrainProportionsScale: 0
   m_Children:

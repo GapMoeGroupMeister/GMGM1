@@ -30,6 +30,9 @@ public class PlayerControl : MonoBehaviour
     
     [SerializeField]
     private float inputx;
+    private Vector2 mousePos;
+
+    
 
 
     [SerializeField]
@@ -80,6 +83,7 @@ public class PlayerControl : MonoBehaviour
     private void CheckMove()
     {
         inputx = (Input.GetAxisRaw("Horizontal")); // inputx에 움직임 값 넣어주기
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     private void InputKey()
@@ -121,20 +125,22 @@ public class PlayerControl : MonoBehaviour
 
         
     }
-
     
 
     private void Flip()
     {
 
-        if (inputx > 0)
-        {
-            SpriteRenderer.flipX = false;
-        }
-        else if (inputx < 0)
-        {
-            SpriteRenderer.flipX = true;
-        }
+        //if (inputx > 0)
+        //{
+        //    SpriteRenderer.flipX = false;
+        //}
+        //else if (inputx < 0)
+        //{
+        //    SpriteRenderer.flipX = true;
+        //}
+
+        SpriteRenderer.flipX = transform.position.x > mousePos.x;
+        
     }
 
     private void PlayerRoutine()
@@ -164,23 +170,7 @@ public class PlayerControl : MonoBehaviour
 
             //case PlayerState.UseHeal:
                 
-
-
-                
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }
