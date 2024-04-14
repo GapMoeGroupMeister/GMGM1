@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerTest : MonoBehaviour
 {
     public Gun gun;
+    public Gun[] guns;
     public Knife knife;
 
 

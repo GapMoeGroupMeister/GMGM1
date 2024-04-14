@@ -17,6 +17,7 @@ public class Bullet : MonoBehaviour
     {
         Direction = dir;
         gunTipPosition = transform.position;//쏠때 당시의 자신의 위치 = 총구의 위치 
+        Debug.Log(destroyDistance);
     }
 
     private void Update()

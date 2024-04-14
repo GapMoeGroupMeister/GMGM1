@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 1089284466}
   - component: {fileID: 1089284470}
   - component: {fileID: 1089284471}
+  - component: {fileID: 1089284472}
   m_Layer: 0
   m_Name: PlayerTest
   m_TagString: Untagged
@@ -186,8 +187,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d52983eab32a88479bece70472940a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 1089284471}
+  gun: {fileID: 1089284472}
+  guns: []
   knife: {fileID: 1089284470}
+  Player: {fileID: 0}
   fireDelay: 0
 --- !u!212 &1089284467
 SpriteRenderer:
@@ -292,7 +295,31 @@ MonoBehaviour:
   reloadTime: 0
   bulletSpeed: 0
   destroyRange: 0
+  gunSO: {fileID: 0}
   bulletPrefab: {fileID: 6347915103290359698, guid: d260880515a2db1408bbbbca3a0183c9, type: 3}
+  gunTip: {fileID: 0}
+--- !u!114 &1089284472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089284463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2600abbd40984b34298b7cdf9e1382ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  reloadCheck: 1
+  maxBulletCount: 0
+  currentBulletCount: 0
+  fireDelay: 0
+  reloadTime: 0
+  bulletSpeed: 0
+  destroyRange: 0
+  gunSO: {fileID: 0}
+  bulletPrefab: {fileID: 0}
   gunTip: {fileID: 0}
 --- !u!1 &1149058077
 GameObject:
