@@ -20,6 +20,7 @@ public class M9 : Gun
         
     }
 
+
     public override void Fire(Vector2 direction)
     {
         if (reloadCheck == false) return;//재장전 중이라면 아래코드들 실행안함

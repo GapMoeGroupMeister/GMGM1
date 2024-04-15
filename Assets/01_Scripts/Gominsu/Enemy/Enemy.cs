@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTest : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
-    public Gun gun;
+
+
     public Gun[] guns;
     public Knife knife;
 
+    int i;
 
     [SerializeField]
     GameObject Player;
@@ -18,19 +20,37 @@ public class PlayerTest : MonoBehaviour
 
     private void Start()
     {
-        fireDelay = gun.fireDelay;
+        fireDelay = guns[i].fireDelay;
     }
 
-    private void Update() 
+    private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            i = 0;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            i = 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            i = 2;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            i = 3;
+        }
+
+
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//마우스 위치를 월드 좌표로 변환
         Rotate();
         if (Input.GetMouseButtonDown(0))//좌클릭
         {
             StartCoroutine("ShootCoroutine");
-               
+
         }
-        if(Input.GetMouseButtonUp(0))//좌클릭 해제
+        if (Input.GetMouseButtonUp(0))//좌클릭 해제
         {
             StopCoroutine("ShootCoroutine");
         }
@@ -60,17 +80,17 @@ public class PlayerTest : MonoBehaviour
 
     private void Fire()
     {
-            //    Vector3 dir = Vector3.up;
-            //    dir = Quaternion.Euler(0, 0, 20f) * dir;
-            //    transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90f));
+        //    Vector3 dir = Vector3.up;
+        //    dir = Quaternion.Euler(0, 0, 20f) * dir;
+        //    transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90f));
 
         Vector2 dir = mousePos - (Vector2)transform.position;
-        gun.Fire(dir.normalized);
+        guns[i].Fire(dir.normalized);
     }
 
     IEnumerator ShootCoroutine()
     {
-        while(true)
+        while (true)
         {
             if (Input.GetMouseButton(0))//좌클릭이 눌리고 있는 동안에 /연사
             {
@@ -79,4 +99,6 @@ public class PlayerTest : MonoBehaviour
             yield return new WaitForSeconds(fireDelay);
         }
     }
+
+
 }
