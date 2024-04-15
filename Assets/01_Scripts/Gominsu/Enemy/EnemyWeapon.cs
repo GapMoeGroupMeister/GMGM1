@@ -22,7 +22,7 @@ public abstract class EnemyWeapon : MonoBehaviour
 
     public float destroyRange;//»çÁ¤°Å¸®
 
-    public GunSO gunSO;
+    public EnemyWeaponSO enemyWeaponSO;
 
     public GameObject bulletPrefab;//ÃÑ¾ó ÇÁ¸®Æé
 
@@ -32,13 +32,13 @@ public abstract class EnemyWeapon : MonoBehaviour
     protected virtual void Awake()
     {
         gunTip = transform.Find("GunTip");//ÃÑ±¸ÀÇÄ¡ ¹Þ¾Æ¿È
-        fireDelay = gunSO.fireDelay;
-        damage = gunSO.damage;
-        maxBulletCount = gunSO.maxBulletCount;
-        reloadTime = gunSO.reloadTime;
-        bulletSpeed = gunSO.bulletSpeed;
-        destroyRange = gunSO.destroyRange;
-        bulletPrefab = gunSO.bulletPrefab;
+        fireDelay = enemyWeaponSO.fireDelay;
+        damage = enemyWeaponSO.damage;
+        maxBulletCount = enemyWeaponSO.maxBulletCount;
+        reloadTime = enemyWeaponSO.reloadTime;
+        bulletSpeed = enemyWeaponSO.bulletSpeed;
+        destroyRange = enemyWeaponSO.destroyRange;
+        bulletPrefab = enemyWeaponSO.bulletPrefab;
         currentBulletCount = maxBulletCount;
 
 
