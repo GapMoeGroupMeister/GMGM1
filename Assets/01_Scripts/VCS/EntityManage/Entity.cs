@@ -8,6 +8,8 @@ namespace EntityManage
     {
         public event Action OnDamagedEvent;
         
+        [Header("Current Status")]
+        [SerializeField]
         protected Status _status;
         public Status Status => _status;
 
