@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class EnemyWeapon : MonoBehaviour
 {
 
-
     public int damage = 0;//데미지
 
     public bool reloadCheck = true;//재장전 체크
