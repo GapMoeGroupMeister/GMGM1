@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HeathBar : MonoBehaviour
+public class healspat : MonoBehaviour
 {
     float currentHp = 100f;
     float maxHp = 100f;

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviour
 {
+
 
     public float speed = 3;
 
@@ -23,17 +24,22 @@ public class Bullet : MonoBehaviour
     {
         transform.position += Direction * speed * Time.deltaTime;
 
-        if(Vector2.Distance(gunTipPosition, transform.position) > destroyDistance)//만약 Vector2.Distance가 destroyDistance보다 크다면 총알을 삭제
+        if (Vector2.Distance(gunTipPosition, transform.position) > destroyDistance)//만약 Vector2.Distance가 destroyDistance보다 크다면 총알을 삭제
         {                                                                             //   ㄴ얘는 transform.position - guntip(현재 이동한 거리)이다
             Destroy(gameObject);
         }
 
-        
+
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Destroy(collision.gameObject);
+        }
         Destroy(gameObject);
 
     }
+
+
 }
