@@ -19,8 +19,8 @@ public class healspat : MonoBehaviour
 
     private void Update()
     {
-        HandleHp();
-        UseHeal();
+       
+        //UseHeal();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -33,26 +33,13 @@ public class healspat : MonoBehaviour
     }
 
 
-
-    private void HandleHp()
-    {
-        hpBar.value = currentHp / maxHp;
-
-        
-
-        if (currentHp <= 0)
-        {
-            Destroy(Player);
-        }
-    }
-
-    private void UseHeal()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            currentHp += 10;
-        }
-    }
+    //private void UseHeal()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.C))
+    //    {
+    //        currentHp += 10;
+    //    }
+    //}
 
     
 

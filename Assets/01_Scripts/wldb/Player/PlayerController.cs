@@ -94,7 +94,7 @@ public class test : MonoBehaviour
         if (currentHp <= 0)
         {
             Destroy(gameObject);
-            currentHp = 0;
+            
         }
         
     }
