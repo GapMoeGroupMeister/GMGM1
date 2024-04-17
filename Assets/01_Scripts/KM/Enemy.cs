@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private float _sight = 1;
     [SerializeField] private float _wallSight = 1;
+    [SerializeField] private float _wallSight2 = 1;
 
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private LayerMask _wallLayer;
@@ -49,26 +50,57 @@ public class Enemy : MonoBehaviour
         Transform tr = transform;
         // 현재 에너미의 위치를 얻어옴
         Vector2 currentPosition = tr.position;
+        Vector2 currentPosition2 = tr.position + new Vector3(0, -0.1f);
         // 현재 방향값 설정
         float dir = _direction == Direction.Left ? -1f : 1f;
 
-        bool findWall = false;
+        bool findWall1 = false;
+        bool findWall2 = false;
         bool findPlayer = false;
 
+
         // 이동 방향으로 Ray를 쏴서 충돌 되면 방향 전환 (Player찾기)
+        //RaycastHit2D hit2D = Physics2D.Raycast(currentPosition, new Vector2(dir, 0), _sight, _playerLayer);
+        //if (hit2D.collider != null)
+        //{
+        //    findPlayer = true;
+        //}
+        //RaycastHit2D hit = Physics2D.Raycast(currentPosition2, new Vector2(dir, 0), _wallSight, _wallLayer);
+        //if (hit.collider != null)
+        //{
+        //    findWall = true;
+        //}
+
         RaycastHit2D hit2D = Physics2D.Raycast(currentPosition, new Vector2(dir, 0), _sight, _playerLayer);
         if (hit2D.collider != null)
         {
-            findPlayer = true;            
-        }        
-
-        hit2D = Physics2D.Raycast(currentPosition, new Vector2(dir, 0), _wallSight, _wallLayer);
-        if (hit2D.collider != null)
-        {
-            findWall = true;            
+            findPlayer = true;
         }
 
-        if (findPlayer && findWall )
+        if (findPlayer) 
+        {
+            RaycastHit2D hit = Physics2D.Raycast(currentPosition2, new Vector2(dir, 0), _wallSight, _wallLayer);
+            if (hit.collider != null)
+            {
+                findWall1 = true;
+            }
+        }
+
+        if (!findPlayer)
+        {
+            RaycastHit2D hit2 = Physics2D.Raycast(currentPosition2, new Vector2(dir, 0), _wallSight2, _wallLayer);
+            if (hit2.collider != null)
+            {
+                findWall2 = true;
+            }
+        }
+
+        Debug.DrawRay(currentPosition, new Vector2(dir, 0), Color.green);
+        Debug.DrawRay(currentPosition2, new Vector2(dir, 0), Color.blue);
+
+        print("wall " + findWall1 + " / player : " + findPlayer);
+
+        if (findPlayer && findWall1)
         {
             _findEnemyMark.SetActive(false);
             _findWallMark.SetActive(true);
@@ -80,7 +112,7 @@ public class Enemy : MonoBehaviour
             _findWallMark.SetActive(false);            
             return;
         }
-        else if (findWall)
+        else if (findWall2)
         {
             _findEnemyMark.SetActive(false);
             _findWallMark.SetActive(false);
