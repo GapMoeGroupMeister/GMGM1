@@ -13,7 +13,7 @@ public enum PlayerState
 
 }
 
-public class PlayerControl : MonoBehaviour
+public class test : MonoBehaviour
 {
     [SerializeField]
     private PlayerState currentState;
@@ -32,7 +32,10 @@ public class PlayerControl : MonoBehaviour
     private float inputx;
     private Vector2 mousePos;
 
-    
+    [SerializeField]
+    GameObject[] gunPrefab;
+
+    GameObject gun1, gun2, gun3;
 
 
     [SerializeField]
@@ -72,6 +75,8 @@ public class PlayerControl : MonoBehaviour
         PlayerRoutine();
 
         Flip();
+
+        Gunswap();
     }
 
     
@@ -171,6 +176,35 @@ public class PlayerControl : MonoBehaviour
             //case PlayerState.UseHeal:
                 
         }
+
+    }
+
+    void Gunswap()
+    {
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            gun1 = Instantiate(gunPrefab[0],gameObject.transform);
+            Destroy(gun2);
+            Destroy(gun3);
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            
+            gun2 = Instantiate(gunPrefab[1], gameObject.transform);
+
+            Destroy(gun1);
+            Destroy(gun3);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            gun3 = Instantiate(gunPrefab[2], gameObject.transform);
+
+            Destroy(gun1);
+            Destroy(gun2);
+        }
+
+
 
     }
 }

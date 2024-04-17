@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//추상 클래스
-public abstract class Gun : MonoBehaviour
+public abstract class EnemyWeapon : MonoBehaviour
 {
-    
+
     public int damage = 0;//데미지
 
     public bool reloadCheck = true;//재장전 체크
 
     public int maxBulletCount = 0;//총탄수
-    
+
     public int currentBulletCount = 0;
 
     public float fireDelay;//연사 속도
@@ -22,7 +21,7 @@ public abstract class Gun : MonoBehaviour
 
     public float destroyRange;//사정거리
 
-    public GunSO gunSO;
+    public EnemyWeaponSO enemyWeaponSO;
 
     public GameObject bulletPrefab;//총얼 프리펩
 
@@ -32,13 +31,13 @@ public abstract class Gun : MonoBehaviour
     protected virtual void Awake()
     {
         gunTip = transform.Find("GunTip");//총구의치 받아옴
-        fireDelay = gunSO.fireDelay;
-        damage = gunSO.damage;
-        maxBulletCount = gunSO.maxBulletCount;
-        reloadTime = gunSO.reloadTime;
-        bulletSpeed = gunSO.bulletSpeed;
-        destroyRange = gunSO.destroyRange;
-        bulletPrefab = gunSO.bulletPrefab;
+        fireDelay = enemyWeaponSO.fireDelay;
+        damage = enemyWeaponSO.damage;
+        maxBulletCount = enemyWeaponSO.maxBulletCount;
+        reloadTime = enemyWeaponSO.reloadTime;
+        bulletSpeed = enemyWeaponSO.bulletSpeed;
+        destroyRange = enemyWeaponSO.destroyRange;
+        bulletPrefab = enemyWeaponSO.bulletPrefab;
         currentBulletCount = maxBulletCount;
 
 
@@ -56,4 +55,6 @@ public abstract class Gun : MonoBehaviour
         reloadCheck = true;
         currentBulletCount = maxBulletCount;
     }
+
+
 }

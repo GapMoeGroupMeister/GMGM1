@@ -2,22 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTest : MonoBehaviour
+public class Fire1 : MonoBehaviour
 {
-    public Gun gun;
+    //public Gun gun;
+    public Gun guns;
     public Knife knife;
 
-
-    [SerializeField]
     GameObject Player;
 
     private Vector2 mousePos;//마우스 위치
 
-    public float fireDelay;
-
-    private void Start()
+    private void Awake()
     {
-        fireDelay = gun.fireDelay;
+        Player = GameObject.Find("Player");
+        print(Player);
     }
 
     private void Update() 
@@ -38,7 +36,7 @@ public class PlayerTest : MonoBehaviour
             knife.Slash();
         }
 
-        if (Player.transform.position.x > mousePos.x)
+        if (Player.transform.position.x > mousePos.x)   
         {
             transform.position = new Vector3(Player.transform.position.x + -0.7f, Player.transform.position.y, 0);
         }
@@ -64,7 +62,7 @@ public class PlayerTest : MonoBehaviour
             //    transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90f));
 
         Vector2 dir = mousePos - (Vector2)transform.position;
-        gun.Fire(dir.normalized);
+        guns.Fire(dir.normalized);
     }
 
     IEnumerator ShootCoroutine()
@@ -75,7 +73,7 @@ public class PlayerTest : MonoBehaviour
             {
                 Fire();
             }
-            yield return new WaitForSeconds(fireDelay);
+            yield return new WaitForSeconds(guns.fireDelay);
         }
     }
 }

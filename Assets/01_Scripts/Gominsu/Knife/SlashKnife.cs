@@ -11,15 +11,21 @@ public class SlashKnife : Knife
 
     GameObject knife;
 
+    private void Start()
+    {
+        Rotate();   
+    }
+
     private void Update()
     {
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         currentTime += Time.deltaTime;
         if (currentTime >= creatTime)
         {
             Destroy(knife);
             currentTime = 0;
         }
-        Rotate();
+
 
     }
     public override void Slash()
@@ -27,6 +33,7 @@ public class SlashKnife : Knife
 
         damage = 50;
         knife = Instantiate(knifePrefab, gunTip.position, Quaternion.identity);
+        
 
     }
 
@@ -36,6 +43,7 @@ public class SlashKnife : Knife
 
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        knifePrefab.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+        knifePrefab.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
     }
 }
