@@ -113,7 +113,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &3876479013884972249
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
   _normalSpeed: 4
   _runSpeed: 7
   _sitSpeed: 2
-  _jumpPower: 6
+  _jumpPower: 10
   inputx: 0
   gunPrefab:
   - {fileID: 4235532665382729105, guid: e3a357f0e1473f842b9458ebbefc479b, type: 3}
