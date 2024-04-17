@@ -19,32 +19,31 @@ public class healspat : MonoBehaviour
 
     private void Update()
     {
-
         HandleHp();
         UseHeal();
-
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("EnemyBullet"))
+        {
+            currentHp -= 10;
+        }
+        Debug.Log(currentHp);
+    }
+
 
 
     private void HandleHp()
     {
         hpBar.value = currentHp / maxHp;
 
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    currentHp -= 10;
-        //    Debug.Log(currentHp);
-        //}
+        
 
         if (currentHp <= 0)
         {
             Destroy(Player);
         }
-
-
-
-        //Vector3 PlayerPos = Player.transform.position;
-        //transform.position = PlayerPos;
     }
 
     private void UseHeal()
@@ -55,13 +54,9 @@ public class healspat : MonoBehaviour
         }
     }
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Bullet"))
-    //    {
-    //        currentHp -= 10;
-    //    }
-    //}
+    
+
+
 
 
 }
