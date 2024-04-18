@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyBullet : MonoBehaviour
 {
-
+    
+    Slider hpBar;
 
     public float speed = 3;
 
@@ -33,10 +35,7 @@ public class EnemyBullet : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(collision.gameObject);
-        }
+  
         Destroy(gameObject);
 
     }

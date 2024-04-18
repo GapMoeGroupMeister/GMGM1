@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum PlayerState
 {
@@ -13,12 +15,14 @@ public enum PlayerState
 
 }
 
-public class test : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
+    public event Action<int, int> OnHealthChangedEvent;
+    public Action<int, int> OnShootEvent; 
     [SerializeField]
     private PlayerState currentState;
     [SerializeField]
-    private float _speed = 4f;  // 속도
+    private float _speed = 4f;  // ???
     [SerializeField]
     private float _normalSpeed = 4f;
     [SerializeField]
@@ -26,17 +30,18 @@ public class test : MonoBehaviour
     [SerializeField]
     private float _sitSpeed = 2f;
     [SerializeField]
-    private float _jumpPower = 5f;  // 점프 높이
-    
+    private float _jumpPower = 5f;  // ???? ????
+    int currentHp = 100;
+    int maxHp = 100;
+
     [SerializeField]
     private float inputx;
     private Vector2 mousePos;
 
     [SerializeField]
     GameObject[] gunPrefab;
-
     GameObject gun1, gun2, gun3;
-
+    
 
     [SerializeField]
     private LayerMask _whatIsGround;
@@ -45,25 +50,30 @@ public class test : MonoBehaviour
 
     public bool isGround;
 
-    private Rigidbody2D _rigid;  // Rigidbody 함수
+    private Rigidbody2D _rigid;  // Rigidbody ???
     private SpriteRenderer SpriteRenderer;
 
-    
-
-
+    private Gun _currentGun;
+    public Gun CurrentGun { get; private set; }
 
 
     private void Awake()
     {
-        _rigid = GetComponent<Rigidbody2D>(); // Rigidbody함수에 Rigidbody2D 가져와서 넣기
+        _rigid = GetComponent<Rigidbody2D>(); // Rigidbody????? Rigidbody2D ??????? ???
         SpriteRenderer = GetComponent<SpriteRenderer>();
-
+        _currentGun = GetComponentInChildren<Gun>();
     }
 
     private void Start()
+    {   
+        
+        
+    }
+
+    [ContextMenu("DebugRefreshHealth")]
+    public void RefreshHealth()
     {
-      
-     
+        OnHealthChangedEvent?.Invoke(currentHp, maxHp);
     }
 
     void Update()
@@ -79,7 +89,34 @@ public class test : MonoBehaviour
         Gunswap();
     }
 
-    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("EnemyBullet"))
+        {
+            currentHp -= 10;
+            OnHealthChangedEvent?.Invoke(currentHp, maxHp);
+            CheckDie();
+        }
+    }
+
+    private void CheckDie()
+    {
+        if (currentHp <= 0)
+        {
+            Destroy(gameObject);
+            
+        }
+        
+    }
+
+    //private void UseHeal()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.C))
+    //    {
+    //        currentHp += 10;
+    //    }
+    //}
+
     private void CheckGround()
     {
         isGround = Physics2D.Raycast(transform.position, Vector2.down, _ray, _whatIsGround);
@@ -87,7 +124,7 @@ public class test : MonoBehaviour
 
     private void CheckMove()
     {
-        inputx = (Input.GetAxisRaw("Horizontal")); // inputx에 움직임 값 넣어주기
+        inputx = (Input.GetAxisRaw("Horizontal")); // inputx?? ?????? ?? ??????
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
@@ -99,7 +136,7 @@ public class test : MonoBehaviour
             currentState = PlayerState.Walk;
         }
 
-        if (Input.GetKey(KeyCode.LeftShift)) // 뛰기
+        if (Input.GetKey(KeyCode.LeftShift)) 
         {
             if (currentState == PlayerState.Walk)
             {
@@ -108,17 +145,17 @@ public class test : MonoBehaviour
             
         }
 
-        if (Input.GetKey(KeyCode.LeftControl)) // 앉기
+        if (Input.GetKey(KeyCode.LeftControl)) 
         {
             currentState = PlayerState.Sit;
 
         }
 
-        if (Input.GetKeyDown(KeyCode.Space)) // 점프 키 입력 받으면 작동
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGround)
             {
-            _rigid.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
+                _rigid.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
 
             }
         }
@@ -134,15 +171,6 @@ public class test : MonoBehaviour
 
     private void Flip()
     {
-
-        //if (inputx > 0)
-        //{
-        //    SpriteRenderer.flipX = false;
-        //}
-        //else if (inputx < 0)
-        //{
-        //    SpriteRenderer.flipX = true;
-        //}
 
         SpriteRenderer.flipX = transform.position.x > mousePos.x;
         
@@ -184,24 +212,31 @@ public class test : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+            Destroy(gun1);
             gun1 = Instantiate(gunPrefab[0],gameObject.transform);
+            gun1.transform.position = transform.position;
             Destroy(gun2);
             Destroy(gun3);
         }
         else if(Input.GetKeyDown(KeyCode.Alpha2))
         {
-            
+            Destroy(gun2);
             gun2 = Instantiate(gunPrefab[1], gameObject.transform);
-
+            gun2.transform.position = transform.position;
             Destroy(gun1);
             Destroy(gun3);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
+            Destroy(gun3);
             gun3 = Instantiate(gunPrefab[2], gameObject.transform);
-
+            gun3.transform.position = transform.position;
             Destroy(gun1);
             Destroy(gun2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+
         }
 
 
