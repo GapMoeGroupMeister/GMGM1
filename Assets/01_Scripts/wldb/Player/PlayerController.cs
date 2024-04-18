@@ -224,6 +224,10 @@ public class test : MonoBehaviour
             Destroy(gun1);
             Destroy(gun2);
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+
+        }
 
 
 
