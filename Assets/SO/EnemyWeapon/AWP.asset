@@ -16,6 +16,6 @@ MonoBehaviour:
   maxBulletCount: 2
   fireDelay: 2
   reloadTime: 5
-  bulletSpeed: 50
-  destroyRange: 15
+  bulletSpeed: 30
+  destroyRange: 5
   bulletPrefab: {fileID: 7174808125437742660, guid: 512b4eb5f0866504da2b09e362515987, type: 3}

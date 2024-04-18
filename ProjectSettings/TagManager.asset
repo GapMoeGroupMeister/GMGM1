@@ -39,8 +39,11 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - EnemyBullet
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 2019390575
     locked: 0
