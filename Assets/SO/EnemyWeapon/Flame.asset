@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9d1e534b6e190a46b6934debae17a86, type: 3}
-  m_Name: AWP
+  m_Name: Flame
   m_EditorClassIdentifier: 
-  damage: 30
-  maxBulletCount: 2
-  fireDelay: 2
+  damage: 1
+  maxBulletCount: 100
+  fireDelay: 0.01
   reloadTime: 5
-  bulletSpeed: 30
-  destroyRange: 5
+  bulletSpeed: 2
+  destroyRange: 15
   bulletPrefab: {fileID: 7174808125437742660, guid: 512b4eb5f0866504da2b09e362515987, type: 3}
