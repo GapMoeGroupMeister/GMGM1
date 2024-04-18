@@ -61,7 +61,7 @@ public class MagazineUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             currentBullet = maxBullet;
-            Refresh(currentBullet, maxBullet);
+            HandleBulletGaugeRefresh(currentBullet, maxBullet);
         }
 
         currentTime += Time.deltaTime;
@@ -74,7 +74,7 @@ public class MagazineUI : MonoBehaviour
                 currentTime = 0;
                 if (currentBullet <= 0)
                 {
-                    Refresh(currentBullet, maxBullet);
+                    HandleBulletGaugeRefresh(currentBullet, maxBullet);
                     currentTime = -1;
                     Shake(_shakePower, _vibrato, _shakeDuration);
                     return;
@@ -91,7 +91,7 @@ public class MagazineUI : MonoBehaviour
     {
         Shake(_shakePower, _vibrato, _shakeDuration);
         StartCoroutine(ShootCoroutine());
-        Refresh(currentBullet, maxBullets);
+        HandleBulletGaugeRefresh(currentBullet, maxBullets);
         
         _shellParticle.Play();
     }
@@ -103,7 +103,7 @@ public class MagazineUI : MonoBehaviour
         _lightObject.SetActive(false);
     }
 
-    private void Refresh(int currentBullets, int maxBullets)
+    private void HandleBulletGaugeRefresh(int currentBullets, int maxBullets)
     {
         _gridMaterial.SetFloat("_GridWidth", maxBullets);
         if (currentBullets <= 0)
