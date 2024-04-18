@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class S860 : Gun
 {
-//    1. ÅºÃ¢ 2¹ß
+//    1. ÅºÃ¢ 2ï¿½ï¿½
 
-//2. ÅºÈ¯ ´ç 3µ¥¹ÌÁö(ÃÖ´ë 24 µ¥¹ÌÁö)
+//2. ÅºÈ¯ ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½Ö´ï¿½ 24 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 
-//3. ÀçÀåÀü½Ã ¼Ò¿ä ½Ã°£ 3f;
+//3. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¿ï¿½ ï¿½Ã°ï¿½ 3f;
 
-//4. Åº¼Ó 1f;
+//4. Åºï¿½ï¿½ 1f;
 
-//5. »çÁ¤°Å¸® 3Å¸ÀÏ(Å¸ÀÏ¸Ê ±âÁØ)
+//5. ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ 3Å¸ï¿½ï¿½(Å¸ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½)
 
-//6. ¹ß»ç 1 = 8 ÅºÈ¯
+//6. ï¿½ß»ï¿½ 1 = 8 ÅºÈ¯
     protected override void Awake()
     {
         base.Awake();
@@ -22,29 +22,20 @@ public class S860 : Gun
 
     public override void Fire(Vector2 direction)
     {
-        if (reloadCheck == false) return;
-        currentBulletCount--;
-        if (currentBulletCount <= 0)
-        {
-            Reload();
-        }
+        
         for (int i = 0; i < 8; i++)
         {
-            //¸¶¿ì½ºÀÇ À§Ä¡¿¡¼­ +-10ÀÇ ·£´ýÇÑ °¢µµ¸¦ direction¿¡ ÀúÀåÇÏ¿© bullet¿¡ Àü¼Û
-            direction = Quaternion.Euler(new Vector3(0,0,Random.Range(-10f, 10f))) * direction;
-            GameObject bullet = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity);
-
-            Bullet bullet_clone = bullet.GetComponent<Bullet>();
-
-            bullet_clone.Fire(direction);
+            Bullet bullet = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity);
+            bullet.Fire(direction.normalized);
+            bullet.SetDefault(bulletSpeed, destroyRange);
+            Vector2 newDirection = Quaternion.Euler(new Vector3(0,0,Random.Range(-10f, 10f))) * direction;
+            bullet.Fire(newDirection);
             
-
-            bullet_clone.speed = bulletSpeed;
-            bullet_clone.destroyDistance = Random.Range(3f, 5f);
+            bullet.destroyDistance = Random.Range(3f, 5f);
         }
             
     }
-    public override void Reload()
+    protected override void Reload()
     {
         base.Reload();
     }

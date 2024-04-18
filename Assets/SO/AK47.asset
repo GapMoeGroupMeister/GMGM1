@@ -18,4 +18,4 @@ MonoBehaviour:
   reloadTime: 5
   bulletSpeed: 30
   destroyRange: 12
-  bulletPrefab: {fileID: 6347915103290359698, guid: d260880515a2db1408bbbbca3a0183c9, type: 3}
+  bulletPrefab: {fileID: 1843989781348865363, guid: d260880515a2db1408bbbbca3a0183c9, type: 3}

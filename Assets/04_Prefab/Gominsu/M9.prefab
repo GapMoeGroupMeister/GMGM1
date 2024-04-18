@@ -138,7 +138,7 @@ MonoBehaviour:
   bulletSpeed: 0
   destroyRange: 0
   gunSO: {fileID: 11400000, guid: cc14a38db455bea4582bc125f7a45672, type: 2}
-  bulletPrefab: {fileID: 6347915103290359698, guid: d260880515a2db1408bbbbca3a0183c9, type: 3}
+  bulletPrefab: {fileID: 1843989781348865363, guid: d260880515a2db1408bbbbca3a0183c9, type: 3}
   gunTip: {fileID: 0}
 --- !u!1 &8232162324592248655
 GameObject:
