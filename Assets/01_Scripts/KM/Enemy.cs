@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
     private int _hp = 5;
     private float _directionMoveDistance = 6;
     private Vector2 moveRange;   
-    private Direction _direction = Direction.Left;  
+    private Direction _direction = Direction.Left;
 
     void Start()
     {
@@ -139,7 +139,7 @@ public class Enemy : MonoBehaviour
     }
 
     private float ChangeDirection()
-    {        
+    {
         _direction = _direction == Direction.Left ? Direction.Right : Direction.Left;
         return _direction == Direction.Left ? -1 : 1;
     }
@@ -152,4 +152,6 @@ public class Enemy : MonoBehaviour
             //Destroy(gameObject);
         }
     }
+
+    
 }
