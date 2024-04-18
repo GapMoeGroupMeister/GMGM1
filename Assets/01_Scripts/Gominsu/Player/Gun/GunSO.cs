@@ -15,10 +15,13 @@ public class GunSO : ScriptableObject
 
     public float reloadTime;//재장전 시간
 
+    public bool isContinueFire;
+    
     public float bulletSpeed;//총알 스피드
 
     public float destroyRange;//사정거리
 
-    public Bullet bulletPrefab;//총얼 프리펩
+    public Bullet bulletPrefab;//총알 프리팹
+    
 
 }

@@ -1,6 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using UnityEditor.AnimatedValues;
 using UnityEngine;
 
 //추상 클래스
@@ -14,7 +13,8 @@ public abstract class Gun : MonoBehaviour
     public int maxBulletCount = 0;//총탄수
     
     public int currentBulletCount = 0;
-
+    public bool isContinueFire;
+    
     public float fireDelay;//연사 속도
 
     public float reloadTime;//재장전 시간
@@ -28,11 +28,12 @@ public abstract class Gun : MonoBehaviour
     public GunSO gunSO;
 
     public Bullet bulletPrefab;//총얼 프리펩
-
     public Transform gunTip;//총구 위치
-    private Vector2 mousePos;//마우스 위치
+    
+    
+    private Vector2 _mousePos;//마우스 위치
     private PlayerController _player;
-    private bool isReloading;
+    private bool _isReloading;
 
     
     public abstract void Fire(Vector2 direction);
@@ -46,6 +47,7 @@ public abstract class Gun : MonoBehaviour
         damage = gunSO.damage;
         maxBulletCount = gunSO.maxBulletCount;
         reloadTime = gunSO.reloadTime;
+        isContinueFire = gunSO.isContinueFire;
         bulletSpeed = gunSO.bulletSpeed;
         destroyRange = gunSO.destroyRange;
         bulletPrefab = gunSO.bulletPrefab;
@@ -61,37 +63,17 @@ public abstract class Gun : MonoBehaviour
 
     protected virtual void Update()
     {
+        _currentTime += Time.deltaTime;
+        _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//마우스 위치를 월드 좌표로 변환
+        Rotate();
+
         GunInput();
+        GunRender();
     }
 
-    
-
-    private void GunInput()
+    private void GunRender()
     {
-        _currentTime += Time.deltaTime;
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//마우스 위치를 월드 좌표로 변환
-        Rotate();
-        if (Input.GetMouseButtonDown(0))//좌클릭
-        {
-            if (IsCoolTime)
-            {
-                _currentTime = 0;
-               
-                FireHandler();
-            }
-        }
-        if (currentBulletCount <= 0 && !isReloading)
-        {
-            isReloading = true;
-            Reload();
-        }
-        
-        if (Input.GetMouseButtonDown(1))//우클릭
-        {
-            //knife.Slash();
-        }
-
-        if (_player.transform.position.x > mousePos.x)   
+        if (_player.transform.position.x > _mousePos.x)   
         {
             transform.position = new Vector3(_player.transform.position.x + -0.7f, _player.transform.position.y, 0);
         }
@@ -101,6 +83,46 @@ public abstract class Gun : MonoBehaviour
         }
     }
     
+
+    private void GunInput()
+    {
+        if (currentBulletCount <= 0 && !_isReloading)
+        {
+            _isReloading = true;
+            Reload();
+        }
+        if (Input.GetMouseButtonDown(1))//우클릭
+        {
+            //knife.Slash();
+        }
+        
+        if (!IsCoolTime)
+        {
+             return;      
+        }
+        if (isContinueFire)
+        {
+            if (Input.GetMouseButton(0))//좌클릭 홀드
+            {
+                _currentTime = 0;
+               
+                FireHandler();
+                
+            }
+        }
+        else
+        {
+            
+            if (Input.GetMouseButtonDown(0))//좌클릭
+            {
+                _currentTime = 0;
+               
+                FireHandler();
+            }
+        }
+        
+    }
+    
     protected virtual void Reload()
     {
         StartCoroutine(ReloadCoroutine());
@@ -108,7 +130,7 @@ public abstract class Gun : MonoBehaviour
     
     protected void Rotate()
     {
-        Vector2 dir = (mousePos - (Vector2)transform.position).normalized;
+        Vector2 dir = (_mousePos - (Vector2)transform.position).normalized;
 
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
@@ -117,7 +139,7 @@ public abstract class Gun : MonoBehaviour
 
     protected void FireHandler()
     {
-        Vector2 dir = mousePos - (Vector2)transform.position;
+        Vector2 dir = _mousePos - (Vector2)transform.position;
         if (reloadCheck == false) return;
         currentBulletCount--;
         GameManager.Instance.playerController.OnShootEvent?.Invoke(currentBulletCount, maxBulletCount);
@@ -134,7 +156,7 @@ public abstract class Gun : MonoBehaviour
         reloadCheck = false;
         yield return new WaitForSeconds(reloadTime); //reloadTime만큼 기다렸다가 밑에 코드를 실행
         reloadCheck = true;
-        isReloading = false;
+        _isReloading = false;
         print("장전 끝남");
         currentBulletCount = maxBulletCount;
         GameManager.Instance.playerController.OnShootEvent?.Invoke(currentBulletCount, maxBulletCount);

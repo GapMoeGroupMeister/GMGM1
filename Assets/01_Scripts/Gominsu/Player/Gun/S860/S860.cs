@@ -4,22 +4,6 @@ using UnityEngine;
 
 public class S860 : Gun
 {
-//    1. źâ 2��
-
-//2. źȯ �� 3������(�ִ� 24 ������)
-
-//3. �������� �ҿ� �ð� 3f;
-
-//4. ź�� 1f;
-
-//5. �����Ÿ� 3Ÿ��(Ÿ�ϸ� ����)
-
-//6. �߻� 1 = 8 źȯ
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
     public override void Fire(Vector2 direction)
     {
         
@@ -35,13 +19,5 @@ public class S860 : Gun
         }
             
     }
-    protected override void Reload()
-    {
-        base.Reload();
-    }
-
-    protected override IEnumerator ReloadCoroutine()
-    {
-        return base.ReloadCoroutine();
-    }
+    
 }
