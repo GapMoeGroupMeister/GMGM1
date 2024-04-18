@@ -39,51 +39,47 @@ public class MagazineUI : MonoBehaviour
 
     // 나중에 플레이어쪽 Action<int, int>하나 만들어서 구독 ㄱ
     // 지금은 이쪽에 Action을 달아놓음
-    public event Action<int, int> shootEvent;
-
-    private void Awake()
-    {
-    }
 
     private void Start()
     {
         _gridMaterial = _gridImage.material;
-        shootEvent += Shoot;
+        GameManager.Instance.playerController.OnShootEvent += Shoot;
+        
     }
     private void OnDisable()
     {
-        shootEvent -= shootEvent;
+        GameManager.Instance.playerController.OnShootEvent -= Shoot;
     }
 
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            currentBullet = maxBullet;
-            HandleBulletGaugeRefresh(currentBullet, maxBullet);
-        }
-
-        currentTime += Time.deltaTime;
-        if (Input.GetMouseButton(0))
-        {
-            
-            if (currentTime >= _shootTerm)
-            {
-                
-                currentTime = 0;
-                if (currentBullet <= 0)
-                {
-                    HandleBulletGaugeRefresh(currentBullet, maxBullet);
-                    currentTime = -1;
-                    Shake(_shakePower, _vibrato, _shakeDuration);
-                    return;
-                }
-                currentBullet--;
-
-                shootEvent?.Invoke(currentBullet, maxBullet);
-            }
-        }
+        // if (Input.GetKeyDown(KeyCode.R))
+        // {
+        //     currentBullet = maxBullet;
+        //     HandleBulletGaugeRefresh(currentBullet, maxBullet);
+        // }
+        //
+        // currentTime += Time.deltaTime;
+        // if (Input.GetMouseButton(0))
+        // {
+        //     
+        //     if (currentTime >= _shootTerm)
+        //     {
+        //         
+        //         currentTime = 0;
+        //         if (currentBullet <= 0)
+        //         {
+        //             HandleBulletGaugeRefresh(currentBullet, maxBullet);
+        //             currentTime = -1;
+        //             Shake(_shakePower, _vibrato, _shakeDuration);
+        //             return;
+        //         }
+        //         currentBullet--;
+        //
+        //         shootEvent?.Invoke(currentBullet, maxBullet);
+        //     }
+        // }
     }
 
     [ContextMenu("Debug_shoot")]

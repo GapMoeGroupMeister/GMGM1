@@ -5,17 +5,17 @@ using UnityEngine;
 public class AK47 : Gun
 {
 
-//    1. ÅºÃ¢ 30¹ß
+//    1. íƒ„ì°½ 30ë°œ
 
-//2. ÅºÈ¯ ´ç µ¥¹ÌÁö 10
+//2. íƒ„í™˜ ë‹¹ ë°ë¯¸ì§€ 10
 
-//3. ÀçÀåÀü½Ã ¼Ò¿ä ½Ã°£ 5f;
+//3. ì¬ì¥ì „ì‹œ ì†Œìš” ì‹œê°„ 5f;
 
-//4. Åº¼Ó 1f;
+//4. íƒ„ì† 1f;
 
-//5. »çÁ¤°Å¸® 12Å¸ÀÏ(Å¸ÀÏ¸Ê ±âÁØ)
+//5. ì‚¬ì •ê±°ë¦¬ 12íƒ€ì¼(íƒ€ì¼ë§µ ê¸°ì¤€)
 
-//6. ¹ß»ç 1 = 1 ÅºÈ¯
+//6. ë°œì‚¬ 1 = 1 íƒ„í™˜
     protected override void Awake()
     {
         base.Awake();
@@ -24,18 +24,11 @@ public class AK47 : Gun
 
     public override void Fire(Vector2 direction)
     {
-        if (reloadCheck == false) return;
-        GameObject bullet = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity);
-        bullet.GetComponent<Bullet>().Fire(direction);
-        currentBulletCount--;
-        if (currentBulletCount == 0)
-        {
-            Reload();
-        }
-        bullet.GetComponent<Bullet>().speed = bulletSpeed;
-        bullet.GetComponent<Bullet>().destroyDistance = destroyRange;
+        Bullet bullet = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity);
+        bullet.Fire(direction.normalized);
+        bullet.SetDefault(bulletSpeed, destroyRange);
     }
-    public override void Reload()
+    protected override void Reload()
     {
         base.Reload();
     }
