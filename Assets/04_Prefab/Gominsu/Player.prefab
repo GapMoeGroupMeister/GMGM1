@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8997942961766425115}
   - component: {fileID: 3876479013884972249}
   - component: {fileID: 5095195991932623560}
+  - component: {fileID: 6062416390289312866}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -178,13 +179,24 @@ MonoBehaviour:
   _sitSpeed: 2
   _jumpPower: 10
   inputx: 0
-  gunPrefab:
-  - {fileID: 4235532665382729105, guid: e3a357f0e1473f842b9458ebbefc479b, type: 3}
-  - {fileID: 1487458227804703299, guid: 54a1d1c8f0639744fa10e12c4ce06f51, type: 3}
-  - {fileID: 5763382536376114772, guid: 86a1cead28f4e60429412708865ace28, type: 3}
-  hpBar: {fileID: 0}
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 64
   _ray: 0.7
   isGround: 1
+--- !u!114 &6062416390289312866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3315461583994741468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc96618bb56186f4f8189ff8cafbae36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunPrefab:
+  - {fileID: 4235532665382729105, guid: e3a357f0e1473f842b9458ebbefc479b, type: 3}
+  - {fileID: 5763382536376114772, guid: 86a1cead28f4e60429412708865ace28, type: 3}
+  - {fileID: 1487458227804703299, guid: 54a1d1c8f0639744fa10e12c4ce06f51, type: 3}

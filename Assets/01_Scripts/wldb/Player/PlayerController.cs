@@ -38,9 +38,6 @@ public class PlayerController : MonoBehaviour
     private float inputx;
     private Vector2 mousePos;
 
-    [SerializeField]
-    GameObject[] gunPrefab;
-    GameObject gun1, gun2, gun3;
     
 
     [SerializeField]
@@ -85,8 +82,6 @@ public class PlayerController : MonoBehaviour
         PlayerRoutine();
 
         Flip();
-
-        Gunswap();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -207,39 +202,5 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void Gunswap()
-    {
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Destroy(gun1);
-            gun1 = Instantiate(gunPrefab[0],gameObject.transform);
-            gun1.transform.position = transform.position;
-            Destroy(gun2);
-            Destroy(gun3);
-        }
-        else if(Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Destroy(gun2);
-            gun2 = Instantiate(gunPrefab[1], gameObject.transform);
-            gun2.transform.position = transform.position;
-            Destroy(gun1);
-            Destroy(gun3);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Destroy(gun3);
-            gun3 = Instantiate(gunPrefab[2], gameObject.transform);
-            gun3.transform.position = transform.position;
-            Destroy(gun1);
-            Destroy(gun2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-
-        }
-
-
-
-    }
+    
 }
