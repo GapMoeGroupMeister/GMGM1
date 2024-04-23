@@ -38,8 +38,8 @@ public class PlayerController : MonoBehaviour
     private float inputx;
     private Vector2 mousePos;
 
-    
-
+    [SerializeField]
+    private GameObject _gameOverUI;
     [SerializeField]
     private LayerMask _whatIsGround;
     [SerializeField]
@@ -99,10 +99,11 @@ public class PlayerController : MonoBehaviour
         if (currentHp <= 0)
         {
             Destroy(gameObject);
-            
+            _gameOverUI.SetActive(true);
+            Time.timeScale = 0;
         }
-        
     }
+
 
     //private void UseHeal()
     //{
