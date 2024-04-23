@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyTest : MonoBehaviour
+public class EnemyTestBomb : MonoBehaviour
 {
 
     public EnemyWeapon guns;
