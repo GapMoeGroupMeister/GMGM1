@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2792823936986413084}
   - component: {fileID: 6601206764831165324}
-  - component: {fileID: 4938841036179718612}
   - component: {fileID: 7039100511227591052}
   - component: {fileID: -8356203140924021825}
   m_Layer: 7
@@ -88,20 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4938841036179718612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4235532665382729105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d52983eab32a88479bece70472940a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guns: {fileID: 7039100511227591052}
-  knife: {fileID: -8356203140924021825}
 --- !u!114 &7039100511227591052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,6 +103,7 @@ MonoBehaviour:
   reloadCheck: 1
   maxBulletCount: 0
   currentBulletCount: 0
+  isContinueFire: 0
   fireDelay: 0
   reloadTime: 0
   bulletSpeed: 0

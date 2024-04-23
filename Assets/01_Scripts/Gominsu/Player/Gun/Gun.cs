@@ -31,13 +31,13 @@ public abstract class Gun : MonoBehaviour
     public Transform gunTip;//총구 위치
     
     
-    private Vector2 _mousePos;//마우스 위치
-    private PlayerController _player;
-    private bool _isReloading;
+    public Vector2 _mousePos;//마우스 위치
+    public PlayerController _player;
+    public bool _isReloading;
 
     
     public abstract void Fire(Vector2 direction);
-    private float _currentTime = 0;
+    public float _currentTime = 0;
     
 
     protected virtual void Awake()
@@ -61,91 +61,91 @@ public abstract class Gun : MonoBehaviour
         _player = GameManager.Instance.playerController;
     }
 
-    protected virtual void Update()
-    {
-        _currentTime += Time.deltaTime;
-        _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//마우스 위치를 월드 좌표로 변환
-        Rotate();
+    //protected virtual void Update()
+    //{
+    //    _currentTime += Time.deltaTime;
+    //    _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//마우스 위치를 월드 좌표로 변환
+    //    Rotate();
 
-        GunInput();
-        GunRender();
-    }
+    //    GunInput();
+    //    GunRender();
+    //}
 
-    private void GunRender()
-    {
-        if (_player.transform.position.x > _mousePos.x)   
-        {
-            transform.position = new Vector3(_player.transform.position.x + -0.7f, _player.transform.position.y, 0);
-        }
-        else
-        {
-            transform.position = new Vector3(_player.transform.position.x + 0.7f, _player.transform.position.y, 0);
-        }
-    }
+    //private void GunRender()
+    //{
+    //    if (_player.transform.position.x > _mousePos.x)   
+    //    {
+    //        transform.position = new Vector3(_player.transform.position.x + -0.7f, _player.transform.position.y, 0);
+    //    }
+    //    else
+    //    {
+    //        transform.position = new Vector3(_player.transform.position.x + 0.7f, _player.transform.position.y, 0);
+    //    }
+    //}
     
 
-    private void GunInput()
-    {
-        if (currentBulletCount <= 0 && !_isReloading)
-        {
-            _isReloading = true;
-            Reload();
-        }
-        if (Input.GetMouseButtonDown(1))//우클릭
-        {
-            //knife.Slash();
-        }
+    //private void GunInput()
+    //{
+    //    if (currentBulletCount <= 0 && !_isReloading)
+    //    {
+    //        _isReloading = true;
+    //        Reload();
+    //    }
+    //    if (Input.GetMouseButtonDown(1))//우클릭
+    //    {
+    //        //knife.Slash();
+    //    }
         
-        if (!IsCoolTime)
-        {
-             return;      
-        }
-        if (isContinueFire)
-        {
-            if (Input.GetMouseButton(0))//좌클릭 홀드
-            {
-                _currentTime = 0;
+    //    if (!IsCoolTime)
+    //    {
+    //         return;      
+    //    }
+    //    if (isContinueFire)
+    //    {
+    //        if (Input.GetMouseButton(0))//좌클릭 홀드
+    //        {
+    //            _currentTime = 0;
                
-                FireHandler();
+    //            FireHandler();
                 
-            }
-        }
-        else
-        {
+    //        }
+    //    }
+    //    else
+    //    {
             
-            if (Input.GetMouseButtonDown(0))//좌클릭
-            {
-                _currentTime = 0;
+    //        if (Input.GetMouseButtonDown(0))//좌클릭
+    //        {
+    //            _currentTime = 0;
                
-                FireHandler();
-            }
-        }
+    //            FireHandler();
+    //        }
+    //    }
         
-    }
+    //}
     
-    protected virtual void Reload()
+    public virtual void Reload()
     {
         StartCoroutine(ReloadCoroutine());
     }
     
-    protected void Rotate()
-    {
-        Vector2 dir = (_mousePos - (Vector2)transform.position).normalized;
+    //protected void Rotate()
+    //{
+    //    Vector2 dir = (_mousePos - (Vector2)transform.position).normalized;
 
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+    //    float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
-    }
+    //    transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+    //}
 
-    protected void FireHandler()
-    {
-        Vector2 dir = _mousePos - (Vector2)transform.position;
-        if (reloadCheck == false) return;
-        currentBulletCount--;
-        GameManager.Instance.playerController.OnShootEvent?.Invoke(currentBulletCount, maxBulletCount);
+    //protected void FireHandler()
+    //{
+    //    Vector2 dir = _mousePos - (Vector2)transform.position;
+    //    if (reloadCheck == false) return;
+    //    currentBulletCount--;
+    //    GameManager.Instance.playerController.OnShootEvent?.Invoke(currentBulletCount, maxBulletCount);
         
-        Fire(dir.normalized);
-    }
+    //    Fire(dir.normalized);
+    //}
 
    
 
