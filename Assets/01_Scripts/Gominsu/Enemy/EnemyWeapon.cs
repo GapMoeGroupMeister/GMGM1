@@ -28,8 +28,11 @@ public abstract class EnemyWeapon : MonoBehaviour
     public Transform gunTip;//ÃÑ±¸ À§Ä¡
     public abstract void Fire(Vector2 direction);
 
+    public GameObject _player;
+
     protected virtual void Awake()
     {
+        _player = GameObject.Find("Player");
         gunTip = transform.Find("GunTip");//ÃÑ±¸ÀÇÄ¡ ¹Þ¾Æ¿È
         fireDelay = enemyWeaponSO.fireDelay;
         damage = enemyWeaponSO.damage;

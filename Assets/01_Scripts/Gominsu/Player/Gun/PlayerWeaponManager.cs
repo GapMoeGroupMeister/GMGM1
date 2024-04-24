@@ -7,37 +7,89 @@ public class PlayerWeaponManager : MonoBehaviour
 
     [SerializeField]
     GameObject[] gunPrefab;
-    GameObject gun1, gun2, gun3;
+    public GameObject gun;
 
+    Gun _gun;
+
+    
+
+    public GameObject CurrentGun;
+
+    bool changeCheck = false;
+
+    int _gunPrefab = 0;
+    int a = 0;
+
+    CurrentGunUI currentGunUI;
+
+    private void Awake()
+    {
+       
+       
+        currentGunUI = FindObjectOfType<CurrentGunUI>();
+        
+    }
     private void Update()
     {
+        
         ChnageWeapon();
+        
+            
     }
     void ChnageWeapon()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Destroy(gun1);
-            gun1 = Instantiate(gunPrefab[0], gameObject.transform);
-            gun1.transform.position = transform.position;
-            Destroy(gun2);
-            Destroy(gun3);
+            a = 1;
+            _gunPrefab = 0;
+            InputCheck();
+            
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            Destroy(gun2);
-            gun2 = Instantiate(gunPrefab[1], gameObject.transform);
-            gun2.transform.position = transform.position;
-            Destroy(gun1);
-            Destroy(gun3);
+            a = 2;
+            _gunPrefab = 1;
+            InputCheck();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            Destroy(gun3);
-            gun3 = Instantiate(gunPrefab[2], gameObject.transform);
-            gun3.transform.position = transform.position;
-            Destroy(gun1);
-            Destroy(gun2);
+            a = 3;
+            _gunPrefab = 2;
+            InputCheck();
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            if (changeCheck)
+                return;
+            StartCoroutine("ChangeCheck");
+            Destroy(gun);
+            currentGunUI.i = 0;
+        }
+    }
+
+    void InputCheck()
+    {
+        
+        if (changeCheck)    
+            return;
+        if(_gun != null && _gun._isReloading)
+            return;
+        StartCoroutine("ChangeCheck");
+        Destroy(gun);
+        gun = Instantiate(gunPrefab[_gunPrefab], gameObject.transform);
+        gun.transform.position = transform.position;
+        
+        
+        CurrentGun = gun;
+        currentGunUI.i = a;
+        _gun = FindObjectOfType<Gun>();
+        GameManager.Instance.RefreshBullet(_gun.currentBulletCount, _gun.maxBulletCount);
+    }
+
+    IEnumerator ChangeCheck()
+    {
+        changeCheck = true;
+        yield return new WaitForSeconds(0.5f);
+        changeCheck = false;
     }
 }
