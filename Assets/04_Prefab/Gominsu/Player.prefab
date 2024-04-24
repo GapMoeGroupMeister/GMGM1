@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3876479013884972249}
   - component: {fileID: 5095195991932623560}
   - component: {fileID: 6062416390289312866}
+  - component: {fileID: 5914022392950667310}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -179,6 +180,7 @@ MonoBehaviour:
   _sitSpeed: 2
   _jumpPower: 10
   inputx: 0
+  _gameOverUI: {fileID: 0}
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 64
@@ -200,3 +202,24 @@ MonoBehaviour:
   - {fileID: 4235532665382729105, guid: e3a357f0e1473f842b9458ebbefc479b, type: 3}
   - {fileID: 5763382536376114772, guid: 86a1cead28f4e60429412708865ace28, type: 3}
   - {fileID: 1487458227804703299, guid: 54a1d1c8f0639744fa10e12c4ce06f51, type: 3}
+--- !u!95 &5914022392950667310
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3315461583994741468}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2299939449ae35448a3f463b1e1a91b8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
