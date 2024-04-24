@@ -44,6 +44,7 @@ public class Enemy : MonoBehaviour
     private float _directionMoveDistance = 6;
     private Vector2 moveRange;   
     private Direction _direction = Direction.Left;
+
     private Gun gun;
     private float gunFireDelay = 0;
     
@@ -149,13 +150,13 @@ public class Enemy : MonoBehaviour
     private void OnUpdateRoaming()
     {
         Transform tr = transform;
-        // ÇöÀç ¿¡³Ê¹ÌÀÇ À§Ä¡¸¦ ¾ò¾î¿È
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Vector2 currentPosition = tr.position;
         Vector2 currentPosition2 = tr.position + new Vector3(0, -0.1f);
-        // ÇöÀç ¹æÇâ°ª ¼³Á¤
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â°ª ï¿½ï¿½ï¿½ï¿½
         float dir = _direction == Direction.Left ? -1f : 1f;
 
-        // ÇÃ·¹ÀÌ¾î°¡ ½Ã¾ß °Å¸® ¾È¿¡ ÀÖÀ½
+        // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Ã¾ï¿½ ï¿½Å¸ï¿½ ï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½
         float playerDistance = Vector3.Distance(player.transform.position, transform.position);
         playerInSight = playerDistance <= _sight;
         
@@ -164,7 +165,7 @@ public class Enemy : MonoBehaviour
             float playerDir = player.transform.position.x > transform.position.x ? 1 : -1;
             RaycastHit2D hit = Physics2D.Raycast(currentPosition2, new Vector2(playerDir, 0), _sight, _wallLayer);
             if (hit.collider != null)
-            {   // ½Ã¾ß ¾È¿¡ ÀÖ´Âµ¥ º®¿¡ °¡·Á ÀÖÀ½
+            {   // ï¿½Ã¾ï¿½ ï¿½È¿ï¿½ ï¿½Ö´Âµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 float wallDistance = Vector3.Distance(hit.collider.transform.position, transform.position);
 
                 if( wallDistance < playerDistance ) 
@@ -192,12 +193,12 @@ public class Enemy : MonoBehaviour
 
         float move = dir * _moveSpeed * Time.deltaTime;
 
-        // ÇØ´ç ¹æÇâÀ¸·Î ÀÌµ¿
+        // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
         currentPosition.x += move;
-        // ÀÌµ¿ °ª Àû¿ë
+        // ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         tr.position = currentPosition;
 
-        // ÁöÁ¤µÈ °Å¸® ¸¸Å­ ÇØ´ç ¹æÇâÀ¸·Î ÀÌµ¿
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½Å­ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
         if (currentPosition.x <= moveRange.x || currentPosition.x >= moveRange.y)
         {
             ChangeDirection();
@@ -207,14 +208,14 @@ public class Enemy : MonoBehaviour
     private void OnUpdateAttack()
     {
         Transform tr = transform;
-        // ÇöÀç ¿¡³Ê¹ÌÀÇ À§Ä¡¸¦ ¾ò¾î¿È
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Vector2 currentPosition = tr.position;
         Vector2 currentPosition2 = tr.position + new Vector3(0, -0.1f);
-        // ÇöÀç ¹æÇâ°ª ¼³Á¤
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â°ª ï¿½ï¿½ï¿½ï¿½
         float dir = _direction == Direction.Left ? -1f : 1f;
 
         float playerDistance = Vector3.Distance(player.transform.position, transform.position);
-        // ÇÃ·¹ÀÌ¾î°¡ ½Ã¾ß ¹ÛÀ¸·Î ³ª°¨
+        // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Ã¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (playerDistance > _sight)
         {
             OnEnterState(EnemyState.Roaming);
@@ -225,7 +226,7 @@ public class Enemy : MonoBehaviour
     }
 
     private float ChangeDirection()
-    {        
+    {
         _direction = _direction == Direction.Left ? Direction.Right : Direction.Left;
         return _direction == Direction.Left ? -1 : 1;
     }
@@ -273,4 +274,6 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    
 }
