@@ -8,56 +8,51 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField]
     GameObject[] gunPrefab;
     public GameObject gun;
-
-    Gun _gun;
-
-    
-
     public GameObject CurrentGun;
-
+    public Gun _gun;
+    PlayerInput _playerInput;
     bool changeCheck = false;
-
     int _gunPrefab = 0;
-    int a = 0;
+    int currentGun = 0;
 
     CurrentGunUI currentGunUI;
 
     private void Awake()
     {
-       
-       
         currentGunUI = FindObjectOfType<CurrentGunUI>();
-        
+        _playerInput = FindObjectOfType<PlayerInput>();
+    }
+
+    private void Start()
+    {
+        _playerInput.OnChangeGun += ChnageWeapon;
     }
     private void Update()
     {
-        
-        ChnageWeapon();
-        
-            
+
     }
-    void ChnageWeapon()
+    void ChnageWeapon(bool _1,bool _2,bool _3,bool _4)
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (_1)
         {
-            a = 1;
+            currentGun = 1;
             _gunPrefab = 0;
             InputCheck();
             
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (_2)
         {
-            a = 2;
+            currentGun = 2;
             _gunPrefab = 1;
             InputCheck();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (_3)
         {
-            a = 3;
+            currentGun = 3;
             _gunPrefab = 2;
             InputCheck();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        else if (_4)
         {
             if (changeCheck)
                 return;
@@ -81,7 +76,7 @@ public class PlayerWeaponManager : MonoBehaviour
         
         
         CurrentGun = gun;
-        currentGunUI.i = a;
+        currentGunUI.i = currentGun;
         _gun = FindObjectOfType<Gun>();
         GameManager.Instance.RefreshBullet(_gun.currentBulletCount, _gun.maxBulletCount);
     }

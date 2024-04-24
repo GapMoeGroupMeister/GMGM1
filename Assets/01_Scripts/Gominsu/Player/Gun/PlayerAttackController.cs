@@ -8,9 +8,18 @@ public class PlayerAttackController : MonoBehaviour
     [SerializeField]
     PlayerWeaponManager weaponManager;
 
+    private PlayerInput _playerInput;
+
     private void Awake()
     {
+        
+        _playerInput = GetComponent<PlayerInput>();
         weaponManager = GetComponent<PlayerWeaponManager>();
+    }
+
+    private void Start()
+    {
+        _playerInput.OnMouseClick += GunInput;
     }
     protected virtual void Update()
     {
@@ -21,7 +30,6 @@ public class PlayerAttackController : MonoBehaviour
         gun._currentTime += Time.deltaTime;
         gun._mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//¸¶¿ì½º À§Ä¡¸¦ ¿ùµå ÁÂÇ¥·Î º¯È¯
         Rotate();
-        GunInput();
         GunRender();
         }
     }
@@ -36,36 +44,39 @@ public class PlayerAttackController : MonoBehaviour
             gun.transform.position = new Vector3(transform.position.x + 0.7f, transform.position.y, 0);
         }
     }
-    private void GunInput()
+    private void GunInput(bool Mouse0,bool MouseDown0,bool Mouse1)
     {
-        if (gun.currentBulletCount <= 0 && !gun._isReloading)
+        if (gun != null) 
         {
-            gun._isReloading = true;
-            gun.Reload();
-        }
-        if (Input.GetMouseButtonDown(1))//¿ìÅ¬¸¯
-        {
-            //knife.Slash();
-        }
-        if (!gun.IsCoolTime)
-        {
-            return;
-        }
-        if (gun.isContinueFire)
-        {
-            if (Input.GetMouseButton(0))//ÁÂÅ¬¸¯ È¦µå
+            if (gun.currentBulletCount <= 0 && !gun._isReloading)
             {
-                gun._currentTime = 0;
-                FireHandler();
+                gun._isReloading = true;
+                gun.Reload();
             }
-        }
-        else
-        {
-            if (Input.GetMouseButtonDown(0))//ÁÂÅ¬¸¯
+            if (Mouse1)//¿ìÅ¬¸¯
             {
-                gun._currentTime = 0;
-                FireHandler();
+                //knife.Slash();
             }
+            if (!gun.IsCoolTime)
+            {
+                return;
+            }
+            if (gun.isContinueFire)
+            {
+                if (MouseDown0)//ÁÂÅ¬¸¯ È¦µå
+                {
+                    gun._currentTime = 0;
+                    FireHandler();
+                }
+            }
+            else
+            {
+                if (Mouse0)//ÁÂÅ¬¸¯
+                {
+                    gun._currentTime = 0;
+                    FireHandler();
+                }
+            } 
         }
     }
     protected void Rotate()
