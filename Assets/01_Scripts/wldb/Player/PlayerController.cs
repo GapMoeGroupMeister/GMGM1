@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rigid;  // Rigidbody ???
     private SpriteRenderer SpriteRenderer;
     private Animator _anim;
+    private PlayerInput _playerInput;
 
     private Gun _currentGun;
     public Gun CurrentGun { get; private set; }
@@ -57,6 +58,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        _playerInput = GetComponent<PlayerInput>();
         _rigid = GetComponent<Rigidbody2D>(); // Rigidbody????? Rigidbody2D ??????? ???
         SpriteRenderer = GetComponent<SpriteRenderer>();
         _currentGun = GetComponentInChildren<Gun>();
@@ -64,10 +66,15 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Start()
-    {   
-        
-        
+    {
+        _playerInput.OnMoveMentEvent += InputKey;
+
     }
+
+    //private void OnDisable()
+    //{
+    //    _playerInput.OnMoveMentEvent -= InputKey;
+    //}
 
     [ContextMenu("DebugRefreshHealth")]
     public void RefreshHealth()
@@ -77,7 +84,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        InputKey();
+        
         CheckGround();
         CheckMove();
         CheckAnim();
@@ -125,20 +132,21 @@ public class PlayerController : MonoBehaviour
 
     private void CheckMove()
     {
-        inputx = (Input.GetAxisRaw("Horizontal")); // inputx?? ?????? ?? ??????
+         // inputx?? ?????? ?? ??????
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
-    private void InputKey()
+    private void InputKey(float x, bool LeftShift, bool LeftControl,bool Space)
     {
         currentState = PlayerState.Idle;
-        if (inputx != 0)
+        if (x != 0)
         {
             currentState = PlayerState.Walk;
+            inputx = x;
         }
 
 
-        if (Input.GetKey(KeyCode.LeftShift)) 
+        if (LeftShift && isGround) 
         {
             if (currentState == PlayerState.Walk)
             {
@@ -148,7 +156,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (Input.GetKey(KeyCode.LeftControl)) 
+        if (LeftControl) 
         {
             currentState = PlayerState.Sit;
             _anim.SetBool("PlayerSit", true);
@@ -156,7 +164,7 @@ public class PlayerController : MonoBehaviour
         
 
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Space)
         {
             if (isGround)
             {
