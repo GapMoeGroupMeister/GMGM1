@@ -6,35 +6,14 @@ using UnityEngine.UI;
 public class CurrentGunUI : MonoBehaviour
 {
     [SerializeField] private Image _image;
-
-    int i = 0;
     [SerializeField] private CurrentGunSO[] currentGunSO;
+    public int i = 0;
+    
 
-    private void OnValidate()
+    protected virtual void Update()
     {
-        if (currentGunSO[i] != null)
-        {
-            _image.sprite = currentGunSO[i].image;
-        }
+        _image.sprite = currentGunSO[i].image;
     }
-    private void Update()
-    {
-        ChangeGun();
-    }
-    void ChangeGun()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            i = 0;
-        }
-        else if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            i = 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            i = 2;
-        }
-    }
+   
 }
 

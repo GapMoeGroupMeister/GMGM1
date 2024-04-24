@@ -6742,7 +6742,7 @@ RectTransform:
   m_GameObject: {fileID: 1559207997}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.3596087, y: 1.6197944, z: 2.0678313}
+  m_LocalScale: {x: 5.436544, y: 2.1424062, z: 2.344217}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 663763675}
@@ -6766,9 +6766,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _image: {fileID: 1559208000}
   currentGunSO:
+  - {fileID: 11400000, guid: b820303d52345e042935d942e2d8b2e1, type: 2}
   - {fileID: 11400000, guid: 4e1e84bc79e336a40951c33f0876cf51, type: 2}
-  - {fileID: 11400000, guid: a6e2c351550cf2c45bf42796269789fa, type: 2}
   - {fileID: 11400000, guid: a1aa7ab9bd491774bb1daa45ba1be9e7, type: 2}
+  - {fileID: 11400000, guid: a6e2c351550cf2c45bf42796269789fa, type: 2}
+  i: 0
 --- !u!114 &1559208000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6789,7 +6791,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300044, guid: 6674e8c43c63e4f4184cbd009379498d, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -12,7 +12,6 @@ public class PlayerAttackController : MonoBehaviour
     {
         weaponManager = GetComponent<PlayerWeaponManager>();
     }
-
     protected virtual void Update()
     {
         if (weaponManager.CurrentGun != null)
@@ -22,12 +21,10 @@ public class PlayerAttackController : MonoBehaviour
         gun._currentTime += Time.deltaTime;
         gun._mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//¸¶¿ì½º À§Ä¡¸¦ ¿ùµå ÁÂÇ¥·Î º¯È¯
         Rotate();
-
         GunInput();
         GunRender();
         }
     }
-
     private void GunRender()
     {
         if (gun._player.transform.position.x > gun._mousePos.x)
@@ -39,8 +36,6 @@ public class PlayerAttackController : MonoBehaviour
             gun.transform.position = new Vector3(transform.position.x + 0.7f, transform.position.y, 0);
         }
     }
-
-
     private void GunInput()
     {
         if (gun.currentBulletCount <= 0 && !gun._isReloading)
@@ -52,7 +47,6 @@ public class PlayerAttackController : MonoBehaviour
         {
             //knife.Slash();
         }
-
         if (!gun.IsCoolTime)
         {
             return;
@@ -62,30 +56,22 @@ public class PlayerAttackController : MonoBehaviour
             if (Input.GetMouseButton(0))//ÁÂÅ¬¸¯ È¦µå
             {
                 gun._currentTime = 0;
-
                 FireHandler();
-
             }
         }
         else
         {
-
             if (Input.GetMouseButtonDown(0))//ÁÂÅ¬¸¯
             {
                 gun._currentTime = 0;
-
                 FireHandler();
             }
         }
-
     }
-
     protected void Rotate()
     {
         Vector2 dir = (gun._mousePos - (Vector2)transform.position).normalized;
-
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-
         gun.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
     }
 
@@ -95,7 +81,6 @@ public class PlayerAttackController : MonoBehaviour
         if (gun.reloadCheck == false) return;
         gun.currentBulletCount--;
         GameManager.Instance.playerController.OnShootEvent?.Invoke(gun.currentBulletCount, gun.maxBulletCount);
-
         gun.Fire(dir.normalized);
     }
 }
