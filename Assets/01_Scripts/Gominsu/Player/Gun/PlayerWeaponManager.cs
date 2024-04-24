@@ -9,6 +9,10 @@ public class PlayerWeaponManager : MonoBehaviour
     GameObject[] gunPrefab;
     public GameObject gun;
 
+    Gun _gun;
+
+    
+
     public GameObject CurrentGun;
 
     bool changeCheck = false;
@@ -20,12 +24,17 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void Awake()
     {
-
+       
+       
         currentGunUI = FindObjectOfType<CurrentGunUI>();
+        
     }
     private void Update()
     {
+        
         ChnageWeapon();
+        
+            
     }
     void ChnageWeapon()
     {
@@ -34,6 +43,7 @@ public class PlayerWeaponManager : MonoBehaviour
             a = 1;
             _gunPrefab = 0;
             InputCheck();
+            
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -59,20 +69,27 @@ public class PlayerWeaponManager : MonoBehaviour
 
     void InputCheck()
     {
-        if (changeCheck)
+        
+        if (changeCheck)    
+            return;
+        if(_gun != null && _gun._isReloading)
             return;
         StartCoroutine("ChangeCheck");
         Destroy(gun);
         gun = Instantiate(gunPrefab[_gunPrefab], gameObject.transform);
         gun.transform.position = transform.position;
+        
+        
         CurrentGun = gun;
         currentGunUI.i = a;
+        _gun = FindObjectOfType<Gun>();
+        GameManager.Instance.RefreshBullet(_gun.currentBulletCount, _gun.maxBulletCount);
     }
 
     IEnumerator ChangeCheck()
     {
         changeCheck = true;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(0.5f);
         changeCheck = false;
     }
 }

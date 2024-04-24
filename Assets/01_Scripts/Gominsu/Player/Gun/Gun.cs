@@ -33,7 +33,7 @@ public abstract class Gun : MonoBehaviour
     
     public Vector2 _mousePos;//마우스 위치
     public PlayerController _player;
-    public bool _isReloading;
+    public bool _isReloading = false;
 
     
     public abstract void Fire(Vector2 direction);

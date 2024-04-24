@@ -44,11 +44,14 @@ public class MagazineUI : MonoBehaviour
     {
         _gridMaterial = _gridImage.material;
         GameManager.Instance.playerController.OnShootEvent += Shoot;
-        
+        GameManager.Instance.OnGunRefreshEvent += HandleBulletGaugeRefresh;
+
+
     }
     private void OnDisable()
     {
         GameManager.Instance.playerController.OnShootEvent -= Shoot;
+        GameManager.Instance.OnGunRefreshEvent -= HandleBulletGaugeRefresh;
     }
 
     private void Update()
