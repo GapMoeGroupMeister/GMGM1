@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D _rigid;  // Rigidbody ???
     private SpriteRenderer SpriteRenderer;
+    private Animator _anim;
 
     private Gun _currentGun;
     public Gun CurrentGun { get; private set; }
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour
         _rigid = GetComponent<Rigidbody2D>(); // Rigidbody????? Rigidbody2D ??????? ???
         SpriteRenderer = GetComponent<SpriteRenderer>();
         _currentGun = GetComponentInChildren<Gun>();
+        _anim = GetComponent<Animator>();
     }
 
     private void Start()
@@ -78,6 +80,7 @@ public class PlayerController : MonoBehaviour
         InputKey();
         CheckGround();
         CheckMove();
+        CheckAnim();
 
         PlayerRoutine();
 
@@ -105,13 +108,15 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    //private void UseHeal()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.C))
-    //    {
-    //        currentHp += 10;
-    //    }
-    //}
+    public void UseHeal(int amount)
+    {
+        currentHp += amount;
+    }
+
+    private void CheckAnim()
+    {
+        _anim.SetBool("PlayerWalk", inputx != 0 ? true : false);
+    }
 
     private void CheckGround()
     {
@@ -132,36 +137,32 @@ public class PlayerController : MonoBehaviour
             currentState = PlayerState.Walk;
         }
 
+
         if (Input.GetKey(KeyCode.LeftShift)) 
         {
             if (currentState == PlayerState.Walk)
             {
                 currentState = PlayerState.Run;
-            }
-            
+                _anim.SetBool("PlayerRun", true);
+            }     
         }
+
 
         if (Input.GetKey(KeyCode.LeftControl)) 
         {
             currentState = PlayerState.Sit;
-
+            _anim.SetBool("PlayerSit", true);
         }
+        
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGround)
             {
                 _rigid.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-
             }
         }
-
-        //if (Input.GetKeyDown(KeyCode.C))
-        //{
-            
-        //}
-
-        
     }
     
 
@@ -177,7 +178,7 @@ public class PlayerController : MonoBehaviour
         switch (currentState)
         {
             case PlayerState.Idle:
-                
+
                 break;
 
             case PlayerState.Walk:
