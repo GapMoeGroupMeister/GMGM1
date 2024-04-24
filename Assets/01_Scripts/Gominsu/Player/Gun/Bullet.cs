@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        transform.position += direction * speed * Time.deltaTime;
+        transform.position += Direction * speed * Time.deltaTime;
 
         if(Vector2.Distance(gunTipPosition, transform.position) > destroyDistance)//만약 Vector2.Distance가 destroyDistance보다 크다면 총알을 삭제
         {                                                                             //   ㄴ얘는 transform.position - guntip(현재 이동한 거리)이다
@@ -35,16 +35,12 @@ public class Bullet : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if( isPlayer )
+    {   
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            if (collision.gameObject.CompareTag("Enemy"))
-            {
-                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-                enemy.Damage(damage);
-            }
-        }
-        
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            enemy.Damage(damage);
+        }        
         Destroy(gameObject);
     }
 }

@@ -33,9 +33,10 @@ public abstract class Gun : MonoBehaviour
     
     private Vector2 _mousePos;//마우스 위치
     private PlayerController _player;
-    private bool _isReloading;
+    private bool _isReloading;    
 
-    
+    public string ReloadString => _isReloading ? " - Reload" : string.Empty;
+
     public abstract void Fire(Vector2 direction);
     private float _currentTime = 0;
     
