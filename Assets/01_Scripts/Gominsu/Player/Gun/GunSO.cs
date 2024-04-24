@@ -7,18 +7,21 @@ using UnityEngine;
 public class GunSO : ScriptableObject
 {
 
-    public int damage = 0;//µ¥¹ÌÁö
+    public int damage = 0;//ë°ë¯¸ì§€
 
-    public int maxBulletCount = 0;//ÃÑÅº¼ö
+    public int maxBulletCount = 0;//ì´íƒ„ìˆ˜
 
-    public float fireDelay;//¿¬»ç ¼Óµµ
+    public float fireDelay;//ì—°ì‚¬ ì†ë„
 
-    public float reloadTime;//ÀçÀåÀü ½Ã°£
+    public float reloadTime;//ì¬ì¥ì „ ì‹œê°„
 
-    public float bulletSpeed;//ÃÑ¾Ë ½ºÇÇµå
+    public bool isContinueFire;
+    
+    public float bulletSpeed;//ì´ì•Œ ìŠ¤í”¼ë“œ
 
-    public float destroyRange;//»çÁ¤°Å¸®
+    public float destroyRange;//ì‚¬ì •ê±°ë¦¬
 
-    public GameObject bulletPrefab;//ÃÑ¾ó ÇÁ¸®Æé
+    public Bullet bulletPrefab;//ì´ì•Œ í”„ë¦¬íŒ¹
+    
 
 }

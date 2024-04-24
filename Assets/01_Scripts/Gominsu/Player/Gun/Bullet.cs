@@ -11,20 +11,27 @@ public class Bullet : MonoBehaviour
     public float destroyDistance = 10;
 
 
-    public Vector3 Direction;//ÃÑ¾Ë ¹æÇâ
+    public Vector3 Direction;//ì´ì•Œ ë°©í–¥
 
+    public void SetDefault(float speed, float destroyDistance)
+    {
+        this.speed = speed;
+        this.destroyDistance = destroyDistance;
+
+    }
+    
     public void Fire(Vector2 dir)
     {
         Direction = dir;
-        gunTipPosition = transform.position;//½ò¶§ ´ç½ÃÀÇ ÀÚ½ÅÀÇ À§Ä¡ = ÃÑ±¸ÀÇ À§Ä¡ 
+        gunTipPosition = transform.position;//ì ë•Œ ë‹¹ì‹œì˜ ìì‹ ì˜ ìœ„ì¹˜ = ì´êµ¬ì˜ ìœ„ì¹˜ 
     }
 
     private void Update()
     {
         transform.position += Direction * speed * Time.deltaTime;
 
-        if(Vector2.Distance(gunTipPosition, transform.position) > destroyDistance)//¸¸¾à Vector2.Distance°¡ destroyDistanceº¸´Ù Å©´Ù¸é ÃÑ¾ËÀ» »èÁ¦
-        {                                                                             //   ¤¤¾ê´Â transform.position - guntip(ÇöÀç ÀÌµ¿ÇÑ °Å¸®)ÀÌ´Ù
+        if(Vector2.Distance(gunTipPosition, transform.position) > destroyDistance)//ë§Œì•½ Vector2.Distanceê°€ destroyDistanceë³´ë‹¤ í¬ë‹¤ë©´ ì´ì•Œì„ ì‚­ì œ
+        {                                                                             //   ã„´ì–˜ëŠ” transform.position - guntip(í˜„ì¬ ì´ë™í•œ ê±°ë¦¬)ì´ë‹¤
             Destroy(gameObject);
         }
 

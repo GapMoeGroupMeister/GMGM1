@@ -38,7 +38,7 @@ public class CameraControlTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent<test>(out test player))
+        if (other.TryGetComponent<PlayerController>(out PlayerController player))
         {
             if (inspectorObj.panCameraOnContact)
             {
@@ -49,7 +49,7 @@ public class CameraControlTrigger : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.TryGetComponent<test>(out test player))
+        if (other.TryGetComponent<PlayerController>(out PlayerController player))
         {
             if (inspectorObj.panCameraOnContact)
             {
