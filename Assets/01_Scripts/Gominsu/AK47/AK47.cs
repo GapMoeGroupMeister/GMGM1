@@ -26,15 +26,15 @@ public class AK47 : Gun
     {
         if (reloadCheck == false) return;
         GameObject bullet = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity);
-        bullet.GetComponent<Bullet>().Fire(direction);
+
+        bullet.GetComponent<Bullet>().Fire(direction, damage, bulletSpeed, destroyRange, isPlayer);
         currentBulletCount--;
         if (currentBulletCount == 0)
         {
             Reload();
-        }
-        bullet.GetComponent<Bullet>().speed = bulletSpeed;
-        bullet.GetComponent<Bullet>().destroyDistance = destroyRange;
+        }        
     }
+
     public override void Reload()
     {
         base.Reload();

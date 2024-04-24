@@ -36,11 +36,7 @@ public class S860 : Gun
 
             Bullet bullet_clone = bullet.GetComponent<Bullet>();
 
-            bullet_clone.Fire(direction);
-            
-
-            bullet_clone.speed = bulletSpeed;
-            bullet_clone.destroyDistance = Random.Range(3f, 5f);
+            bullet_clone.Fire(direction, damage, bulletSpeed, Random.Range(3f, 5f), isPlayer);
         }
             
     }

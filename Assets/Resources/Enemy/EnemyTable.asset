@@ -20,7 +20,10 @@ MonoBehaviour:
     enemy_Weapon: "\uCEF4\uBC43 \uB098\uC774\uD504"
     enemy_HP: 150
     enemy_RoamingRange: 5
-    enemy_MoveSpeed: 5
+    enemy_MoveSpeed: 3
+    enemy_Sight: 4
+    enemy_WallSight: 1
+    gunPrefab: {fileID: 7039100511227591052, guid: e3a357f0e1473f842b9458ebbefc479b, type: 3}
   - code: 1
     enemy_Name: "\uACBD\uD638\uC6D0"
     spriteName: Enemy_NearGuard
@@ -29,3 +32,6 @@ MonoBehaviour:
     enemy_HP: 100
     enemy_RoamingRange: 5
     enemy_MoveSpeed: 2
+    enemy_Sight: 3
+    enemy_WallSight: 0.7
+    gunPrefab: {fileID: 5641954817059579500, guid: 54a1d1c8f0639744fa10e12c4ce06f51, type: 3}

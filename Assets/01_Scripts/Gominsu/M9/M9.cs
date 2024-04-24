@@ -25,15 +25,16 @@ public class M9 : Gun
     {
         if (reloadCheck == false) return;//재장전 중이라면 아래코드들 실행안함
         //총알의 방향 마우스 위치로 설정
-        GameObject bullet = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity);
-        bullet.GetComponent<Bullet>().Fire(direction);
+        GameObject bulletGameObject = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity);
+        Bullet bullet = bulletGameObject.GetComponent<Bullet>();
+        
+        bullet.Fire(direction, damage, bulletSpeed, destroyRange, isPlayer);
+
         currentBulletCount--;
         if (currentBulletCount == 0)
         {
             Reload();
-        }
-        bullet.GetComponent<Bullet>().speed = bulletSpeed;
-        bullet.GetComponent<Bullet>().destroyDistance = destroyRange;
+        }        
     }
     public override void Reload()
     {

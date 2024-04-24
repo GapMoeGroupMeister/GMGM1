@@ -27,6 +27,11 @@ public abstract class Gun : MonoBehaviour
     public GameObject bulletPrefab;//ÃÑ¾ó ÇÁ¸®Æé
 
     public Transform gunTip;//ÃÑ±¸ À§Ä¡
+
+    public bool isPlayer = true;
+
+    public string ReloadString => reloadCheck? string.Empty : " - Reload";
+
     public abstract void Fire(Vector2 direction);
 
     protected virtual void Awake()
@@ -40,14 +45,12 @@ public abstract class Gun : MonoBehaviour
         destroyRange = gunSO.destroyRange;
         bulletPrefab = gunSO.bulletPrefab;
         currentBulletCount = maxBulletCount;
-
-
     }
 
     public virtual void Reload()
     {
         StartCoroutine(ReloadCoroutine());
-    }
+    }    
 
     protected virtual IEnumerator ReloadCoroutine()
     {

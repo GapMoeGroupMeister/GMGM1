@@ -13,7 +13,7 @@ public enum PlayerState
 
 }
 
-public class test : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     private PlayerState currentState;
@@ -62,8 +62,6 @@ public class test : MonoBehaviour
 
     private void Start()
     {
-      
-     
     }
 
     void Update()
@@ -184,13 +182,14 @@ public class test : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+            Destroy(gun1);
             gun1 = Instantiate(gunPrefab[0],gameObject.transform);
             Destroy(gun2);
             Destroy(gun3);
         }
         else if(Input.GetKeyDown(KeyCode.Alpha2))
         {
-            
+            Destroy(gun2);
             gun2 = Instantiate(gunPrefab[1], gameObject.transform);
 
             Destroy(gun1);
@@ -198,6 +197,7 @@ public class test : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
+            Destroy(gun3);
             gun3 = Instantiate(gunPrefab[2], gameObject.transform);
 
             Destroy(gun1);
