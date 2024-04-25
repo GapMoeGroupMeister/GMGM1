@@ -25,41 +25,48 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void Start()
     {
-        _playerInput.OnChangeGun += ChnageWeapon;
+        _playerInput.OnChangeGun += ChangeWeapon;
     }
     private void Update()
     {
 
     }
-    void ChnageWeapon(bool _1,bool _2,bool _3,bool _4)
+    void ChangeWeapon(int gunIndex)
     {
-        if (_1)
+        currentGun = gunIndex;
+        if (currentGun > 0)
         {
-            currentGun = 1;
-            _gunPrefab = 0;
-            InputCheck();
-            
-        }
-        else if (_2)
-        {
-            currentGun = 2;
-            _gunPrefab = 1;
+            _gunPrefab = gunIndex - 1;
             InputCheck();
         }
-        else if (_3)
-        {
-            currentGun = 3;
-            _gunPrefab = 2;
-            InputCheck();
-        }
-        else if (_4)
-        {
-            if (changeCheck)
-                return;
-            StartCoroutine("ChangeCheck");
-            Destroy(gun);
-            currentGunUI.i = 0;
-        }
+
+        //if (_1)
+        //{
+        //    currentGun = 1;
+        //    _gunPrefab = 0;
+        //    InputCheck();
+
+        //}
+        //else if (_2)
+        //{
+        //    currentGun = 2;
+        //    _gunPrefab = 1;
+        //    InputCheck();
+        //}
+        //else if (_3)
+        //{
+        //    currentGun = 3;
+        //    _gunPrefab = 2;
+        //    InputCheck();
+        //}
+        //else if (_4)
+        //{
+        //    if (changeCheck)
+        //        return;
+        //    StartCoroutine("ChangeCheck");
+        //    Destroy(gun);
+        //    currentGunUI.i = 0;
+        //}
     }
 
     void InputCheck()

@@ -47,7 +47,6 @@ public class PlayerController : MonoBehaviour
 
     public bool isGround;
 
-
     private Rigidbody2D _rigid;  // Rigidbody ???
     private SpriteRenderer SpriteRenderer;
     private Animator _anim;
@@ -68,7 +67,10 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        _playerInput.OnMoveMentEvent += InputKey;
+        _playerInput.OnMoveMentEvent += Move;
+        _playerInput.OnJumpEvent += Jump;
+        _playerInput.OnSitEvent += Sit;
+        _playerInput.OnRunEvent += Run;
 
     }
 
@@ -88,6 +90,7 @@ public class PlayerController : MonoBehaviour
         
         CheckGround();
         CheckMove();
+        CheckAnim();
 
         PlayerRoutine();
 
@@ -120,6 +123,11 @@ public class PlayerController : MonoBehaviour
         currentHp += amount;
     }
 
+    private void CheckAnim()
+    {
+        _anim.SetBool("PlayerWalk", inputx != 0 ? true : false);
+    }
+
     private void CheckGround()
     {
         isGround = Physics2D.Raycast(transform.position, Vector2.down, _ray, _whatIsGround);
@@ -127,51 +135,43 @@ public class PlayerController : MonoBehaviour
 
     private void CheckMove()
     {
+         // inputx?? ?????? ?? ??????
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
-    private void InputKey(float x, bool LeftShift, bool LeftControl,bool Space)
+    private void Move(float x)
     {
         currentState = PlayerState.Idle;
         if (x != 0)
         {
             currentState = PlayerState.Walk;
+        }
             inputx = x;
-            _anim.SetBool("PlayerWalk", true);
-        }
-        else if(x == 0)
-        {
-            _anim.SetBool("PlayerWalk", false);
-        }
+    }
 
-
-        if (LeftShift && isGround) 
+    private void Run(bool LeftShift)
+    {
+        if (LeftShift && isGround)
         {
             if (currentState == PlayerState.Walk)
             {
                 currentState = PlayerState.Run;
-                _anim.SetBool("PlayerWalk", false);
                 _anim.SetBool("PlayerRun", true);
             }
         }
-        else if (!LeftShift)
-        {
-            _anim.SetBool("PlayerRun", false);
-        }
+    }
 
-
-        if (LeftControl) 
+    private void Sit(bool LeftControl)
+    {
+        if (LeftControl)
         {
             currentState = PlayerState.Sit;
-            _anim.SetBool("PlayerWalk", false);
             _anim.SetBool("PlayerSit", true);
         }
-        else if (!LeftControl)
-        {
-            _anim.SetBool("PlayerSit", false);
-        }
+    }
 
-
+    private void Jump(bool Space)
+    {
         if (Space)
         {
             if (isGround)
@@ -179,17 +179,45 @@ public class PlayerController : MonoBehaviour
                 _rigid.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
             }
         }
-
-        if (!isGround)
-        {
-            _anim.SetBool("PlayerJump", true);
-        }
-        else if (isGround)
-        {
-            _anim.SetBool("PlayerJump", false);
-        }
     }
-    
+
+    //private void InputKey(float x, bool LeftShift, bool LeftControl, bool Space)
+    //{
+    //    currentState = PlayerState.Idle;
+    //    if (x != 0)
+    //    {
+    //        currentState = PlayerState.Walk;
+    //        inputx = x;
+    //    }
+
+
+    //    if (LeftShift && isGround)
+    //    {
+    //        if (currentState == PlayerState.Walk)
+    //        {
+    //            currentState = PlayerState.Run;
+    //            _anim.SetBool("PlayerRun", true);
+    //        }
+    //    }
+
+
+    //    if (LeftControl)
+    //    {
+    //        currentState = PlayerState.Sit;
+    //        _anim.SetBool("PlayerSit", true);
+    //    }
+
+
+
+    //    if (Space)
+    //    {
+    //        if (isGround)
+    //        {
+    //            _rigid.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
+    //        }
+    //    }
+    //}
+
 
     private void Flip()
     {
