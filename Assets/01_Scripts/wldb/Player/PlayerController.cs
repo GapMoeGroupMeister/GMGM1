@@ -39,10 +39,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 mousePos;
 
     [SerializeField]
-    GameObject[] gunPrefab;
-    GameObject gun1, gun2, gun3;
-    
-
+    private GameObject _gameOverUI;
     [SerializeField]
     private LayerMask _whatIsGround;
     [SerializeField]
@@ -52,6 +49,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D _rigid;  // Rigidbody ???
     private SpriteRenderer SpriteRenderer;
+    private Animator _anim;
+    private PlayerInput _playerInput;
 
     private Gun _currentGun;
     public Gun CurrentGun { get; private set; }
@@ -59,16 +58,23 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        _playerInput = GetComponent<PlayerInput>();
         _rigid = GetComponent<Rigidbody2D>(); // Rigidbody????? Rigidbody2D ??????? ???
         SpriteRenderer = GetComponent<SpriteRenderer>();
         _currentGun = GetComponentInChildren<Gun>();
+        _anim = GetComponent<Animator>();
     }
 
     private void Start()
-    {   
-        
-        
+    {
+        _playerInput.OnMoveMentEvent += InputKey;
+
     }
+
+    //private void OnDisable()
+    //{
+    //    _playerInput.OnMoveMentEvent -= InputKey;
+    //}
 
     [ContextMenu("DebugRefreshHealth")]
     public void RefreshHealth()
@@ -78,15 +84,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        InputKey();
+        
         CheckGround();
         CheckMove();
+        CheckAnim();
 
         PlayerRoutine();
 
         Flip();
-
-        Gunswap();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -104,18 +109,21 @@ public class PlayerController : MonoBehaviour
         if (currentHp <= 0)
         {
             Destroy(gameObject);
-            
+            _gameOverUI.SetActive(true);
+            Time.timeScale = 0;
         }
-        
     }
 
-    //private void UseHeal()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.C))
-    //    {
-    //        currentHp += 10;
-    //    }
-    //}
+
+    public void UseHeal(int amount)
+    {
+        currentHp += amount;
+    }
+
+    private void CheckAnim()
+    {
+        _anim.SetBool("PlayerWalk", inputx != 0 ? true : false);
+    }
 
     private void CheckGround()
     {
@@ -124,48 +132,45 @@ public class PlayerController : MonoBehaviour
 
     private void CheckMove()
     {
-        inputx = (Input.GetAxisRaw("Horizontal")); // inputx?? ?????? ?? ??????
+         // inputx?? ?????? ?? ??????
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
-    private void InputKey()
+    private void InputKey(float x, bool LeftShift, bool LeftControl,bool Space)
     {
         currentState = PlayerState.Idle;
-        if (inputx != 0)
+        if (x != 0)
         {
             currentState = PlayerState.Walk;
+            inputx = x;
         }
 
-        if (Input.GetKey(KeyCode.LeftShift)) 
+
+        if (LeftShift && isGround) 
         {
             if (currentState == PlayerState.Walk)
             {
                 currentState = PlayerState.Run;
-            }
-            
+                _anim.SetBool("PlayerRun", true);
+            }     
         }
 
-        if (Input.GetKey(KeyCode.LeftControl)) 
+
+        if (LeftControl) 
         {
             currentState = PlayerState.Sit;
-
+            _anim.SetBool("PlayerSit", true);
         }
+        
 
-        if (Input.GetKeyDown(KeyCode.Space))
+
+        if (Space)
         {
             if (isGround)
             {
                 _rigid.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-
             }
         }
-
-        //if (Input.GetKeyDown(KeyCode.C))
-        //{
-            
-        //}
-
-        
     }
     
 
@@ -181,7 +186,7 @@ public class PlayerController : MonoBehaviour
         switch (currentState)
         {
             case PlayerState.Idle:
-                
+
                 break;
 
             case PlayerState.Walk:
@@ -207,39 +212,5 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void Gunswap()
-    {
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Destroy(gun1);
-            gun1 = Instantiate(gunPrefab[0],gameObject.transform);
-            gun1.transform.position = transform.position;
-            Destroy(gun2);
-            Destroy(gun3);
-        }
-        else if(Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Destroy(gun2);
-            gun2 = Instantiate(gunPrefab[1], gameObject.transform);
-            gun2.transform.position = transform.position;
-            Destroy(gun1);
-            Destroy(gun3);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Destroy(gun3);
-            gun3 = Instantiate(gunPrefab[2], gameObject.transform);
-            gun3.transform.position = transform.position;
-            Destroy(gun1);
-            Destroy(gun2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-
-        }
-
-
-
-    }
+    
 }
