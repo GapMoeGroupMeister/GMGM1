@@ -67,7 +67,10 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        _playerInput.OnMoveMentEvent += InputKey;
+        _playerInput.OnMoveMentEvent += Move;
+        _playerInput.OnJumpEvent += Jump;
+        _playerInput.OnSitEvent += Sit;
+        _playerInput.OnRunEvent += Run;
 
     }
 
@@ -136,34 +139,39 @@ public class PlayerController : MonoBehaviour
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
-    private void InputKey(float x, bool LeftShift, bool LeftControl,bool Space)
+    private void Move(float x)
     {
         currentState = PlayerState.Idle;
         if (x != 0)
         {
             currentState = PlayerState.Walk;
-            inputx = x;
         }
+            inputx = x;
+    }
 
-
-        if (LeftShift && isGround) 
+    private void Run(bool LeftShift)
+    {
+        if (LeftShift && isGround)
         {
             if (currentState == PlayerState.Walk)
             {
                 currentState = PlayerState.Run;
                 _anim.SetBool("PlayerRun", true);
-            }     
+            }
         }
+    }
 
-
-        if (LeftControl) 
+    private void Sit(bool LeftControl)
+    {
+        if (LeftControl)
         {
             currentState = PlayerState.Sit;
             _anim.SetBool("PlayerSit", true);
         }
-        
+    }
 
-
+    private void Jump(bool Space)
+    {
         if (Space)
         {
             if (isGround)
@@ -172,7 +180,44 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    
+
+    //private void InputKey(float x, bool LeftShift, bool LeftControl, bool Space)
+    //{
+    //    currentState = PlayerState.Idle;
+    //    if (x != 0)
+    //    {
+    //        currentState = PlayerState.Walk;
+    //        inputx = x;
+    //    }
+
+
+    //    if (LeftShift && isGround)
+    //    {
+    //        if (currentState == PlayerState.Walk)
+    //        {
+    //            currentState = PlayerState.Run;
+    //            _anim.SetBool("PlayerRun", true);
+    //        }
+    //    }
+
+
+    //    if (LeftControl)
+    //    {
+    //        currentState = PlayerState.Sit;
+    //        _anim.SetBool("PlayerSit", true);
+    //    }
+
+
+
+    //    if (Space)
+    //    {
+    //        if (isGround)
+    //        {
+    //            _rigid.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
+    //        }
+    //    }
+    //}
+
 
     private void Flip()
     {
