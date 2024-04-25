@@ -299,9 +299,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3315461583994741468, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095195991932623560, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
+      propertyPath: _runSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095195991932623560, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
+      propertyPath: _sitSpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5095195991932623560, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
       propertyPath: _jumpPower
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095195991932623560, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
+      propertyPath: _normalSpeed
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7892654220724110009, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12910,9 +12926,9 @@ RectTransform:
   - {fileID: 943370075}
   m_Father: {fileID: 663763675}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 420, y: -90}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 80}
   m_SizeDelta: {x: 760, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1580823460
@@ -13590,13 +13606,13 @@ SceneRoots:
   - {fileID: 2136750196}
   - {fileID: 2101534313}
   - {fileID: 1266782001}
-  - {fileID: 173384720}
   - {fileID: 1876412606}
+  - {fileID: 173384720}
   - {fileID: 1323151008}
   - {fileID: 1935956822}
   - {fileID: 2023805783}
+  - {fileID: 507517189}
   - {fileID: 501317235}
   - {fileID: 663763675}
   - {fileID: 1746168116}
   - {fileID: 1380902816}
-  - {fileID: 507517189}
