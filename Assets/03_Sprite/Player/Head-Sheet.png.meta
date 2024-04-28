@@ -139,12 +139,12 @@ TextureImporter:
       name: Head-Sheet_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 103
-        width: 15
-        height: 18
+        x: 0
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -160,12 +160,12 @@ TextureImporter:
       name: Head-Sheet_1
       rect:
         serializedVersion: 2
-        x: 40
-        y: 103
-        width: 15
-        height: 17
+        x: 32
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -178,15 +178,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Head-Sheet_2
+      name: Player_Run0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 71
-        width: 15
-        height: 17
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -199,15 +199,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Head-Sheet_3
+      name: Player_Run1
       rect:
         serializedVersion: 2
-        x: 40
-        y: 72
-        width: 15
-        height: 18
+        x: 32
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -220,15 +220,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Head-Sheet_4
+      name: Player_Run2
       rect:
         serializedVersion: 2
-        x: 72
-        y: 73
-        width: 15
-        height: 18
+        x: 64
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -241,15 +241,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Head-Sheet_5
+      name: Player_Run3
       rect:
         serializedVersion: 2
-        x: 104
-        y: 72
-        width: 15
-        height: 18
+        x: 96
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -262,15 +262,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Head-Sheet_6
+      name: Player_Run4
       rect:
         serializedVersion: 2
-        x: 136
-        y: 71
-        width: 15
-        height: 18
+        x: 128
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -286,12 +286,12 @@ TextureImporter:
       name: Head-Sheet_7
       rect:
         serializedVersion: 2
-        x: 7
-        y: 39
-        width: 15
-        height: 17
+        x: 0
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -307,12 +307,12 @@ TextureImporter:
       name: Head-Sheet_8
       rect:
         serializedVersion: 2
-        x: 38
-        y: 39
-        width: 16
-        height: 16
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -328,12 +328,12 @@ TextureImporter:
       name: Head-Sheet_9
       rect:
         serializedVersion: 2
-        x: 70
-        y: 39
-        width: 16
-        height: 16
+        x: 64
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -349,12 +349,12 @@ TextureImporter:
       name: Head-Sheet_10
       rect:
         serializedVersion: 2
-        x: 102
-        y: 39
-        width: 16
-        height: 16
+        x: 96
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -370,12 +370,12 @@ TextureImporter:
       name: Head-Sheet_11
       rect:
         serializedVersion: 2
-        x: 135
-        y: 39
-        width: 15
-        height: 17
+        x: 128
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -391,12 +391,12 @@ TextureImporter:
       name: Head-Sheet_12
       rect:
         serializedVersion: 2
-        x: 168
-        y: 39
-        width: 15
-        height: 18
+        x: 160
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -412,12 +412,12 @@ TextureImporter:
       name: Head-Sheet_13
       rect:
         serializedVersion: 2
-        x: 2
-        y: 10
-        width: 29
-        height: 11
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -433,12 +433,12 @@ TextureImporter:
       name: Head-Sheet_14
       rect:
         serializedVersion: 2
-        x: 40
-        y: 10
-        width: 16
-        height: 11
+        x: 32
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -454,12 +454,12 @@ TextureImporter:
       name: Head-Sheet_15
       rect:
         serializedVersion: 2
-        x: 66
-        y: 9
-        width: 29
-        height: 13
+        x: 64
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -475,12 +475,12 @@ TextureImporter:
       name: Head-Sheet_16
       rect:
         serializedVersion: 2
-        x: 98
-        y: 12
-        width: 29
-        height: 8
+        x: 96
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -512,14 +512,14 @@ TextureImporter:
       Head-Sheet_14: -1566941697
       Head-Sheet_15: 1068293094
       Head-Sheet_16: 1513448347
-      Head-Sheet_2: -439170395
-      Head-Sheet_3: -798761482
-      Head-Sheet_4: -1760406121
-      Head-Sheet_5: -1195895820
-      Head-Sheet_6: -1282978293
       Head-Sheet_7: 1684171853
       Head-Sheet_8: 642439507
       Head-Sheet_9: -676572704
+      Player_Run0: -439170395
+      Player_Run1: -798761482
+      Player_Run2: -1760406121
+      Player_Run3: -1195895820
+      Player_Run4: -1282978293
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
