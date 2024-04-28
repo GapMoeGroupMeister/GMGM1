@@ -1,36 +1,39 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class EnemyWeapon : MonoBehaviour
 {
 
-    public int damage = 0;//ë°ë¯¸ì§€
+    public int damage = 0;//µ¥¹ÌÁö
 
-    public bool reloadCheck = true;//ì¬ì¥ì „ ì²´í¬
+    public bool reloadCheck = true;//ÀçÀåÀü Ã¼Å©
 
-    public int maxBulletCount = 0;//ì´íƒ„ìˆ˜
+    public int maxBulletCount = 0;//ÃÑÅº¼ö
 
     public int currentBulletCount = 0;
 
-    public float fireDelay;//ì—°ì‚¬ ì†ë„
+    public float fireDelay;//¿¬»ç ¼Óµµ
 
-    public float reloadTime;//ì¬ì¥ì „ ì‹œê°„
+    public float reloadTime;//ÀçÀåÀü ½Ã°£
 
-    public float bulletSpeed;//ì´ì•Œ ìŠ¤í”¼ë“œ
+    public float bulletSpeed;//ÃÑ¾Ë ½ºÇÇµå
 
-    public float destroyRange;//ì‚¬ì •ê±°ë¦¬
+    public float destroyRange;//»çÁ¤°Å¸®
 
     public EnemyWeaponSO enemyWeaponSO;
 
-    public GameObject bulletPrefab;//ì´ì–¼ í”„ë¦¬í©
+    public GameObject bulletPrefab;//ÃÑ¾ó ÇÁ¸®Æé
 
-    public Transform gunTip;//ì´êµ¬ ìœ„ì¹˜
+    public Transform gunTip;//ÃÑ±¸ À§Ä¡
     public abstract void Fire(Vector2 direction);
+
+    public GameObject _player;
 
     protected virtual void Awake()
     {
-        gunTip = transform.Find("GunTip");//ì´êµ¬ì˜ì¹˜ ë°›ì•„ì˜´
+        _player = GameObject.Find("Player");
+        gunTip = transform.Find("GunTip");//ÃÑ±¸ÀÇÄ¡ ¹Ş¾Æ¿È
         fireDelay = enemyWeaponSO.fireDelay;
         damage = enemyWeaponSO.damage;
         maxBulletCount = enemyWeaponSO.maxBulletCount;
@@ -51,7 +54,7 @@ public abstract class EnemyWeapon : MonoBehaviour
     protected virtual IEnumerator ReloadCoroutine()
     {
         reloadCheck = false;
-        yield return new WaitForSeconds(reloadTime);//reloadTimeë§Œí¼ ê¸°ë‹¤ë ¸ë‹¤ê°€ ë°‘ì— ì½”ë“œë¥¼ ì‹¤í–‰
+        yield return new WaitForSeconds(reloadTime);//reloadTime¸¸Å­ ±â´Ù·È´Ù°¡ ¹Ø¿¡ ÄÚµå¸¦ ½ÇÇà
         reloadCheck = true;
         currentBulletCount = maxBulletCount;
     }
