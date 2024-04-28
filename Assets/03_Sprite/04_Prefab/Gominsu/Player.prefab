@@ -15,6 +15,9 @@ GameObject:
   - component: {fileID: 5095195991932623560}
   - component: {fileID: 6062416390289312866}
   - component: {fileID: 5914022392950667310}
+  - component: {fileID: 3389392035659425775}
+  - component: {fileID: 8196317534513522373}
+  - component: {fileID: 5026572717271094729}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -202,6 +205,9 @@ MonoBehaviour:
   - {fileID: 4235532665382729105, guid: e3a357f0e1473f842b9458ebbefc479b, type: 3}
   - {fileID: 5763382536376114772, guid: 86a1cead28f4e60429412708865ace28, type: 3}
   - {fileID: 1487458227804703299, guid: 54a1d1c8f0639744fa10e12c4ce06f51, type: 3}
+  gun: {fileID: 0}
+  CurrentGun: {fileID: 0}
+  _gun: {fileID: 0}
 --- !u!95 &5914022392950667310
 Animator:
   serializedVersion: 5
@@ -223,3 +229,86 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3389392035659425775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3315461583994741468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aae45176a4a4ac44f9ead1f99b8c0c1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponManager: {fileID: 6062416390289312866}
+--- !u!114 &8196317534513522373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3315461583994741468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e816ed7cdb57e5344b3d98bfe143e53d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputx: 0
+  LeftShift: 0
+  LeftControl: 0
+  Space: 0
+  Mouse0: 0
+  MouseDown0: 0
+  Mouse1: 0
+  index: 0
+--- !u!114 &5026572717271094729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3315461583994741468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 608d62d04cd9135408b7f932495dc41f, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8196317534513522373}
+        m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
+        m_MethodName: OnGunSwap
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: efa6dd19-deca-43e8-88ed-8bb998818672
+    m_ActionName: PlayerControl/GunSwap
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1354cb63-8b0e-4aba-9eab-4ab95d79ca8e
+    m_ActionName: GameControl/Move
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Window
+  m_DefaultActionMap: PlayerControl
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
