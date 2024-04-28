@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 [Serializable]
@@ -35,4 +35,3 @@ public class EnemyTableData
     public float Enemy_RoamingRange => enemy_RoamingRange;
     public float Enemy_MoveSpeed => enemy_MoveSpeed;
 }
-
