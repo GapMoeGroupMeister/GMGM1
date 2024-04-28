@@ -125,6 +125,10 @@ public class PlayerController : MonoBehaviour
 
     private void CheckAnim()
     {
+        if (inputx == 0)
+        {
+            currentState = PlayerState.Idle;
+        }
         _anim.SetBool("PlayerWalk", inputx != 0 ? true : false);
     }
 
@@ -141,12 +145,15 @@ public class PlayerController : MonoBehaviour
 
     private void Move(float x)
     {
-        currentState = PlayerState.Idle;
+        inputx = x;
         if (x != 0)
         {
             currentState = PlayerState.Walk;
         }
-            inputx = x;
+        else if (x == 0)
+        {
+            _speed = _normalSpeed;
+        }
     }
 
     private void Run(bool LeftShift)
@@ -155,10 +162,11 @@ public class PlayerController : MonoBehaviour
         {
             if (currentState == PlayerState.Walk)
             {
+                _anim.SetBool("PlayerRun",true);
                 currentState = PlayerState.Run;
-                _anim.SetBool("PlayerRun", true);
             }
         }
+        
     }
 
     private void Sit(bool LeftControl)
@@ -166,7 +174,6 @@ public class PlayerController : MonoBehaviour
         if (LeftControl)
         {
             currentState = PlayerState.Sit;
-            _anim.SetBool("PlayerSit", true);
         }
     }
 
@@ -176,6 +183,7 @@ public class PlayerController : MonoBehaviour
         {
             if (isGround)
             {
+                _anim.SetBool("PlayerJump", true);
                 _rigid.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
             }
         }
@@ -231,7 +239,8 @@ public class PlayerController : MonoBehaviour
         switch (currentState)
         {
             case PlayerState.Idle:
-
+                //_anim.SetBool("PlayerJump", false);
+                //_anim.SetBool("PlayerRun", false);
                 break;
 
             case PlayerState.Walk:
