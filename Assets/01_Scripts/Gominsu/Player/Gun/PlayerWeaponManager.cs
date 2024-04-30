@@ -15,6 +15,8 @@ public class PlayerWeaponManager : MonoBehaviour
     int _gunPrefab = 0;
     int currentGun = 0;
 
+    public int index = 0;
+
     CurrentGunUI currentGunUI;
 
     private void Awake()
@@ -25,59 +27,62 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void Start()
     {
-        _playerInput.OnChangeGun += ChangeWeapon;
+        _playerInput.MouseScrall += MouseScrallCheck;
+        _playerInput.MouseScrall += ChangeWeapon;
     }
     private void Update()
     {
-
+        
     }
-    void ChangeWeapon(int gunIndex)
+    void ChangeWeapon(Vector2 vec)
     {
-        currentGun = gunIndex;
+        print(index);
+        currentGun = index;
         if (currentGun > 0)
         {
-            _gunPrefab = gunIndex - 1;
+            print("½ÇÇà");
+            _gunPrefab = index - 1;
             InputCheck();
         }
 
-        //if (_1)
-        //{
-        //    currentGun = 1;
-        //    _gunPrefab = 0;
-        //    InputCheck();
+    }
 
-        //}
-        //else if (_2)
-        //{
-        //    currentGun = 2;
-        //    _gunPrefab = 1;
-        //    InputCheck();
-        //}
-        //else if (_3)
-        //{
-        //    currentGun = 3;
-        //    _gunPrefab = 2;
-        //    InputCheck();
-        //}
-        //else if (_4)
-        //{
-        //    if (changeCheck)
-        //        return;
-        //    StartCoroutine("ChangeCheck");
-        //    Destroy(gun);
-        //    currentGunUI.i = 0;
-        //}
+    void MouseScrallCheck(Vector2 vec)
+    {
+
+        if (_gun != null &&_gun._isReloading)
+        {
+            return;
+        }
+            
+        if (vec.y <= -120 && index < 4)
+        {
+            print("Down");
+            index++;
+            index = Mathf.Clamp(index, 1, 3);
+
+        }
+        else if (vec.y >= 120)
+        {
+            print("Up");
+            index--;
+            index = Mathf.Clamp(index, 1, 3);
+
+        }
     }
 
     void InputCheck()
     {
-        
+        print("µûÀÕ1");
         if (changeCheck)    
             return;
-        if(_gun != null && _gun._isReloading)
+        print("µûÀÕ2");
+        if (_gun != null && _gun._isReloading)
             return;
+        print("µûÀÕ3");
         StartCoroutine("ChangeCheck");
         Destroy(gun);
+        print(gun);
         gun = Instantiate(gunPrefab[_gunPrefab], gameObject.transform);
         gun.transform.position = transform.position;
         

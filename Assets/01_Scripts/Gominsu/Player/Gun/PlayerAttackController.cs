@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerAttackController : MonoBehaviour
 {
-    Gun gun;
+    public Gun gun;
     [SerializeField]
-    PlayerWeaponManager weaponManager;
+    PlayerWeaponManager _weaponManager;
+    SpriteRenderer _spriteRenderer;
 
     private PlayerInput _playerInput;
 
@@ -14,7 +15,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         
         _playerInput = GetComponent<PlayerInput>();
-        weaponManager = GetComponent<PlayerWeaponManager>();
+        _weaponManager = GetComponent<PlayerWeaponManager>();
     }
 
     private void Start()
@@ -23,19 +24,21 @@ public class PlayerAttackController : MonoBehaviour
     }
     protected virtual void Update()
     {
-        if (weaponManager.CurrentGun != null)
-            gun = weaponManager.CurrentGun.GetComponent<Gun>();
+        if (_weaponManager.CurrentGun != null)
+            gun = _weaponManager.CurrentGun.GetComponent<Gun>();
         if (gun != null) 
         { 
         gun._currentTime += Time.deltaTime;
         gun._mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//마우스 위치를 월드 좌표로 변환
         Rotate();
         GunRender();
+            _spriteRenderer = gun.GetComponent<SpriteRenderer>();
+            Flip();
         }
     }
     private void GunRender()
     {
-        if (gun._player.transform.position.x > gun._mousePos.x)
+        if (transform.position.x > gun._mousePos.x)
         {
             gun.transform.position = new Vector3(transform.position.x + -0.7f, transform.position.y, 0);
         }
@@ -83,7 +86,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         Vector2 dir = (gun._mousePos - (Vector2)transform.position).normalized;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        gun.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+        gun.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
     protected void FireHandler()
@@ -93,5 +96,12 @@ public class PlayerAttackController : MonoBehaviour
         gun.currentBulletCount--;
         GameManager.Instance.playerController.OnShootEvent?.Invoke(gun.currentBulletCount, gun.maxBulletCount);
         gun.Fire(dir.normalized);
+    }
+
+    private void Flip()
+    {
+
+        _spriteRenderer.flipY = transform.position.x > gun._mousePos.x;
+
     }
 }
