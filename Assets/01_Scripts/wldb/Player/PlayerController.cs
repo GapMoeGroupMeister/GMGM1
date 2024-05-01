@@ -18,7 +18,11 @@ public enum PlayerState
 public class PlayerController : MonoBehaviour
 {
     public event Action<int, int> OnHealthChangedEvent;
-    public Action<int, int> OnShootEvent; 
+    public Action<int, int> OnShootEvent;
+    public Action<bool> _AnimaWalk;
+    public Action<bool> _AnimaRun;
+    public Action<bool> _AnimaJump;
+    public Action<bool> _AnimaSliding;
     [SerializeField]
     private PlayerState currentState;
     [SerializeField]
@@ -52,7 +56,6 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D _rigid;  // Rigidbody ???
     private SpriteRenderer SpriteRenderer;
-    private Animator _anim;
     private PlayerInput _playerInput;
 
     private Gun _currentGun;
@@ -65,7 +68,6 @@ public class PlayerController : MonoBehaviour
         _rigid = GetComponent<Rigidbody2D>(); // Rigidbody????? Rigidbody2D ??????? ???
         SpriteRenderer = GetComponent<SpriteRenderer>();
         _currentGun = GetComponentInChildren<Gun>();
-        _anim = GetComponent<Animator>();
     }
 
     private void Start()
@@ -128,13 +130,13 @@ public class PlayerController : MonoBehaviour
 
     private void CheckAnim()
     {
-        _anim.SetBool("PlayerWalk", inputx != 0 ? true : false);
+        _AnimaWalk?.Invoke(inputx != 0);
 
-        _anim.SetBool("PlayerRun", inputx != 0 && currentState == PlayerState.Run ? true : false);
+        _AnimaRun?.Invoke(inputx != 0 && currentState == PlayerState.Run);
 
-        _anim.SetBool("PlayerJump", isGround ? false : true);
+        _AnimaJump?.Invoke(!isGround);
 
-        _anim.SetBool("PlayerSliding", checkSliding);
+        _AnimaSliding?.Invoke(checkSliding);
     }
 
     private void CheckGround()
@@ -221,21 +223,21 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case PlayerState.Walk:
-                _anim.SetBool("PlayerSliding", false);
+                _AnimaSliding?.Invoke(false);
                 _speed = _normalSpeed;
                 _rigid.velocity = new Vector2(inputx * _speed, _rigid.velocity.y);
                 break;
 
             case PlayerState.Run:
-                _anim.SetBool("PlayerWalk", false);
+                _AnimaWalk?.Invoke(false);
                 _speed = _runSpeed;
                 _rigid.velocity = new Vector2(inputx * _speed, _rigid.velocity.y);
 
                 break;
 
             case PlayerState.Sliding:
-                _anim.SetBool("PlayerWalk", false);
-                _anim.SetBool("PlayerRun", false);
+                _AnimaWalk?.Invoke(false);
+                _AnimaRun?.Invoke(false);
                 break;
 
 
