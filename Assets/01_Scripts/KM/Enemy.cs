@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
 
     private void UpdateGun()
     {
-        stateText.text += gun.ReloadString;
+        //stateText.text += gun.ReloadString;
 
         gunFireDelay += Time.deltaTime;
 
