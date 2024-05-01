@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerAttackController : MonoBehaviour
 {
     public Gun gun;
+    public GameObject knife;
+    private Knife _knifeScripts;
     [SerializeField]
     PlayerWeaponManager _weaponManager;
     SpriteRenderer _spriteRenderer;
@@ -13,7 +15,7 @@ public class PlayerAttackController : MonoBehaviour
 
     private void Awake()
     {
-        
+        _knifeScripts = knife.GetComponent<Knife>();
         _playerInput = GetComponent<PlayerInput>();
         _weaponManager = GetComponent<PlayerWeaponManager>();
     }
@@ -58,7 +60,7 @@ public class PlayerAttackController : MonoBehaviour
             }
             if (Mouse1)//¿ìÅ¬¸¯
             {
-                //knife.Slash();
+                //_knifeScripts.Slash();
             }
             if (!gun.IsCoolTime)
             {

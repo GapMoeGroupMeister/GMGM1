@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        _playerInput.OnMoveMentEvent += Move;
+        _playerInput.OnMovementEvent += Move;
         _playerInput.OnJumpEvent += Jump;
         _playerInput.OnSitEvent += Sit;
         _playerInput.OnRunEvent += Run;
