@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 846296916883472237}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.4, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -60,7 +60,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.8, y: 2.49, z: 0}
-  m_LocalScale: {x: 0.54627, y: 0.54627, z: 0.54627}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3471541000382625170}
@@ -108,7 +108,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 1513448347, guid: 939ffad8589b695438af9ecb42354a2f, type: 3}
-  m_Color: {r: 0.3238992, g: 0.871187, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -133,6 +133,10 @@ MonoBehaviour:
   damage: 0
   knifePrefab: {fileID: 4732013016241590896, guid: 15d28e96184c98d4eb66ba5d35d200f2, type: 3}
   gunTip: {fileID: 3471541000382625170}
+  player: {fileID: 0}
+  enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &304735973021001597
 MonoBehaviour:
   m_ObjectHideFlags: 0
