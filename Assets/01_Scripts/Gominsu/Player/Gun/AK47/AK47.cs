@@ -19,7 +19,7 @@ public class AK47 : Gun
     protected override void Awake()
     {
         base.Awake();
-        
+
     }
 
     public override void Fire(Vector2 direction)
@@ -28,7 +28,7 @@ public class AK47 : Gun
         bullet.Fire(direction.normalized);
         bullet.SetDefault(bulletSpeed, destroyRange);
     }
-    protected override void Reload()
+    public override void Reload()
     {
         base.Reload();
     }

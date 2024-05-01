@@ -2,22 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BombVest : EnemyWeapon
+public class BombVest : EnemyBomb
 {
-    public override void Fire(Vector2 direction)
+    public override void Fire()
     {
-        
-    }
-
-
-
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(collision.gameObject);
-        }
         Destroy(gameObject);
+
     }
 }
