@@ -13,11 +13,8 @@ public class S860 : Gun
             bullet.Fire(direction.normalized);
             bullet.SetDefault(bulletSpeed, destroyRange);
             Vector2 newDirection = Quaternion.Euler(new Vector3(0,0,Random.Range(-10f, 10f))) * direction;
-            bullet.Fire(newDirection);
-            
-            bullet.destroyDistance = Random.Range(3f, 5f);
-        }
-            
+            bullet.Fire(newDirection);            
+        }            
     }
     
 }
