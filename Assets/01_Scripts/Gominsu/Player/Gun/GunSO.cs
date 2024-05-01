@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class GunSO : ScriptableObject
 {
-
     public int damage = 0;//데미지
 
     public int maxBulletCount = 0;//총탄수
@@ -22,6 +21,4 @@ public class GunSO : ScriptableObject
     public float destroyRange;//사정거리
 
     public Bullet bulletPrefab;//총알 프리팹
-    
-
 }

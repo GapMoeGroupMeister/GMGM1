@@ -204,7 +204,7 @@ SpriteRenderer:
   m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &225526382
@@ -332,7 +332,7 @@ SpriteRenderer:
   m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &354069649
@@ -537,7 +537,6 @@ GameObject:
   - component: {fileID: 1202069505}
   - component: {fileID: 1202069509}
   - component: {fileID: 1202069508}
-  - component: {fileID: 1202069510}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -631,7 +630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateText: {fileID: 1327627938}
   hpText: {fileID: 1367455838}
-  _enemyCode: 1
+  _enemySO: {fileID: 11400000, guid: 47477a2ec7361664f85e3d88eb929d58, type: 2}
   _sight: 3
   _wallSight: 3
   _playerLayer:
@@ -705,29 +704,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &1202069510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1202069504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84c96c8dc9b7b864e8e2dc2545534c9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  reloadCheck: 1
-  maxBulletCount: 0
-  currentBulletCount: 0
-  fireDelay: 0
-  reloadTime: 0
-  bulletSpeed: 0
-  destroyRange: 0
-  enemyWeaponSO: {fileID: 11400000, guid: 782c4e0336474f944b440f08cb2d535c, type: 2}
-  bulletPrefab: {fileID: 7174808125437742660, guid: 512b4eb5f0866504da2b09e362515987, type: 3}
-  gunTip: {fileID: 0}
 --- !u!1 &1327627936
 GameObject:
   m_ObjectHideFlags: 0

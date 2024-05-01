@@ -7,7 +7,6 @@ public class Fire1 : MonoBehaviour
     //public Gun gun;
     public Gun guns;
     public Knife knife;
-
     GameObject Player;
 
 

@@ -86,7 +86,9 @@ public class PlayerWeaponManager : MonoBehaviour
 
 
         CurrentGun = gun;
-        currentGunUI.i = currentGun;
+        if( currentGunUI != null )
+            currentGunUI.i = currentGun;
+
         _gun = FindObjectOfType<Gun>();
         GameManager.Instance.RefreshBullet(_gun.currentBulletCount, _gun.maxBulletCount);
     }

@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private TextMeshPro stateText;
     [SerializeField] private TextMeshPro hpText;
 
-    [SerializeField] private int _enemyCode = 1;
+    [SerializeField] private EnemySO _enemySO;
 
     [SerializeField] private float _sight = 1;
     [SerializeField] private float _wallSight = 1;
@@ -44,8 +44,7 @@ public class Enemy : MonoBehaviour
     private float _directionMoveDistance = 6;
     private Vector2 moveRange;   
     private Direction _direction = Direction.Left;
-
-    private Gun gun;
+    
     private float gunFireDelay = 0;
     
     bool playerInSight = false;
@@ -63,24 +62,19 @@ public class Enemy : MonoBehaviour
 
     private void UpdateGun()
     {
-        stateText.text += gun.ReloadString;
-
-        gunFireDelay += Time.deltaTime;
-
-        float playerDir = player.transform.position.x > transform.position.x ? 1 : -1;
-        gun.transform.localPosition = new Vector3(playerDir * 0.7f, 0, 0);
+   
+        gunFireDelay += Time.deltaTime;        
 
         if( player != null )
         {
-            Vector2 dir = ((Vector2)player.transform.position - (Vector2)gun.transform.position).normalized;
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            gun.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+            Vector2 dir = ((Vector2)player.transform.position - (Vector2)transform.position).normalized;            
 
             if (playerInSight)
             {
-                if (gunFireDelay >= gun.fireDelay)
+                if (gunFireDelay >= 0.2f)
                 {
-                    gun.Fire(dir.normalized);
+                    EnemyBullet enemyBullet = GameObject.Instantiate(_enemySO.Bullet, transform.position, Quaternion.identity).GetComponent<EnemyBullet>();
+                    enemyBullet.Fire(dir.normalized);
                     gunFireDelay = 0;
                 }
             }
@@ -232,39 +226,22 @@ public class Enemy : MonoBehaviour
     }
 
     private void Setup()
-    {
-        EnemyTableData enemyData = EnemyTable.Instance.Find(_enemyCode);
-        _hp = enemyData.Enemy_HP;
-        _directionMoveDistance = enemyData.Enemy_RoamingRange;
-        _moveSpeed = enemyData.Enemy_MoveSpeed;
+    {   
+        _hp = _enemySO.Enemy_HP;
+        _directionMoveDistance = _enemySO.Enemy_RoamingRange;
+        _moveSpeed = _enemySO.Enemy_MoveSpeed;
 
-        _sight = enemyData.Sight;
-        _wallSight = enemyData.WallSight;
+        _sight = _enemySO.Sight;
+        _wallSight = _enemySO.WallSight;
 
         _findEnemyMark.SetActive(false);
         _findWallMark.SetActive(false);
 
         Vector3 pos = transform.position;
         moveRange.x = pos.x - _directionMoveDistance;
-        moveRange.y = pos.x + _directionMoveDistance;
-
-        SetupGun(enemyData);
+        moveRange.y = pos.x + _directionMoveDistance;        
     }
-
-    private void SetupGun(EnemyTableData enemyData)
-    {
-        if (gun != null)
-        { 
-            Destroy(gun.gameObject);
-        }
-        gun = GameObject.Instantiate(enemyData.GunPrefab, gameObject.transform);
-
-        float dir = _direction == Direction.Left ? -1f : 1f;
-        gun.transform.localPosition = new Vector3(dir * 0.7f, 0, 0);       
-
-        gun.GetComponent<Fire1>().enabled = false;
-    }
-
+    
     public void Damage (int amout)
     {
         _hp -= amout;
@@ -272,7 +249,5 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    
+    }    
 }

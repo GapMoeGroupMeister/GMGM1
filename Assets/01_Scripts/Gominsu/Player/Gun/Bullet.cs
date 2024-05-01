@@ -18,6 +18,7 @@ public class Bullet : MonoBehaviour
         this.destroyDistance = destroyDistance;
     }
     
+
     public void Fire(Vector2 dir)
     {
         Direction = dir;

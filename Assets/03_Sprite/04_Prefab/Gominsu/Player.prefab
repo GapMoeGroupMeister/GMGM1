@@ -207,7 +207,9 @@ MonoBehaviour:
   - {fileID: 1487458227804703299, guid: 54a1d1c8f0639744fa10e12c4ce06f51, type: 3}
   gun: {fileID: 0}
   CurrentGun: {fileID: 0}
-  _gun: {fileID: 0}
+  _gun: {fileID: 7039100511227591052, guid: e3a357f0e1473f842b9458ebbefc479b, type: 3}
+  index: 0
+  currentIndex: 0
 --- !u!95 &5914022392950667310
 Animator:
   serializedVersion: 5
@@ -242,6 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 0}
+  knife: {fileID: 0}
   _weaponManager: {fileID: 0}
 --- !u!114 &8196317534513522373
 MonoBehaviour:
@@ -262,8 +265,6 @@ MonoBehaviour:
   Mouse0: 0
   MouseDown0: 0
   Mouse1: 0
-  index: 0
-  currentIndex: 0
 --- !u!114 &5026572717271094729
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -30,14 +30,11 @@ public class EnemyBullet : MonoBehaviour
         {                                                                             //   ㄴ얘는 transform.position - guntip(현재 이동한 거리)이다
             Destroy(gameObject);
         }
-
-
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-  
         Destroy(gameObject);
-
     }
 
 

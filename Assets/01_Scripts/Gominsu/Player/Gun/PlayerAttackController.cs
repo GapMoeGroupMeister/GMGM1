@@ -15,7 +15,6 @@ public class PlayerAttackController : MonoBehaviour
 
     private void Awake()
     {
-        _knifeScripts = knife.GetComponent<Knife>();
         _playerInput = GetComponent<PlayerInput>();
         _weaponManager = GetComponent<PlayerWeaponManager>();
     }
