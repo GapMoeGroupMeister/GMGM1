@@ -16,6 +16,7 @@ public class PlayerWeaponManager : MonoBehaviour
     int currentGun = 0;
 
     public int index = 0;
+    public int currentIndex = 0;
 
     CurrentGunUI currentGunUI;
 
@@ -28,23 +29,23 @@ public class PlayerWeaponManager : MonoBehaviour
     private void Start()
     {
         _playerInput.MouseScrall += MouseScrallCheck;
-        _playerInput.MouseScrall += ChangeWeapon;
+        _playerInput.WeaponChange += ChangeWeapon;
     }
     private void Update()
     {
         
     }
-    void ChangeWeapon(Vector2 vec)
+    void ChangeWeapon(int idx)
     {
-        print(index);
-        currentGun = index;
+        print(idx);
+        currentGun = idx;
         if (currentGun > 0)
         {
             print("½ÇÇà");
-            _gunPrefab = index - 1;
+            _gunPrefab = idx - 1;
             InputCheck();
         }
-
+        currentIndex = index;
     }
 
     void MouseScrallCheck(Vector2 vec)
@@ -55,38 +56,35 @@ public class PlayerWeaponManager : MonoBehaviour
             return;
         }
             
-        if (vec.y <= -120 && index < 4)
+        if (vec.y <= -120 && index < 3)
         {
-            print("Down");
+            currentIndex = index;
             index++;
             index = Mathf.Clamp(index, 1, 3);
-
         }
-        else if (vec.y >= 120)
+        else if (vec.y >= 120 && index > 1)
         {
-            print("Up");
-            index--;
-            index = Mathf.Clamp(index, 1, 3);
-
+            currentIndex = index;
+                index--;
+                index = Mathf.Clamp(index, 1, 3); 
         }
     }
 
     void InputCheck()
     {
-        print("µûÀÕ1");
         if (changeCheck)    
             return;
-        print("µûÀÕ2");
         if (_gun != null && _gun._isReloading)
             return;
-        print("µûÀÕ3");
         StartCoroutine("ChangeCheck");
         Destroy(gun);
         print(gun);
         gun = Instantiate(gunPrefab[_gunPrefab], gameObject.transform);
         gun.transform.position = transform.position;
-        
-        
+
+        print(gun);
+
+
         CurrentGun = gun;
         currentGunUI.i = currentGun;
         _gun = FindObjectOfType<Gun>();

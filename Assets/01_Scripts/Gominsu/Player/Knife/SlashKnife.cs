@@ -9,8 +9,14 @@ public class SlashKnife : Knife
 
     private Vector2 mousePos;
 
-    GameObject knife;
+    [SerializeField]
+    private LayerMask enemyLayerMask;
 
+    private void Awake()
+    {
+        base.Awake();
+        damage = 50;
+    }
     private void Start()
     {
         Rotate();   
@@ -22,19 +28,20 @@ public class SlashKnife : Knife
         currentTime += Time.deltaTime;
         if (currentTime >= creatTime)
         {
-            Destroy(knife);
             currentTime = 0;
         }
-
-
+        
     }
+
+
     public override void Slash()
     {
-
-        damage = 50;
-        knife = Instantiate(knifePrefab, gunTip.position, Quaternion.identity);
-        
-
+        RaycastHit2D[] py = Physics2D.BoxCastAll(new Vector2(transform.position.x, transform.position.y), new Vector2(10, 10), transform.eulerAngles.z, new Vector2(10, 10), enemyLayerMask);
+        if (py != null)
+        {
+            Instantiate(knifePrefab, gunTip.position, Quaternion.identity);
+        }
+        //knife = Instantiate(knifePrefab, gunTip.position, Quaternion.identity);
     }
 
     private void Rotate()
