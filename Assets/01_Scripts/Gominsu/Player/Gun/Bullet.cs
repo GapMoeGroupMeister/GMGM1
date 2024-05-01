@@ -20,6 +20,7 @@ public class Bullet : MonoBehaviour
     
     public void Fire(Vector2 dir)
     {
+        transform.right = dir;
         Direction = dir;
         gunTipPosition = transform.position;//쏠때 당시의 자신의 위치 = 총구의 위치 
     }
