@@ -10,7 +10,7 @@ public enum PlayerState
     Walk,
     Run,
     Jump,
-    Sit,
+    Sliding,
     Dash,
 
 }
@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     private float _sitSpeed = 2f;
     [SerializeField]
     private float _jumpPower = 5f;  // ???? ????
+    [SerializeField]
+    private float _slidingPower = 3f;
     int currentHp = 100;
     int maxHp = 100;
 
@@ -46,7 +48,7 @@ public class PlayerController : MonoBehaviour
     private float _ray = 1f;
 
     public bool isGround;
-    private bool checkSit = false;
+    private bool checkSliding = false;
 
     private Rigidbody2D _rigid;  // Rigidbody ???
     private SpriteRenderer SpriteRenderer;
@@ -70,7 +72,7 @@ public class PlayerController : MonoBehaviour
     {
         _playerInput.OnMovementEvent += Move;
         _playerInput.OnJumpEvent += Jump;
-        _playerInput.OnSitEvent += Sit;
+        _playerInput.OnSitEvent += Sliding;
         _playerInput.OnRunEvent += Run;
 
     }
@@ -126,22 +128,13 @@ public class PlayerController : MonoBehaviour
 
     private void CheckAnim()
     {
-        if (inputx == 0)
-        {
-            currentState = PlayerState.Idle;
-        }
-
         _anim.SetBool("PlayerWalk", inputx != 0 ? true : false);
 
         _anim.SetBool("PlayerRun", inputx != 0 && currentState == PlayerState.Run ? true : false);
 
         _anim.SetBool("PlayerJump", isGround ? false : true);
 
-        _anim.SetBool("PlayerSit", checkSit);
-
-        
-        
-
+        _anim.SetBool("PlayerSliding", checkSliding);
     }
 
     private void CheckGround()
@@ -175,13 +168,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Sit(bool LeftControl)
+    private void Sliding(bool LeftControl)
     {
-        checkSit = true;
-            currentState = PlayerState.Sit;
-        //if (LeftControl)
-        //{
-        //}
+        if (checkSliding)
+        {
+            return;
+        }
+        _rigid.AddForce(new Vector2(transform.position.x > mousePos.x ? -1 : 1, 0) * _slidingPower, ForceMode2D.Impulse);
+        checkSliding = true;
+        currentState = PlayerState.Sliding;
+        StartCoroutine("CheckSliding");
+    }
+
+    IEnumerator CheckSliding()
+    {
+        yield return new WaitForSeconds(1);
+        checkSliding = false;
+        currentState = PlayerState.Walk;
     }
     
 
@@ -217,6 +220,7 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case PlayerState.Walk:
+                _anim.SetBool("PlayerSliding", false);
                 _speed = _normalSpeed;
                 _rigid.velocity = new Vector2(inputx * _speed, _rigid.velocity.y);
                 break;
@@ -228,10 +232,9 @@ public class PlayerController : MonoBehaviour
 
                 break;
 
-            case PlayerState.Sit:
-                _speed = _sitSpeed;
-                _rigid.velocity = new Vector2(inputx * _speed, _rigid.velocity.y);
-                transform.Translate(Vector3.down * 0.5f * Time.deltaTime);
+            case PlayerState.Sliding:
+                _anim.SetBool("PlayerWalk", false);
+                _anim.SetBool("PlayerRun", false);
                 break;
 
 
