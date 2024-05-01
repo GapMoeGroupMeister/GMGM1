@@ -6,12 +6,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
-    public Action<float> OnMoveMentEvent;
+    public Action<float> OnMovementEvent;
     public Action<bool> OnJumpEvent;
     public Action<bool> OnRunEvent;
     public Action<bool> OnSitEvent;
     public Action<bool,bool,bool> OnMouseClick;
     public Action<Vector2> MouseScrall;
+    public Action<int> WeaponChange;
 
     public float inputx = 0;
     public bool LeftShift;
@@ -22,10 +23,12 @@ public class PlayerInput : MonoBehaviour
     public bool Mouse1;
 
     PlayerAttackController _playerController;
+    PlayerWeaponManager _playerWeaponManager;
 
     private void Awake()
     {
         _playerController = GameObject.Find("Player").GetComponent<PlayerAttackController>();
+        _playerWeaponManager = GameObject.Find("Player").GetComponent<PlayerWeaponManager>();
     }
 
     private void Update()
@@ -33,18 +36,25 @@ public class PlayerInput : MonoBehaviour
         Mouse0 = Input.GetMouseButtonDown(0);
         MouseDown0 = Input.GetMouseButton(0);
         Mouse1 = Input.GetMouseButton(1);
+
         Vector2 vec = Mouse.current.scroll.ReadValue();
-        print(vec);
+
         if ((Mouse0 || MouseDown0) || Mouse1)
         OnMouseClick?.Invoke(Mouse0, MouseDown0, Mouse1);
+
         if(vec != Vector2.zero)
         MouseScrall?.Invoke(vec);
+
+        if (_playerWeaponManager.currentIndex != _playerWeaponManager.index)
+        {
+            WeaponChange?.Invoke(_playerWeaponManager.index);
+        }
     }
 
     public void OnMove(InputValue value)
     {
         Vector2 vector = value.Get<Vector2>();
-        OnMoveMentEvent?.Invoke(vector.x);
+        OnMovementEvent?.Invoke(vector.x);
     }
 
     public void OnJump(InputValue value)

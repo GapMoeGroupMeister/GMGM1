@@ -20,6 +20,8 @@ public class AK47 : Gun
     {
         base.Awake();
 
+
+
     }
 
     public override void Fire(Vector2 direction)
