@@ -76,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0.4178315, g: 1, b: 0.38679236, a: 1}
+  m_Sprite: {fileID: 1520012648, guid: 939ffad8589b695438af9ecb42354a2f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -111,6 +111,10 @@ MonoBehaviour:
   gunSO: {fileID: 11400000, guid: 05fff15517ef9d3498d447db908aac1e, type: 2}
   bulletPrefab: {fileID: 1843989781348865363, guid: d260880515a2db1408bbbbca3a0183c9, type: 3}
   gunTip: {fileID: 8969115628671681790}
+  _mousePos: {x: 0, y: 0}
+  _player: {fileID: 0}
+  _isReloading: 0
+  _currentTime: 0
 --- !u!114 &-8356203140924021825
 MonoBehaviour:
   m_ObjectHideFlags: 0

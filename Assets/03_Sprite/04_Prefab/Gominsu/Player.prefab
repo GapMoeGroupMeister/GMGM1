@@ -241,7 +241,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aae45176a4a4ac44f9ead1f99b8c0c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponManager: {fileID: 6062416390289312866}
+  gun: {fileID: 0}
+  _weaponManager: {fileID: 0}
 --- !u!114 &8196317534513522373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +263,7 @@ MonoBehaviour:
   MouseDown0: 0
   Mouse1: 0
   index: 0
+  currentIndex: 0
 --- !u!114 &5026572717271094729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,7 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 608d62d04cd9135408b7f932495dc41f, type: 3}
-  m_NotificationBehavior: 2
+  m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -307,6 +309,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 1354cb63-8b0e-4aba-9eab-4ab95d79ca8e
     m_ActionName: GameControl/Move
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4a55ad97-122d-46f5-8580-6c0fddcc1e09
+    m_ActionName: PlayerControl/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7fdf1467-695b-4e37-94c7-fcab14f29f93
+    m_ActionName: PlayerControl/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e0992d19-9dce-422a-bb82-da377d8a5c4c
+    m_ActionName: PlayerControl/Run[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6607ab73-b301-4a35-85ac-1e3bf05b8269
+    m_ActionName: PlayerControl/Sit[/Keyboard/leftCtrl]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Window
   m_DefaultActionMap: PlayerControl
