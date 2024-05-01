@@ -170,7 +170,8 @@ public class PlayerController : MonoBehaviour
 
     private void Sliding(bool LeftControl)
     {
-        if (checkSliding)
+
+        if (checkSliding || !isGround)
         {
             return;
         }

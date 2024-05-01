@@ -37,24 +37,22 @@ public class PlayerWeaponManager : MonoBehaviour
     }
     void ChangeWeapon(int idx)
     {
-        print(idx);
         currentGun = idx;
         if (currentGun > 0)
         {
-            print("½ÇÇà");
             _gunPrefab = idx - 1;
             InputCheck();
         }
         currentIndex = index;
     }
-
     void MouseScrallCheck(Vector2 vec)
     {
 
-        if (_gun != null &&_gun._isReloading)
-        {
+        if (changeCheck)
             return;
-        }
+        if (_gun != null &&_gun._isReloading)
+            return;
+
             
         if (vec.y <= -120 && index < 3)
         {
@@ -78,12 +76,8 @@ public class PlayerWeaponManager : MonoBehaviour
             return;
         StartCoroutine("ChangeCheck");
         Destroy(gun);
-        print(gun);
         gun = Instantiate(gunPrefab[_gunPrefab], gameObject.transform);
         gun.transform.position = transform.position;
-
-        print(gun);
-
 
         CurrentGun = gun;
         currentGunUI.i = currentGun;
@@ -94,7 +88,7 @@ public class PlayerWeaponManager : MonoBehaviour
     IEnumerator ChangeCheck()
     {
         changeCheck = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         changeCheck = false;
     }
 }

@@ -262,7 +262,7 @@ public class Enemy : MonoBehaviour
         float dir = _direction == Direction.Left ? -1f : 1f;
         gun.transform.localPosition = new Vector3(dir * 0.7f, 0, 0);       
 
-        gun.GetComponent<Fire1>().enabled = false;
+        //gun.GetComponent<Fire1>().enabled = false;
     }
 
     public void Damage (int amout)
