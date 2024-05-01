@@ -5,8 +5,6 @@ using UnityEngine;
 public class PlayerAttackController : MonoBehaviour
 {
     public Gun gun;
-    public GameObject knife;
-    private Knife _knifeScripts;
     [SerializeField]
     PlayerWeaponManager _weaponManager;
     SpriteRenderer _spriteRenderer;
@@ -15,7 +13,6 @@ public class PlayerAttackController : MonoBehaviour
 
     private void Awake()
     {
-        _knifeScripts = knife.GetComponent<Knife>();
         _playerInput = GetComponent<PlayerInput>();
         _weaponManager = GetComponent<PlayerWeaponManager>();
     }
@@ -49,7 +46,7 @@ public class PlayerAttackController : MonoBehaviour
             gun.transform.position = new Vector3(transform.position.x + 0.7f, transform.position.y, 0);
         }
     }
-    private void GunInput(bool Mouse0,bool MouseDown0,bool Mouse1)
+    private void GunInput(bool Mouse0,bool MouseDown0)
     {
         if (gun != null) 
         {
@@ -58,14 +55,8 @@ public class PlayerAttackController : MonoBehaviour
                 gun._isReloading = true;
                 gun.Reload();
             }
-            if (Mouse1)//¿ìÅ¬¸¯
-            {
-                //_knifeScripts.Slash();
-            }
             if (!gun.IsCoolTime)
-            {
                 return;
-            }
             if (gun.isContinueFire)
             {
                 if (MouseDown0)//ÁÂÅ¬¸¯ È¦µå

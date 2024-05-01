@@ -10,7 +10,7 @@ public class PlayerInput : MonoBehaviour
     public Action<bool> OnJumpEvent;
     public Action<bool> OnRunEvent;
     public Action<bool> OnSitEvent;
-    public Action<bool,bool,bool> OnMouseClick;
+    public Action<bool,bool> OnMouseClick;
     public Action<Vector2> MouseScrall;
     public Action<int> WeaponChange;
 
@@ -20,14 +20,10 @@ public class PlayerInput : MonoBehaviour
     public bool Space;
     public bool Mouse0;
     public bool MouseDown0;
-    public bool Mouse1;
-
-    PlayerAttackController _playerController;
     PlayerWeaponManager _playerWeaponManager;
 
     private void Awake()
     {
-        _playerController = GameObject.Find("Player").GetComponent<PlayerAttackController>();
         _playerWeaponManager = GameObject.Find("Player").GetComponent<PlayerWeaponManager>();
     }
 
@@ -35,12 +31,11 @@ public class PlayerInput : MonoBehaviour
     {
         Mouse0 = Input.GetMouseButtonDown(0);
         MouseDown0 = Input.GetMouseButton(0);
-        Mouse1 = Input.GetMouseButton(1);
 
         Vector2 vec = Mouse.current.scroll.ReadValue();
 
-        if ((Mouse0 || MouseDown0) || Mouse1)
-        OnMouseClick?.Invoke(Mouse0, MouseDown0, Mouse1);
+        if (Mouse0 || MouseDown0)
+            OnMouseClick?.Invoke(Mouse0, MouseDown0);
 
         if(vec != Vector2.zero)
         MouseScrall?.Invoke(vec);
@@ -75,24 +70,4 @@ public class PlayerInput : MonoBehaviour
         bool sit = value.isPressed;
         OnSitEvent?.Invoke(sit);
     }
-
-
-
-
-    //public void OnGunSwap(InputAction.CallbackContext context)
-    //{
-    //    Debug.Log("dfdf");
-    //    index = (int)context.ReadValue<float>();
-    //    print(index);
-    //}
-
-
-
-
-    //public void OnGunSwap(InputValue value)
-    //{
-    //    Debug.Log((int)value.Get<float>());
-    //    //index = (int)value.Get<float>();
-    //    print(index);
-    //}
 }
