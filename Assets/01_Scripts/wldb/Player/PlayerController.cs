@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
     private float _ray = 1f;
 
     public bool isGround;
+    private bool checkSit = false;
 
     private Rigidbody2D _rigid;  // Rigidbody ???
     private SpriteRenderer SpriteRenderer;
@@ -87,7 +88,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        
+        Sliding();
         CheckGround();
         CheckMove();
         CheckAnim();
@@ -129,7 +130,18 @@ public class PlayerController : MonoBehaviour
         {
             currentState = PlayerState.Idle;
         }
+
         _anim.SetBool("PlayerWalk", inputx != 0 ? true : false);
+
+        _anim.SetBool("PlayerRun", inputx != 0 && currentState == PlayerState.Run ? true : false);
+
+        _anim.SetBool("PlayerJump", isGround ? false : true);
+
+        _anim.SetBool("PlayerSit", checkSit);
+
+        
+        
+
     }
 
     private void CheckGround()
@@ -150,10 +162,6 @@ public class PlayerController : MonoBehaviour
         {
             currentState = PlayerState.Walk;
         }
-        else if (x == 0)
-        {
-            _speed = _normalSpeed;
-        }
     }
 
     private void Run(bool LeftShift)
@@ -162,20 +170,20 @@ public class PlayerController : MonoBehaviour
         {
             if (currentState == PlayerState.Walk)
             {
-                _anim.SetBool("PlayerRun",true);
                 currentState = PlayerState.Run;
             }
         }
-        
     }
 
     private void Sit(bool LeftControl)
     {
-        if (LeftControl)
-        {
+        checkSit = true;
             currentState = PlayerState.Sit;
-        }
+        //if (LeftControl)
+        //{
+        //}
     }
+    
 
     private void Jump(bool Space)
     {
@@ -183,49 +191,15 @@ public class PlayerController : MonoBehaviour
         {
             if (isGround)
             {
-                _anim.SetBool("PlayerJump", true);
                 _rigid.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
             }
         }
     }
 
-    //private void InputKey(float x, bool LeftShift, bool LeftControl, bool Space)
-    //{
-    //    currentState = PlayerState.Idle;
-    //    if (x != 0)
-    //    {
-    //        currentState = PlayerState.Walk;
-    //        inputx = x;
-    //    }
-
-
-    //    if (LeftShift && isGround)
-    //    {
-    //        if (currentState == PlayerState.Walk)
-    //        {
-    //            currentState = PlayerState.Run;
-    //            _anim.SetBool("PlayerRun", true);
-    //        }
-    //    }
-
-
-    //    if (LeftControl)
-    //    {
-    //        currentState = PlayerState.Sit;
-    //        _anim.SetBool("PlayerSit", true);
-    //    }
-
-
-
-    //    if (Space)
-    //    {
-    //        if (isGround)
-    //        {
-    //            _rigid.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-    //        }
-    //    }
-    //}
-
+    private void Sliding()
+    {
+        
+    }
 
     private void Flip()
     {
@@ -239,8 +213,7 @@ public class PlayerController : MonoBehaviour
         switch (currentState)
         {
             case PlayerState.Idle:
-                //_anim.SetBool("PlayerJump", false);
-                //_anim.SetBool("PlayerRun", false);
+                if (isGround) _rigid.velocity = Vector2.zero;
                 break;
 
             case PlayerState.Walk:
@@ -249,6 +222,7 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case PlayerState.Run:
+                _anim.SetBool("PlayerWalk", false);
                 _speed = _runSpeed;
                 _rigid.velocity = new Vector2(inputx * _speed, _rigid.velocity.y);
 
@@ -260,8 +234,9 @@ public class PlayerController : MonoBehaviour
                 transform.Translate(Vector3.down * 0.5f * Time.deltaTime);
                 break;
 
-            //case PlayerState.UseHeal:
-                
+
+                //case PlayerState.UseHeal:
+
         }
 
     }
