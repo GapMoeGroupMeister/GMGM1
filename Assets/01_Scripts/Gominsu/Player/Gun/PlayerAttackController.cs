@@ -9,6 +9,8 @@ public class PlayerAttackController : MonoBehaviour
     PlayerWeaponManager _weaponManager;
     SpriteRenderer _spriteRenderer;
 
+    bool fireLight = true;
+
     private PlayerInput _playerInput;
 
     private void Awake()
@@ -63,6 +65,9 @@ public class PlayerAttackController : MonoBehaviour
                 {
                     gun._currentTime = 0;
                     FireHandler();
+                    if(fireLight)
+                    _weaponManager.light.SetActive(true);
+                    StartCoroutine(FireLightCheck());
                 }
             }
             else
@@ -71,6 +76,8 @@ public class PlayerAttackController : MonoBehaviour
                 {
                     gun._currentTime = 0;
                     FireHandler();
+                    _weaponManager.light.SetActive(true);
+                    StartCoroutine(FireLightCheck());
                 }
             } 
         }
@@ -96,5 +103,13 @@ public class PlayerAttackController : MonoBehaviour
 
         _spriteRenderer.flipY = transform.position.x > gun._mousePos.x;
 
+    }
+
+    IEnumerator FireLightCheck()
+    {
+        fireLight = false;
+        yield return new WaitForSeconds(0.1f);
+        _weaponManager.light.SetActive(false);
+        fireLight = true;
     }
 }
