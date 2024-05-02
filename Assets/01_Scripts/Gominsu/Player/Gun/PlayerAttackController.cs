@@ -65,9 +65,14 @@ public class PlayerAttackController : MonoBehaviour
                 {
                     gun._currentTime = 0;
                     FireHandler();
-                    if(fireLight)
-                    _weaponManager.light.SetActive(true);
-                    StartCoroutine(FireLightCheck());
+                    if (fireLight)
+                    {
+                        if (_weaponManager.light != null)
+                        {
+                            _weaponManager.light.SetActive(true);
+                            StartCoroutine(FireLightCheck());
+                        }
+                    }
                 }
             }
             else
@@ -76,8 +81,11 @@ public class PlayerAttackController : MonoBehaviour
                 {
                     gun._currentTime = 0;
                     FireHandler();
-                    _weaponManager.light.SetActive(true);
-                    StartCoroutine(FireLightCheck());
+                    if (_weaponManager.light != null)
+                    {
+                        _weaponManager.light.SetActive(true);
+                        StartCoroutine(FireLightCheck());
+                    }
                 }
             } 
         }

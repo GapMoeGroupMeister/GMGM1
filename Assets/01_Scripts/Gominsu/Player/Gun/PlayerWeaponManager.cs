@@ -60,7 +60,6 @@ public class PlayerWeaponManager : MonoBehaviour
             currentIndex = index;
             index++;
             index = Mathf.Clamp(index, 1, 3);
-            light = GameObject.Find("Light");
 
         }
         else if (vec.y >= 120 && index > 1)
@@ -68,7 +67,6 @@ public class PlayerWeaponManager : MonoBehaviour
             currentIndex = index;
                 index--;
                 index = Mathf.Clamp(index, 1, 3);
-            light = GameObject.Find("Light");
 
         }
     }
@@ -87,6 +85,7 @@ public class PlayerWeaponManager : MonoBehaviour
         CurrentGun = gun;
         currentGunUI.i = currentGun;
         _gun = FindObjectOfType<Gun>();
+        light = GameObject.Find("Light");
         GameManager.Instance.RefreshBullet(_gun.currentBulletCount, _gun.maxBulletCount);
     }
 
