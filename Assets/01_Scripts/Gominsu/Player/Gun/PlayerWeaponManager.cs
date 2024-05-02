@@ -9,6 +9,7 @@ public class PlayerWeaponManager : MonoBehaviour
     GameObject[] gunPrefab;
     public GameObject gun;
     public GameObject CurrentGun;
+    public GameObject light;
     public Gun _gun;
     PlayerInput _playerInput;
     bool changeCheck = false;
@@ -59,12 +60,16 @@ public class PlayerWeaponManager : MonoBehaviour
             currentIndex = index;
             index++;
             index = Mathf.Clamp(index, 1, 3);
+            light = GameObject.Find("Light");
+
         }
         else if (vec.y >= 120 && index > 1)
         {
             currentIndex = index;
                 index--;
-                index = Mathf.Clamp(index, 1, 3); 
+                index = Mathf.Clamp(index, 1, 3);
+            light = GameObject.Find("Light");
+
         }
     }
 
