@@ -116,7 +116,7 @@ public class PlayerAttackController : MonoBehaviour
     IEnumerator FireLightCheck()
     {
         fireLight = false;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.02f);
         _weaponManager.light.SetActive(false);
         fireLight = true;
     }
