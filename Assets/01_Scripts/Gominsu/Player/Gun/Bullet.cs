@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    private int damage= 1;
+    private float speed = 3;
 
-    public float speed = 3;
-
-    public Vector3 gunTipPosition;
-    public float destroyDistance = 10;
-
+    private Vector3 gunTipPosition;
+    private float destroyDistance = 10;
 
     public Vector3 Direction;//총알 방향
 
@@ -17,11 +16,11 @@ public class Bullet : MonoBehaviour
     {
         this.speed = speed;
         this.destroyDistance = destroyDistance;
-
     }
     
     public void Fire(Vector2 dir)
     {
+        transform.right = dir;
         Direction = dir;
         gunTipPosition = transform.position;//쏠때 당시의 자신의 위치 = 총구의 위치 
     }
@@ -34,17 +33,15 @@ public class Bullet : MonoBehaviour
         {                                                                             //   ㄴ얘는 transform.position - guntip(현재 이동한 거리)이다
             Destroy(gameObject);
         }
-
-        
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {   
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(collision.gameObject);
-        }
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            enemy.Damage(damage);
+        }        
         Destroy(gameObject);
-
     }
 }

@@ -29,7 +29,6 @@ public class Flame : EnemyWeapon
             bullet.GetComponent<EnemyBullet>().speed = bulletSpeed;
             bullet.GetComponent<EnemyBullet>().destroyDistance = Random.Range(13f, 15f);
         }
-
     }
     public override void Reload()
     {

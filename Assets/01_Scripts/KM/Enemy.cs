@@ -1,7 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Serialization;
+
+public enum EnemyState
+{    
+    Roaming,
+    Attack
+}
 
 public class Enemy : MonoBehaviour
 {
@@ -9,13 +18,16 @@ public class Enemy : MonoBehaviour
     {
         Left,
         Right
-    }    
+    }
+
+
+    [SerializeField] private TextMeshPro stateText;
+    [SerializeField] private TextMeshPro hpText;
 
     [SerializeField] private int _enemyCode = 1;
 
     [SerializeField] private float _sight = 1;
     [SerializeField] private float _wallSight = 1;
-    [SerializeField] private float _wallSight2 = 1;
 
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private LayerMask _wallLayer;
@@ -23,119 +35,194 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _findEnemyMark;
     [SerializeField] private GameObject _findWallMark;
 
+    [SerializeField] private PlayerController player;
+
+    private EnemyState enemyState = EnemyState.Roaming;
+
     private float _moveSpeed = 3;
     private int _hp = 5;
     private float _directionMoveDistance = 6;
     private Vector2 moveRange;   
     private Direction _direction = Direction.Left;
 
+    private Gun gun;
+    private float gunFireDelay = 0;
+    
+    bool playerInSight = false;
+
+
     void Start()
     {
-        EnemyTableData enemyData = EnemyTable.Instance.Find(_enemyCode);
-        _hp = enemyData.Enemy_HP;
-        _directionMoveDistance = enemyData.Enemy_RoamingRange;
-        _moveSpeed = enemyData.Enemy_MoveSpeed;
-
-        _findEnemyMark.SetActive(false);
-        _findWallMark.SetActive(false);
-
-        Vector3 pos = transform.position;
-        moveRange.x = pos.x - _directionMoveDistance;
-        moveRange.y = pos.x + _directionMoveDistance;
+        Setup();        
     }
 
     void Update()
     {
+        OnUpdateState();        
+    }
 
+    private void UpdateGun()
+    {
+        //stateText.text += gun.ReloadString;
+
+        gunFireDelay += Time.deltaTime;
+
+        float playerDir = player.transform.position.x > transform.position.x ? 1 : -1;
+        gun.transform.localPosition = new Vector3(playerDir * 0.7f, 0, 0);
+
+        if( player != null )
+        {
+            Vector2 dir = ((Vector2)player.transform.position - (Vector2)gun.transform.position).normalized;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            gun.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+
+            if (playerInSight)
+            {
+                if (gunFireDelay >= gun.fireDelay)
+                {
+                    gun.Fire(dir.normalized);
+                    gunFireDelay = 0;
+                }
+            }
+        }
+    }
+
+    private void OnEnterState(EnemyState state)
+    {
+        if (state == enemyState)
+            return;
+
+        OnLeaveState(enemyState);
+        enemyState = state;
+
+        switch (enemyState)
+        {
+            case EnemyState.Roaming:
+                {                    
+                    break;
+                }
+            case EnemyState.Attack:
+                {
+                    gunFireDelay = 0;
+                    _findEnemyMark.SetActive(true);
+                    _findWallMark.SetActive(false);
+                    break;
+                }
+        }
+    }
+
+    private void OnLeaveState(EnemyState state)
+    {
+        switch (enemyState)
+        {
+            case EnemyState.Roaming:
+                {
+                    break;
+                }
+            case EnemyState.Attack:
+                {
+                    _findEnemyMark.SetActive(false);
+                    break;
+                }
+        }
+    }
+
+    private void OnUpdateState()
+    {
+        hpText.text = _hp.ToString();
+        stateText.text = enemyState.ToString();
+
+        switch ( enemyState )
+        {
+            case EnemyState.Roaming:
+                {
+                    OnUpdateRoaming();
+                    break;
+                }
+            case EnemyState.Attack: 
+                {
+                    OnUpdateAttack();
+                    break;
+                }
+        }
+    }
+
+    private void OnUpdateRoaming()
+    {
         Transform tr = transform;
-        // ÇöÀç ¿¡³Ê¹ÌÀÇ À§Ä¡¸¦ ¾ò¾î¿È
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Vector2 currentPosition = tr.position;
         Vector2 currentPosition2 = tr.position + new Vector3(0, -0.1f);
-        // ÇöÀç ¹æÇâ°ª ¼³Á¤
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â°ª ï¿½ï¿½ï¿½ï¿½
         float dir = _direction == Direction.Left ? -1f : 1f;
 
-        bool findWall1 = false;
-        bool findWall2 = false;
-        bool findPlayer = false;
-
-
-        // ÀÌµ¿ ¹æÇâÀ¸·Î Ray¸¦ ½÷¼­ Ãæµ¹ µÇ¸é ¹æÇâ ÀüÈ¯ (PlayerÃ£±â)
-        //RaycastHit2D hit2D = Physics2D.Raycast(currentPosition, new Vector2(dir, 0), _sight, _playerLayer);
-        //if (hit2D.collider != null)
-        //{
-        //    findPlayer = true;
-        //}
-        //RaycastHit2D hit = Physics2D.Raycast(currentPosition2, new Vector2(dir, 0), _wallSight, _wallLayer);
-        //if (hit.collider != null)
-        //{
-        //    findWall = true;
-        //}
-
-        RaycastHit2D hit2D = Physics2D.Raycast(currentPosition, new Vector2(dir, 0), _sight, _playerLayer);
-        if (hit2D.collider != null)
+        // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Ã¾ï¿½ ï¿½Å¸ï¿½ ï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½
+        float playerDistance = Vector3.Distance(player.transform.position, transform.position);
+        playerInSight = playerDistance <= _sight;
+        
+        if (playerInSight)
         {
-            findPlayer = true;
-        }
-
-        if (findPlayer) 
-        {
-            RaycastHit2D hit = Physics2D.Raycast(currentPosition2, new Vector2(dir, 0), _wallSight, _wallLayer);
+            float playerDir = player.transform.position.x > transform.position.x ? 1 : -1;
+            RaycastHit2D hit = Physics2D.Raycast(currentPosition2, new Vector2(playerDir, 0), _sight, _wallLayer);
             if (hit.collider != null)
+            {   // ï¿½Ã¾ï¿½ ï¿½È¿ï¿½ ï¿½Ö´Âµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                float wallDistance = Vector3.Distance(hit.collider.transform.position, transform.position);
+
+                if( wallDistance < playerDistance ) 
+                {
+                    _findWallMark.SetActive(true);
+                    return;
+                }                
+            }
+            else
             {
-                findWall1 = true;
+                OnEnterState(EnemyState.Attack);
+                return;
             }
         }
 
-        if (!findPlayer)
-        {
-            RaycastHit2D hit2 = Physics2D.Raycast(currentPosition2, new Vector2(dir, 0), _wallSight2, _wallLayer);
-            if (hit2.collider != null)
-            {
-                findWall2 = true;
-            }
-        }
+        _findWallMark.SetActive(false);
 
-        Debug.DrawRay(currentPosition, new Vector2(dir, 0), Color.green);
-        Debug.DrawRay(currentPosition2, new Vector2(dir, 0), Color.blue);
-
-        print("wall " + findWall1 + " / player : " + findPlayer);
-
-        if (findPlayer && findWall1)
+        //else
+        //{
+        RaycastHit2D hit2 = Physics2D.Raycast(currentPosition2, new Vector2(dir, 0), _wallSight, _wallLayer);
+        if (hit2.collider != null)
         {
-            _findEnemyMark.SetActive(false);
-            _findWallMark.SetActive(true);
-            return;
-        }
-        else if (findPlayer)
-        {
-            _findEnemyMark.SetActive(true);
-            _findWallMark.SetActive(false);            
-            return;
-        }
-        else if (findWall2)
-        {
-            _findEnemyMark.SetActive(false);
-            _findWallMark.SetActive(false);
             dir = ChangeDirection();
-        }
-        else
-        {
-            _findEnemyMark.SetActive(false);
-            _findWallMark.SetActive(false);
-        }
+        }                
 
         float move = dir * _moveSpeed * Time.deltaTime;
 
-        // ÇØ´ç ¹æÇâÀ¸·Î ÀÌµ¿
+        // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
         currentPosition.x += move;
-        // ÀÌµ¿ °ª Àû¿ë
+        // ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         tr.position = currentPosition;
-        
-        // ÁöÁ¤µÈ °Å¸® ¸¸Å­ ÇØ´ç ¹æÇâÀ¸·Î ÀÌµ¿
+
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½Å­ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
         if (currentPosition.x <= moveRange.x || currentPosition.x >= moveRange.y)
         {
             ChangeDirection();
         }
+    }
+
+    private void OnUpdateAttack()
+    {
+        Transform tr = transform;
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Vector2 currentPosition = tr.position;
+        Vector2 currentPosition2 = tr.position + new Vector3(0, -0.1f);
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â°ª ï¿½ï¿½ï¿½ï¿½
+        float dir = _direction == Direction.Left ? -1f : 1f;
+
+        float playerDistance = Vector3.Distance(player.transform.position, transform.position);
+        // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Ã¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        if (playerDistance > _sight)
+        {
+            OnEnterState(EnemyState.Roaming);
+            return;
+        }
+        
+        UpdateGun();
     }
 
     private float ChangeDirection()
@@ -144,12 +231,46 @@ public class Enemy : MonoBehaviour
         return _direction == Direction.Left ? -1 : 1;
     }
 
+    private void Setup()
+    {
+        EnemyTableData enemyData = EnemyTable.Instance.Find(_enemyCode);
+        _hp = enemyData.Enemy_HP;
+        _directionMoveDistance = enemyData.Enemy_RoamingRange;
+        _moveSpeed = enemyData.Enemy_MoveSpeed;
+
+        _sight = enemyData.Sight;
+        _wallSight = enemyData.WallSight;
+
+        _findEnemyMark.SetActive(false);
+        _findWallMark.SetActive(false);
+
+        Vector3 pos = transform.position;
+        moveRange.x = pos.x - _directionMoveDistance;
+        moveRange.y = pos.x + _directionMoveDistance;
+
+        SetupGun(enemyData);
+    }
+
+    private void SetupGun(EnemyTableData enemyData)
+    {
+        if (gun != null)
+        { 
+            Destroy(gun.gameObject);
+        }
+        gun = GameObject.Instantiate(enemyData.GunPrefab, gameObject.transform);
+
+        float dir = _direction == Direction.Left ? -1f : 1f;
+        gun.transform.localPosition = new Vector3(dir * 0.7f, 0, 0);       
+
+        //gun.GetComponent<Fire1>().enabled = false;
+    }
+
     public void Damage (int amout)
     {
         _hp -= amout;
         if (_hp <= 0)
         {
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 

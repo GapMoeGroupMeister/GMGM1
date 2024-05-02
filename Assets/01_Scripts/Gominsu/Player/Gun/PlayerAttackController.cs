@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class PlayerAttackController : MonoBehaviour
 {
-    Gun gun;
+    public Gun gun;
     [SerializeField]
-    PlayerWeaponManager weaponManager;
+    PlayerWeaponManager _weaponManager;
+    SpriteRenderer _spriteRenderer;
+
+    bool fireLight = true;
 
     private PlayerInput _playerInput;
 
     private void Awake()
     {
-        
         _playerInput = GetComponent<PlayerInput>();
-        weaponManager = GetComponent<PlayerWeaponManager>();
+        _weaponManager = GetComponent<PlayerWeaponManager>();
     }
 
     private void Start()
@@ -23,19 +25,21 @@ public class PlayerAttackController : MonoBehaviour
     }
     protected virtual void Update()
     {
-        if (weaponManager.CurrentGun != null)
-            gun = weaponManager.CurrentGun.GetComponent<Gun>();
+        if (_weaponManager.CurrentGun != null)
+            gun = _weaponManager.CurrentGun.GetComponent<Gun>();
         if (gun != null) 
         { 
         gun._currentTime += Time.deltaTime;
         gun._mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//마우스 위치를 월드 좌표로 변환
         Rotate();
         GunRender();
+            _spriteRenderer = gun.GetComponent<SpriteRenderer>();
+            Flip();
         }
     }
     private void GunRender()
     {
-        if (gun._player.transform.position.x > gun._mousePos.x)
+        if (transform.position.x > gun._mousePos.x)
         {
             gun.transform.position = new Vector3(transform.position.x + -0.7f, transform.position.y, 0);
         }
@@ -44,7 +48,7 @@ public class PlayerAttackController : MonoBehaviour
             gun.transform.position = new Vector3(transform.position.x + 0.7f, transform.position.y, 0);
         }
     }
-    private void GunInput(bool Mouse0,bool MouseDown0,bool Mouse1)
+    private void GunInput(bool Mouse0,bool MouseDown0)
     {
         if (gun != null) 
         {
@@ -53,20 +57,17 @@ public class PlayerAttackController : MonoBehaviour
                 gun._isReloading = true;
                 gun.Reload();
             }
-            if (Mouse1)//우클릭
-            {
-                //knife.Slash();
-            }
             if (!gun.IsCoolTime)
-            {
                 return;
-            }
             if (gun.isContinueFire)
             {
                 if (MouseDown0)//좌클릭 홀드
                 {
                     gun._currentTime = 0;
                     FireHandler();
+                    if(fireLight)
+                    _weaponManager.light.SetActive(true);
+                    StartCoroutine(FireLightCheck());
                 }
             }
             else
@@ -75,6 +76,8 @@ public class PlayerAttackController : MonoBehaviour
                 {
                     gun._currentTime = 0;
                     FireHandler();
+                    _weaponManager.light.SetActive(true);
+                    StartCoroutine(FireLightCheck());
                 }
             } 
         }
@@ -83,7 +86,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         Vector2 dir = (gun._mousePos - (Vector2)transform.position).normalized;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        gun.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+        gun.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
     protected void FireHandler()
@@ -93,5 +96,20 @@ public class PlayerAttackController : MonoBehaviour
         gun.currentBulletCount--;
         GameManager.Instance.playerController.OnShootEvent?.Invoke(gun.currentBulletCount, gun.maxBulletCount);
         gun.Fire(dir.normalized);
+    }
+
+    private void Flip()
+    {
+
+        _spriteRenderer.flipY = transform.position.x > gun._mousePos.x;
+
+    }
+
+    IEnumerator FireLightCheck()
+    {
+        fireLight = false;
+        yield return new WaitForSeconds(0.1f);
+        _weaponManager.light.SetActive(false);
+        fireLight = true;
     }
 }
