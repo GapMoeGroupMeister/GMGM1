@@ -67,7 +67,7 @@ public class PlayerAttackController : MonoBehaviour
                     FireHandler();
                     if (fireLight)
                     {
-                        if (_weaponManager.light != null)
+                        if (_weaponManager.light != null && !gun._isReloading)
                         {
                             _weaponManager.light.SetActive(true);
                             StartCoroutine(FireLightCheck());
@@ -81,7 +81,7 @@ public class PlayerAttackController : MonoBehaviour
                 {
                     gun._currentTime = 0;
                     FireHandler();
-                    if (_weaponManager.light != null)
+                    if (_weaponManager.light != null && !gun._isReloading)
                     {
                         _weaponManager.light.SetActive(true);
                         StartCoroutine(FireLightCheck());
@@ -109,7 +109,7 @@ public class PlayerAttackController : MonoBehaviour
     private void Flip()
     {
 
-        _spriteRenderer.flipY = transform.position.x > gun._mousePos.x;
+        gun.transform.localScale = new Vector3(gun.transform.localScale.x, gun.transform.localScale.y * transform.position.x > gun._mousePos.x ? -1 : 1, gun.transform.localScale.z);
 
     }
 
