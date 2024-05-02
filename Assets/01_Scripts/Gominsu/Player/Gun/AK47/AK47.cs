@@ -19,7 +19,9 @@ public class AK47 : Gun
     protected override void Awake()
     {
         base.Awake();
-        
+
+
+
     }
 
     public override void Fire(Vector2 direction)

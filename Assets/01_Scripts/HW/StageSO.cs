@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "SO/StageSO")]
 public class StageSO : ScriptableObject
 {
-    public List<GameObject> stagePrefab;
+    public List<GameObject> stagePrefabs;
 }
