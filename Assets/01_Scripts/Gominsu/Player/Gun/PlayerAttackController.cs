@@ -10,6 +10,8 @@ public class PlayerAttackController : MonoBehaviour
     SpriteRenderer _spriteRenderer;
 
     bool fireLight = true;
+    bool _renderer = true;
+    bool checkRenderer;
 
     private PlayerInput _playerInput;
 
@@ -34,6 +36,7 @@ public class PlayerAttackController : MonoBehaviour
         Rotate();
         GunRender();
             _spriteRenderer = gun.GetComponent<SpriteRenderer>();
+            
             Flip();
         }
     }
@@ -108,9 +111,16 @@ public class PlayerAttackController : MonoBehaviour
 
     private void Flip()
     {
-
-        gun.transform.localScale = new Vector3(gun.transform.localScale.x, gun.transform.localScale.y * transform.position.x > gun._mousePos.x ? -1 : 1, gun.transform.localScale.z);
-
+            if (_renderer)
+            {
+            gun.transform.localScale = new Vector3(
+                gun.transform.localScale.x,
+                Mathf.Abs(gun.transform.localScale.y) * transform.position.x > gun._mousePos.x ? -1 : 1,
+                gun.transform.localScale.z
+                );
+                checkRenderer = transform.position.x > gun._mousePos.x;
+            }
+                _renderer = checkRenderer != transform.position.x > gun._mousePos.x;
     }
 
     IEnumerator FireLightCheck()
