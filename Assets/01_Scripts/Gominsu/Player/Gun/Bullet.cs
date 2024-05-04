@@ -7,6 +7,12 @@ public class Bullet : MonoBehaviour
     private int damage= 1;
     private float speed = 3;
 
+    [SerializeField]
+    GameObject bulletEffect;
+    bool _bulletEffect;
+    bool _checkBulletEffect = true;
+    GameObject _bulletEffect_;
+
     private Vector3 gunTipPosition;
     private float destroyDistance = 10;
 
@@ -44,4 +50,13 @@ public class Bullet : MonoBehaviour
         }        
         Destroy(gameObject);
     }
+
+    private void OnDestroy()
+    {
+        _bulletEffect_ = Instantiate(bulletEffect);
+        _bulletEffect_.transform.position = transform.position;
+        
+    }
+
+    
 }
