@@ -49,14 +49,7 @@ public class Bullet : MonoBehaviour
             enemy.Damage(damage);
         }        
         Destroy(gameObject);
-    }
-
-    private void OnDestroy()
-    {
         _bulletEffect_ = Instantiate(bulletEffect);
         _bulletEffect_.transform.position = transform.position;
-        
     }
-
-    
 }
