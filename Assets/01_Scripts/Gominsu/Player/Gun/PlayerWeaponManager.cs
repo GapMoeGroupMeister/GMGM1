@@ -31,9 +31,6 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         _playerInput.MouseScrall += MouseScrallCheck;
         _playerInput.WeaponChange += ChangeWeapon;
-    }
-    private void Update()
-    {
         
     }
     void ChangeWeapon(int idx)
@@ -86,6 +83,7 @@ public class PlayerWeaponManager : MonoBehaviour
         currentGunUI.i = currentGun;
         _gun = FindObjectOfType<Gun>();
         light = GameObject.Find("Light");
+        light.SetActive(false);
         GameManager.Instance.RefreshBullet(_gun.currentBulletCount, _gun.maxBulletCount);
     }
 

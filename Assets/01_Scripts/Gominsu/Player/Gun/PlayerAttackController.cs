@@ -10,6 +10,8 @@ public class PlayerAttackController : MonoBehaviour
     SpriteRenderer _spriteRenderer;
 
     bool fireLight = true;
+    bool _renderer = true;
+    bool checkRenderer;
 
     private PlayerInput _playerInput;
 
@@ -34,6 +36,7 @@ public class PlayerAttackController : MonoBehaviour
         Rotate();
         GunRender();
             _spriteRenderer = gun.GetComponent<SpriteRenderer>();
+            
             Flip();
         }
     }
@@ -67,7 +70,7 @@ public class PlayerAttackController : MonoBehaviour
                     FireHandler();
                     if (fireLight)
                     {
-                        if (_weaponManager.light != null)
+                        if (_weaponManager.light != null && !gun._isReloading)
                         {
                             _weaponManager.light.SetActive(true);
                             StartCoroutine(FireLightCheck());
@@ -81,7 +84,7 @@ public class PlayerAttackController : MonoBehaviour
                 {
                     gun._currentTime = 0;
                     FireHandler();
-                    if (_weaponManager.light != null)
+                    if (_weaponManager.light != null && !gun._isReloading)
                     {
                         _weaponManager.light.SetActive(true);
                         StartCoroutine(FireLightCheck());
@@ -108,15 +111,22 @@ public class PlayerAttackController : MonoBehaviour
 
     private void Flip()
     {
-
-        _spriteRenderer.flipY = transform.position.x > gun._mousePos.x;
-
+            if (_renderer)
+            {
+            gun.transform.localScale = new Vector3(
+                gun.transform.localScale.x,
+                Mathf.Abs(gun.transform.localScale.y) * transform.position.x > gun._mousePos.x ? -1 : 1,
+                gun.transform.localScale.z
+                );
+                checkRenderer = transform.position.x > gun._mousePos.x;
+            }
+                _renderer = checkRenderer != transform.position.x > gun._mousePos.x;
     }
 
     IEnumerator FireLightCheck()
     {
         fireLight = false;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.02f);
         _weaponManager.light.SetActive(false);
         fireLight = true;
     }
