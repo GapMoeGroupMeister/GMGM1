@@ -245,6 +245,11 @@ public class Enemy : MonoBehaviour
         _findEnemyMark.SetActive(false);
         _findWallMark.SetActive(false);
 
+        if(player == null )
+        {
+           player = GameObject.FindObjectOfType<PlayerController>();
+        }
+
         Vector3 pos = transform.position;
         moveRange.x = pos.x - _directionMoveDistance;
         moveRange.y = pos.x + _directionMoveDistance;
@@ -254,10 +259,24 @@ public class Enemy : MonoBehaviour
     
     public void Damage (int amout)
     {
+        if (_hp <= 0)
+            return;
+
         _hp -= amout;
         if (_hp <= 0)
         {
+            StartCoroutine(OnDie());
             Destroy(gameObject);
         }
     }    
+
+    IEnumerator OnDie()
+    {
+        Animator animator = GetComponent<Animator>();
+        animator.Play("enemy-die");
+
+        yield return new WaitForSeconds(3f);
+
+        Destroy(gameObject);
+    }
 }
