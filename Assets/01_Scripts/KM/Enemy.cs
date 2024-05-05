@@ -68,8 +68,7 @@ public class Enemy : MonoBehaviour
         gunFireDelay += Time.deltaTime;
 
         float playerDir = player.transform.position.x > transform.position.x ? 1 : -1;
-        gun.transform.localPosition = new Vector3(playerDir * 0.7f, 0, 0);
-
+        
         if( player != null )
         {
             Vector2 dir = ((Vector2)player.transform.position - (Vector2)transform.position).normalized;            

@@ -21,4 +21,4 @@ MonoBehaviour:
   enemy_MoveSpeed: 3
   enemy_Sight: 4
   enemy_WallSight: 2
-  enemy_Bullet: {fileID: 3901230923764232883, guid: 512b4eb5f0866504da2b09e362515987, type: 3}
+  enemy_Bullet: {fileID: 3316803668970782058, guid: 512b4eb5f0866504da2b09e362515987, type: 3}

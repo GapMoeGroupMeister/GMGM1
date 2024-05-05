@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 729f4ec06ac7d0943b25efc743ad4d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 7
   gunTipPosition: {x: 0, y: 0, z: 0}
   destroyDistance: 10
   Direction: {x: 0, y: 0, z: 0}
