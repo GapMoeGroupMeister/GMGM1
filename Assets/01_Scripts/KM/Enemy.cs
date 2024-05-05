@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _findWallMark;
 
     [SerializeField] private PlayerController player;
+    [SerializeField] private Transform gunTip;
 
     private EnemyState enemyState = EnemyState.Roaming;
 
@@ -73,7 +74,7 @@ public class Enemy : MonoBehaviour
             {
                 if (gunFireDelay >= 0.2f)
                 {
-                    EnemyBullet enemyBullet = GameObject.Instantiate(_enemySO.Bullet, transform.position, Quaternion.identity).GetComponent<EnemyBullet>();
+                    EnemyBullet enemyBullet = GameObject.Instantiate(_enemySO.Bullet, gunTip.position, Quaternion.identity).GetComponent<EnemyBullet>();
                     enemyBullet.Fire(dir.normalized);
                     gunFireDelay = 0;
                 }
@@ -222,7 +223,14 @@ public class Enemy : MonoBehaviour
     private float ChangeDirection()
     {
         _direction = _direction == Direction.Left ? Direction.Right : Direction.Left;
-        return _direction == Direction.Left ? -1 : 1;
+        return SetDirectionScale();
+    }
+
+    private float SetDirectionScale()
+    {
+        float dir = _direction == Direction.Left ? -1 : 1;
+        transform.localScale = new Vector3(dir, 1, 1);
+        return dir;
     }
 
     private void Setup()
@@ -239,7 +247,9 @@ public class Enemy : MonoBehaviour
 
         Vector3 pos = transform.position;
         moveRange.x = pos.x - _directionMoveDistance;
-        moveRange.y = pos.x + _directionMoveDistance;        
+        moveRange.y = pos.x + _directionMoveDistance;
+
+        SetDirectionScale();
     }
     
     public void Damage (int amout)
