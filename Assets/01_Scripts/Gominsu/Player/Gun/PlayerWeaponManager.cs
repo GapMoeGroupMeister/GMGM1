@@ -9,6 +9,7 @@ public class PlayerWeaponManager : MonoBehaviour
     GameObject[] gunPrefab;
     public GameObject gun;
     public GameObject CurrentGun;
+    public GameObject light;
     public Gun _gun;
     PlayerInput _playerInput;
     bool changeCheck = false;
@@ -30,43 +31,40 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         _playerInput.MouseScrall += MouseScrallCheck;
         _playerInput.WeaponChange += ChangeWeapon;
-    }
-    private void Update()
-    {
         
     }
     void ChangeWeapon(int idx)
     {
-        print(idx);
         currentGun = idx;
         if (currentGun > 0)
         {
-            print("½ÇÇà");
             _gunPrefab = idx - 1;
             InputCheck();
         }
         currentIndex = index;
     }
-
     void MouseScrallCheck(Vector2 vec)
     {
 
-        if (_gun != null &&_gun._isReloading)
-        {
+        if (changeCheck)
             return;
-        }
+        if (_gun != null &&_gun._isReloading)
+            return;
+
             
         if (vec.y <= -120 && index < 3)
         {
             currentIndex = index;
             index++;
             index = Mathf.Clamp(index, 1, 3);
+
         }
         else if (vec.y >= 120 && index > 1)
         {
             currentIndex = index;
                 index--;
-                index = Mathf.Clamp(index, 1, 3); 
+                index = Mathf.Clamp(index, 1, 3);
+
         }
     }
 
@@ -78,25 +76,23 @@ public class PlayerWeaponManager : MonoBehaviour
             return;
         StartCoroutine("ChangeCheck");
         Destroy(gun);
-        print(gun);
         gun = Instantiate(gunPrefab[_gunPrefab], gameObject.transform);
         gun.transform.position = transform.position;
-
-        print(gun);
-
 
         CurrentGun = gun;
         if( currentGunUI != null )
             currentGunUI.i = currentGun;
 
         _gun = FindObjectOfType<Gun>();
+        light = GameObject.Find("Light");
+        light.SetActive(false);
         GameManager.Instance.RefreshBullet(_gun.currentBulletCount, _gun.maxBulletCount);
     }
 
     IEnumerator ChangeCheck()
     {
         changeCheck = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         changeCheck = false;
     }
 }

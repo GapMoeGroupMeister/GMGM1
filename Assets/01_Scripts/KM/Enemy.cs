@@ -63,8 +63,12 @@ public class Enemy : MonoBehaviour
 
     private void UpdateGun()
     {
-   
-        gunFireDelay += Time.deltaTime;        
+        //stateText.text += gun.ReloadString;
+
+        gunFireDelay += Time.deltaTime;
+
+        float playerDir = player.transform.position.x > transform.position.x ? 1 : -1;
+        gun.transform.localPosition = new Vector3(playerDir * 0.7f, 0, 0);
 
         if( player != null )
         {
@@ -256,7 +260,7 @@ public class Enemy : MonoBehaviour
 
         SetDirectionScale();
     }
-    
+
     public void Damage (int amout)
     {
         if (_hp <= 0)

@@ -5,11 +5,13 @@ using UnityEngine;
 public class PlayerAttackController : MonoBehaviour
 {
     public Gun gun;
-    public GameObject knife;
-    private Knife _knifeScripts;
     [SerializeField]
     PlayerWeaponManager _weaponManager;
     SpriteRenderer _spriteRenderer;
+
+    bool fireLight = true;
+    bool _renderer = true;
+    bool checkRenderer;
 
     private PlayerInput _playerInput;
 
@@ -34,6 +36,7 @@ public class PlayerAttackController : MonoBehaviour
         Rotate();
         GunRender();
             _spriteRenderer = gun.GetComponent<SpriteRenderer>();
+            
             Flip();
         }
     }
@@ -48,7 +51,7 @@ public class PlayerAttackController : MonoBehaviour
             gun.transform.position = new Vector3(transform.position.x + 0.7f, transform.position.y, 0);
         }
     }
-    private void GunInput(bool Mouse0,bool MouseDown0,bool Mouse1)
+    private void GunInput(bool Mouse0,bool MouseDown0)
     {
         if (gun != null) 
         {
@@ -57,20 +60,22 @@ public class PlayerAttackController : MonoBehaviour
                 gun._isReloading = true;
                 gun.Reload();
             }
-            if (Mouse1)//¿ìÅ¬¸¯
-            {
-                //_knifeScripts.Slash();
-            }
             if (!gun.IsCoolTime)
-            {
                 return;
-            }
             if (gun.isContinueFire)
             {
                 if (MouseDown0)//ÁÂÅ¬¸¯ È¦µå
                 {
                     gun._currentTime = 0;
                     FireHandler();
+                    if (fireLight)
+                    {
+                        if (_weaponManager.light != null && !gun._isReloading)
+                        {
+                            _weaponManager.light.SetActive(true);
+                            StartCoroutine(FireLightCheck());
+                        }
+                    }
                 }
             }
             else
@@ -79,6 +84,11 @@ public class PlayerAttackController : MonoBehaviour
                 {
                     gun._currentTime = 0;
                     FireHandler();
+                    if (_weaponManager.light != null && !gun._isReloading)
+                    {
+                        _weaponManager.light.SetActive(true);
+                        StartCoroutine(FireLightCheck());
+                    }
                 }
             } 
         }
@@ -101,8 +111,23 @@ public class PlayerAttackController : MonoBehaviour
 
     private void Flip()
     {
+            if (_renderer)
+            {
+            gun.transform.localScale = new Vector3(
+                gun.transform.localScale.x,
+                Mathf.Abs(gun.transform.localScale.y) * transform.position.x > gun._mousePos.x ? -1 : 1,
+                gun.transform.localScale.z
+                );
+                checkRenderer = transform.position.x > gun._mousePos.x;
+            }
+                _renderer = checkRenderer != transform.position.x > gun._mousePos.x;
+    }
 
-        _spriteRenderer.flipY = transform.position.x > gun._mousePos.x;
-
+    IEnumerator FireLightCheck()
+    {
+        fireLight = false;
+        yield return new WaitForSeconds(0.02f);
+        _weaponManager.light.SetActive(false);
+        fireLight = true;
     }
 }
