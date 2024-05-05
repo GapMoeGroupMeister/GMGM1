@@ -174,4 +174,5 @@ MonoBehaviour:
   speed: 7
   gunTipPosition: {x: 0, y: 0, z: 0}
   destroyDistance: 10
+  bulletEffect: {fileID: 4786362876144403721, guid: 903fc549e33589b4aa95fdaffe4d5db5, type: 3}
   Direction: {x: 0, y: 0, z: 0}

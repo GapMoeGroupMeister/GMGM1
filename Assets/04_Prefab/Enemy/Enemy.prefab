@@ -609,6 +609,8 @@ MonoBehaviour:
   _findWallMark: {fileID: 2862914612969880533}
   player: {fileID: 0}
   gunTip: {fileID: 1332609197036657804}
+  _hitMaterial: {fileID: 2100000, guid: 5146f32727b468f459afd80b91cb495b, type: 2}
+  _hitEffect: {fileID: 3953844675736068697, guid: 4fecd00973fdf4544bd13e3497746128, type: 3}
 --- !u!212 &3115709796847570723
 SpriteRenderer:
   m_ObjectHideFlags: 0

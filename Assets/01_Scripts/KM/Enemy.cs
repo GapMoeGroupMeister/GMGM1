@@ -38,6 +38,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] private PlayerController player;
     [SerializeField] private Transform gunTip;
 
+    [SerializeField] private Material _hitMaterial;
+    
+    private Material _originalMaterial;
+    private SpriteRenderer _spriteRenderer;
+
+
     private EnemyState enemyState = EnemyState.Roaming;
 
     private float _moveSpeed = 3;
@@ -58,6 +64,9 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        if (_hp <= 0)
+            return;
+
         OnUpdateState();        
     }
 
@@ -205,6 +214,8 @@ public class Enemy : MonoBehaviour
 
     private void OnUpdateAttack()
     {
+        UpdateDirection();
+
         Transform tr = transform;
         // ���� ���ʹ��� ��ġ�� ����
         Vector2 currentPosition = tr.position;
@@ -221,6 +232,12 @@ public class Enemy : MonoBehaviour
         }
         
         UpdateGun();
+    }
+
+    private float UpdateDirection()
+    {
+        _direction = transform.position.x >= player.transform.position.x ? Direction.Left : Direction.Right;
+        return SetDirectionScale();
     }
 
     private float ChangeDirection()
@@ -253,6 +270,9 @@ public class Enemy : MonoBehaviour
            player = GameObject.FindObjectOfType<PlayerController>();
         }
 
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _originalMaterial = _spriteRenderer.material;
+
         Vector3 pos = transform.position;
         moveRange.x = pos.x - _directionMoveDistance;
         moveRange.y = pos.x + _directionMoveDistance;
@@ -269,9 +289,20 @@ public class Enemy : MonoBehaviour
         if (_hp <= 0)
         {
             StartCoroutine(OnDie());
-            Destroy(gameObject);
         }
-    }    
+        else
+        {
+            StartCoroutine(Hit());
+        }
+    }
+
+    IEnumerator Hit()
+    {
+        _spriteRenderer.material = _hitMaterial;
+        yield return new WaitForSeconds(0.05f);
+        _spriteRenderer.material = _originalMaterial;
+
+    }
 
     IEnumerator OnDie()
     {

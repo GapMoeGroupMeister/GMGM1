@@ -13,6 +13,9 @@ public class EnemyBullet : MonoBehaviour
     public Vector3 gunTipPosition;
     public float destroyDistance = 10;
 
+    [SerializeField]
+    GameObject bulletEffect;
+
 
     public Vector3 Direction;//ÃÑ¾Ë ¹æÇâ
 
@@ -35,7 +38,7 @@ public class EnemyBullet : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Destroy(gameObject);
+        GameObject effect = Instantiate(bulletEffect);
+        effect.transform.transform.position = transform.position;
     }
-
-
 }
