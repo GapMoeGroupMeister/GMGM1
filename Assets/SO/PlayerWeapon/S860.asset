@@ -16,6 +16,8 @@ MonoBehaviour:
   maxBulletCount: 2
   fireDelay: 1.3
   reloadTime: 3
+  isContinueFire: 0
   bulletSpeed: 10
   destroyRange: 5
   bulletPrefab: {fileID: 1843989781348865363, guid: d260880515a2db1408bbbbca3a0183c9, type: 3}
+  gunShootSound: {fileID: 8300000, guid: 381acb7ee1ab4f44fbfaa69692e7d510, type: 3}

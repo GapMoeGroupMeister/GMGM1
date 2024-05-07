@@ -23,6 +23,7 @@ public abstract class Gun : MonoBehaviour
     public Transform gunTip;//총구 위치
     public PlayerController _player;
     public Vector2 _mousePos;//마우스 위치
+    public AudioClip gunSound;
     public abstract void Fire(Vector2 direction);
     
     protected virtual void Awake()
@@ -37,6 +38,7 @@ public abstract class Gun : MonoBehaviour
         destroyRange = gunSO.destroyRange;
         bulletPrefab = gunSO.bulletPrefab;
         currentBulletCount = maxBulletCount;
+        gunSound = gunSO.gunShootSound;
     }
     protected virtual void Start()
     {

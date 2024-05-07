@@ -12,6 +12,7 @@ public class PlayerWeaponManager : MonoBehaviour
     public GameObject light;
     public Gun _gun;
     PlayerInput _playerInput;
+    AudioSource audioSource;
     bool changeCheck = false;
     int _gunPrefab = 0;
     int currentGun = 0;
@@ -23,6 +24,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         currentGunUI = FindObjectOfType<CurrentGunUI>();
         _playerInput = FindObjectOfType<PlayerInput>();
     }
@@ -81,7 +83,9 @@ public class PlayerWeaponManager : MonoBehaviour
 
         CurrentGun = gun;
         currentGunUI.i = currentGun;
+        
         _gun = FindObjectOfType<Gun>();
+        audioSource.clip = _gun.gunSound;
         light = GameObject.Find("Light");
         light.SetActive(false);
         GameManager.Instance.RefreshBullet(_gun.currentBulletCount, _gun.maxBulletCount);
