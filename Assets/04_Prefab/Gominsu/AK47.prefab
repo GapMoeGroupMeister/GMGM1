@@ -72,9 +72,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1354744657
+  m_SortingLayer: 4
+  m_SortingOrder: 10
   m_Sprite: {fileID: 1520012648, guid: 939ffad8589b695438af9ecb42354a2f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -114,6 +114,7 @@ MonoBehaviour:
   gunTip: {fileID: 8969115628671681790}
   _player: {fileID: 0}
   _mousePos: {x: 0, y: 0}
+  gunSound: {fileID: 0}
 --- !u!1 &6030078781091044595
 GameObject:
   m_ObjectHideFlags: 0
