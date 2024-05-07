@@ -7,8 +7,9 @@ public class Bullet : MonoBehaviour
     private int damage= 1;
     private float speed = 3;
 
-    [SerializeField]
-    GameObject bulletEffect;
+    [SerializeField] GameObject bulletEffect;
+    [SerializeField] GameObject _hitEffect;
+
     bool _bulletEffect;
     bool _checkBulletEffect = true;
     GameObject _bulletEffect_;
@@ -24,6 +25,7 @@ public class Bullet : MonoBehaviour
         this.destroyDistance = destroyDistance;
     }
     
+
     public void Fire(Vector2 dir)
     {
         transform.right = dir;
@@ -46,6 +48,13 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+
+            GameObject effect = Instantiate(_hitEffect);
+            effect.transform.position = transform.position;
+            effect.transform.localScale = new Vector3(enemy.transform.position.x > transform.position.x ? 1 : -1, 1, 1);
+
+            effect.GetComponent<ParticleSystem>().Play(true);
+
             enemy.Damage(damage);
         }        
         Destroy(gameObject);

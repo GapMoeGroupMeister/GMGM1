@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3c88a75e8734e1fbd8ce0618ed68e91, type: 3}
+  m_Name: EnemySO_01
+  m_EditorClassIdentifier: 
+  enemy_Name: "\uC5D0\uB108\uBBF8_01"
+  spriteName: 1
+  enemy_AttackType: 1
+  enemy_Weapon: 1
+  enemy_HP: 10
+  enemy_RoamingRange: 10
+  enemy_MoveSpeed: 3
+  enemy_Sight: 4
+  enemy_WallSight: 2
+  enemy_Bullet: {fileID: 3316803668970782058, guid: 512b4eb5f0866504da2b09e362515987, type: 3}
