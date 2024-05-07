@@ -17,7 +17,7 @@ MonoBehaviour:
   fireDelay: 0.3
   reloadTime: 3
   isContinueFire: 0
-  bulletSpeed: 10
-  destroyRange: 7
+  bulletSpeed: 20
+  destroyRange: 10
   bulletPrefab: {fileID: 1843989781348865363, guid: d260880515a2db1408bbbbca3a0183c9, type: 3}
   gunShootSound: {fileID: 8300000, guid: 205926140d44a6e45b96ffc0ffd31a23, type: 3}
