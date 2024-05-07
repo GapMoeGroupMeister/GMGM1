@@ -383,66 +383,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3876479013884972249, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
-      propertyPath: m_Size.y
-      value: 1.16
-      objectReference: {fileID: 0}
-    - target: {fileID: 3876479013884972249, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3876479013884972249, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026572717271094729, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
-      propertyPath: m_NotificationBehavior
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026572717271094729, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
-      propertyPath: m_ActionEvents.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026572717271094729, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
-      propertyPath: m_ActionEvents.Array.data[2].m_ActionId
-      value: 4a55ad97-122d-46f5-8580-6c0fddcc1e09
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026572717271094729, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_ActionId
-      value: 7fdf1467-695b-4e37-94c7-fcab14f29f93
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026572717271094729, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
-      propertyPath: m_ActionEvents.Array.data[4].m_ActionId
-      value: e0992d19-9dce-422a-bb82-da377d8a5c4c
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026572717271094729, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
-      propertyPath: m_ActionEvents.Array.data[5].m_ActionId
-      value: 6607ab73-b301-4a35-85ac-1e3bf05b8269
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026572717271094729, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
-      propertyPath: m_ActionEvents.Array.data[2].m_ActionName
-      value: PlayerControl/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026572717271094729, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_ActionName
-      value: PlayerControl/Jump[/Keyboard/space]
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026572717271094729, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
-      propertyPath: m_ActionEvents.Array.data[4].m_ActionName
-      value: PlayerControl/Run[/Keyboard/leftShift]
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026572717271094729, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
-      propertyPath: m_ActionEvents.Array.data[5].m_ActionName
-      value: PlayerControl/Sit[/Keyboard/leftCtrl]
-      objectReference: {fileID: 0}
-    - target: {fileID: 5095195991932623560, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
-      propertyPath: _jumpPower
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6922468250018243054, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
-      propertyPath: m_Sprite
+    - target: {fileID: 6236621806395129225, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
+      propertyPath: OutputAudioMixerGroup
       value: 
-      objectReference: {fileID: -883962451, guid: 939ffad8589b695438af9ecb42354a2f, type: 3}
+      objectReference: {fileID: -8054705631418640689, guid: 224de0ef051c26742989f73a335b306f, type: 2}
     - target: {fileID: 7892654220724110009, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -482,10 +426,6 @@ PrefabInstance:
     - target: {fileID: 7892654220724110009, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8997942961766425115, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
-      propertyPath: m_GravityScale
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6017,7 +5957,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1167093276
 MonoBehaviour:
   m_ObjectHideFlags: 0
