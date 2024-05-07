@@ -86,7 +86,7 @@ public class PlayerWeaponManager : MonoBehaviour
         
         _gun = FindObjectOfType<Gun>();
         audioSource.clip = _gun.gunSound;
-        light = GameObject.Find("Light");
+        light = GameObject.Find("GunLight");
         light.SetActive(false);
         GameManager.Instance.RefreshBullet(_gun.currentBulletCount, _gun.maxBulletCount);
     }
