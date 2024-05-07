@@ -8,6 +8,8 @@ public class PlayerAttackController : MonoBehaviour
     [SerializeField]
     PlayerWeaponManager _weaponManager;
     SpriteRenderer _spriteRenderer;
+    AudioSource audioSource;
+
 
     bool fireLight = true;
     bool _renderer = true;
@@ -17,6 +19,7 @@ public class PlayerAttackController : MonoBehaviour
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         _playerInput = GetComponent<PlayerInput>();
         _weaponManager = GetComponent<PlayerWeaponManager>();
     }
@@ -106,6 +109,7 @@ public class PlayerAttackController : MonoBehaviour
         if (gun.reloadCheck == false) return;
         gun.currentBulletCount--;
         GameManager.Instance.playerController.OnShootEvent?.Invoke(gun.currentBulletCount, gun.maxBulletCount);
+        audioSource.PlayOneShot(audioSource.clip);
         gun.Fire(dir.normalized);
     }
 
