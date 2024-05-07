@@ -7,5 +7,6 @@ public class BombVest : EnemyBomb
     public override void Fire()
     {
         Destroy(gameObject);
+
     }
 }
