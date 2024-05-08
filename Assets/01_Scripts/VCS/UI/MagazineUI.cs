@@ -29,13 +29,12 @@ public class MagazineUI : MonoBehaviour
     [Header("Text Setting")] 
     [SerializeField] private Color _defaultColor;
     [SerializeField] private Color _alertColor;
-
     
     [Header("Debug Setting")] 
     [SerializeField] private int currentBullet = 10;
     [SerializeField] private int maxBullet = 10;
     [SerializeField] private float _shootTerm = 0.3f;
-    private float currentTime = 0;
+    private float _currentTime = 0;
 
     // 나중에 플레이어쪽 Action<int, int>하나 만들어서 구독 ㄱ
     // 지금은 이쪽에 Action을 달아놓음
@@ -48,11 +47,7 @@ public class MagazineUI : MonoBehaviour
 
 
     }
-    private void OnDisable()
-    {
-        GameManager.Instance.playerController.OnShootEvent -= Shoot;
-        GameManager.Instance.OnGunRefreshEvent -= HandleBulletGaugeRefresh;
-    }
+    
 
     private void Update()
     {

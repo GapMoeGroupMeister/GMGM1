@@ -19,7 +19,7 @@ public class EffectObject : MonoBehaviour
         LifeTime();
     }
 
-    public void Play()
+    public virtual void Play()
     {
         for (int i = 0; i < _particles.Length; i++)
         {

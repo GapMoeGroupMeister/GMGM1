@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using EntityManage;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -56,7 +57,14 @@ public class Bullet : MonoBehaviour
             effect.GetComponent<ParticleSystem>().Play(true);
 
             enemy.Damage(damage);
-        }        
+        }
+
+        if (collision.transform.CompareTag("Object"))
+        {
+            IDamageable target = collision.gameObject.GetComponent<IDamageable>();
+            target.TakeDamage(damage);
+        }
+        
         Destroy(gameObject);
         _bulletEffect_ = Instantiate(bulletEffect);
         _bulletEffect_.transform.position = transform.position;

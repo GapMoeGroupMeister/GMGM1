@@ -13,6 +13,12 @@ public class GameManager : MonoSingleton<GameManager>
 
     }
 
+    private void OnDisable()
+    {
+        OnGunRefreshEvent = null;
+        
+    }
+
     public void RefreshBullet(int current, int max)
     {
         OnGunRefreshEvent?.Invoke(current, max);
