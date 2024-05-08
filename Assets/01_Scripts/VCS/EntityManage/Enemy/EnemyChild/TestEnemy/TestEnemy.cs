@@ -21,6 +21,7 @@ namespace EntityManage.Enemy
         public override void Die()
         {
             // 에너미 뒤짐
+            
         }
 
         protected override void AttackPlayer()
