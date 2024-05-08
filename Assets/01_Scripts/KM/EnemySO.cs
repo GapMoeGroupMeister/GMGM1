@@ -1,12 +1,9 @@
-using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class EnemyTableData
+[CreateAssetMenu(fileName = "EnemySO", menuName = "SO/EnemySO")]
+public class EnemySO : ScriptableObject
 {
-    [SerializeField]
-    private int code;
-
     [SerializeField]
     private string enemy_Name;
 
@@ -35,16 +32,15 @@ public class EnemyTableData
     private float enemy_WallSight;
 
     [SerializeField]
-    private Gun gunPrefab;
+    private EnemyBullet enemy_Bullet;
 
-    public int Code => code;
+
     public string Enemy_Name => enemy_Name;
     public string SpriteName => spriteName;
     public int Enemy_HP => enemy_HP;
     public float Enemy_RoamingRange => enemy_RoamingRange;
-    public float Enemy_MoveSpeed => enemy_MoveSpeed;
-    public Gun GunPrefab => gunPrefab;
+    public float Enemy_MoveSpeed => enemy_MoveSpeed;    
     public float Sight => enemy_Sight;
     public float WallSight => enemy_WallSight;
+    public EnemyBullet Bullet => enemy_Bullet;
 }
-

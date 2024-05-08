@@ -81,8 +81,10 @@ public class PlayerWeaponManager : MonoBehaviour
         gun.transform.position = transform.position;
 
         CurrentGun = gun;
-        currentGunUI.i = currentGun;
-        
+
+        if( currentGunUI != null )
+            currentGunUI.i = currentGun;
+            
         _gun = FindObjectOfType<Gun>();
         audioSource.clip = _gun.gunSound;
         light = GameObject.Find("GunLight");
