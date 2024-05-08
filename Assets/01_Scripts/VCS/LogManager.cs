@@ -3,32 +3,13 @@ using UnityEngine;
 
 public class LogManager : MonoSingleton<LogManager>
 {
-    private float _playTime;
     public PlayDataLog playDataLog;
 
-    [SerializeField] private bool isPlayTimeCount;
+    
 
-    private void Update()
+    public void AddPlayLog(int killAmount, float playTime)
     {
-        if (isPlayTimeCount)
-        {
-            _playTime += Time.deltaTime;
-        }
-    }
-
-    public void Pause()
-    {
-        isPlayTimeCount = false;
-    }
-
-    public void Resume()
-    {
-        isPlayTimeCount = true;
-    }
-
-    public void AddPlayLog(int killAmount)
-    {
-        playDataLog.playDataLog.Add(new PlayData(killAmount, _playTime));
+        playDataLog.playDataLog.Add(new PlayData(killAmount, playTime));
         DBManager.SavePlayLog(playDataLog);
     }
 }
