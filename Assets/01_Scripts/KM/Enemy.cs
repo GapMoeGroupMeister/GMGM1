@@ -18,13 +18,9 @@ public class Enemy : MonoBehaviour
     {
         Left,
         Right
-    }
+    }    
 
-
-    [SerializeField] private TextMeshPro stateText;
-    [SerializeField] private TextMeshPro hpText;
-
-    [SerializeField] private int _enemyCode = 1;
+    [SerializeField] private EnemySO _enemySO;
 
     [SerializeField] private float _sight = 1;
     [SerializeField] private float _wallSight = 1;
@@ -36,6 +32,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _findWallMark;
 
     [SerializeField] private PlayerController player;
+    [SerializeField] private Transform gunTip;
+
+    [SerializeField] private Material _hitMaterial;
+    
+    private Material _originalMaterial;
+    private SpriteRenderer _spriteRenderer;
+    private Animator animator;
+
 
     private EnemyState enemyState = EnemyState.Roaming;
 
@@ -44,8 +48,7 @@ public class Enemy : MonoBehaviour
     private float _directionMoveDistance = 6;
     private Vector2 moveRange;   
     private Direction _direction = Direction.Left;
-
-    private Gun gun;
+    
     private float gunFireDelay = 0;
     
     bool playerInSight = false;
@@ -58,29 +61,28 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        if (_hp <= 0)
+            return;
+
         OnUpdateState();        
     }
 
     private void UpdateGun()
     {
-        //stateText.text += gun.ReloadString;
-
         gunFireDelay += Time.deltaTime;
 
         float playerDir = player.transform.position.x > transform.position.x ? 1 : -1;
-        gun.transform.localPosition = new Vector3(playerDir * 0.7f, 0, 0);
-
+        
         if( player != null )
         {
-            Vector2 dir = ((Vector2)player.transform.position - (Vector2)gun.transform.position).normalized;
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            gun.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+            Vector2 dir = ((Vector2)player.transform.position - (Vector2)transform.position).normalized;            
 
             if (playerInSight)
             {
-                if (gunFireDelay >= gun.fireDelay)
+                if (gunFireDelay >= 0.2f)
                 {
-                    gun.Fire(dir.normalized);
+                    EnemyBullet enemyBullet = GameObject.Instantiate(_enemySO.Bullet, gunTip.position, Quaternion.identity).GetComponent<EnemyBullet>();
+                    enemyBullet.Fire(dir.normalized);
                     gunFireDelay = 0;
                 }
             }
@@ -121,6 +123,7 @@ public class Enemy : MonoBehaviour
                 }
             case EnemyState.Attack:
                 {
+                    animator.SetBool("isWalk", false);
                     _findEnemyMark.SetActive(false);
                     break;
                 }
@@ -129,9 +132,6 @@ public class Enemy : MonoBehaviour
 
     private void OnUpdateState()
     {
-        hpText.text = _hp.ToString();
-        stateText.text = enemyState.ToString();
-
         switch ( enemyState )
         {
             case EnemyState.Roaming:
@@ -171,6 +171,7 @@ public class Enemy : MonoBehaviour
                 if( wallDistance < playerDistance ) 
                 {
                     _findWallMark.SetActive(true);
+                    animator.SetBool("isWalk", false);
                     return;
                 }                
             }
@@ -182,6 +183,8 @@ public class Enemy : MonoBehaviour
         }
 
         _findWallMark.SetActive(false);
+
+        animator.SetBool("isWalk", true);
 
         //else
         //{
@@ -207,6 +210,8 @@ public class Enemy : MonoBehaviour
 
     private void OnUpdateAttack()
     {
+        UpdateDirection();
+
         Transform tr = transform;
         // ���� ���ʹ��� ��ġ�� ����
         Vector2 currentPosition = tr.position;
@@ -225,54 +230,84 @@ public class Enemy : MonoBehaviour
         UpdateGun();
     }
 
+    private float UpdateDirection()
+    {
+        _direction = transform.position.x >= player.transform.position.x ? Direction.Left : Direction.Right;
+        return SetDirectionScale();
+    }
+
     private float ChangeDirection()
     {
         _direction = _direction == Direction.Left ? Direction.Right : Direction.Left;
-        return _direction == Direction.Left ? -1 : 1;
+        return SetDirectionScale();
+    }
+
+    private float SetDirectionScale()
+    {
+        float dir = _direction == Direction.Left ? -1 : 1;
+        transform.localScale = new Vector3(dir, 1, 1);
+        return dir;
     }
 
     private void Setup()
-    {
-        EnemyTableData enemyData = EnemyTable.Instance.Find(_enemyCode);
-        _hp = enemyData.Enemy_HP;
-        _directionMoveDistance = enemyData.Enemy_RoamingRange;
-        _moveSpeed = enemyData.Enemy_MoveSpeed;
+    {   
+        _hp = _enemySO.Enemy_HP;
+        _directionMoveDistance = _enemySO.Enemy_RoamingRange;
+        _moveSpeed = _enemySO.Enemy_MoveSpeed;
 
-        _sight = enemyData.Sight;
-        _wallSight = enemyData.WallSight;
+        _sight = _enemySO.Sight;
+        _wallSight = _enemySO.WallSight;
 
         _findEnemyMark.SetActive(false);
         _findWallMark.SetActive(false);
+
+        if(player == null )
+        {
+           player = GameObject.FindObjectOfType<PlayerController>();
+        }
+
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _originalMaterial = _spriteRenderer.material;
+
+        animator = GetComponent<Animator>();
 
         Vector3 pos = transform.position;
         moveRange.x = pos.x - _directionMoveDistance;
         moveRange.y = pos.x + _directionMoveDistance;
 
-        SetupGun(enemyData);
-    }
-
-    private void SetupGun(EnemyTableData enemyData)
-    {
-        if (gun != null)
-        { 
-            Destroy(gun.gameObject);
-        }
-        gun = GameObject.Instantiate(enemyData.GunPrefab, gameObject.transform);
-
-        float dir = _direction == Direction.Left ? -1f : 1f;
-        gun.transform.localPosition = new Vector3(dir * 0.7f, 0, 0);       
-
-        //gun.GetComponent<Fire1>().enabled = false;
+        SetDirectionScale();
     }
 
     public void Damage (int amout)
     {
+        if (_hp <= 0)
+            return;
+
         _hp -= amout;
         if (_hp <= 0)
         {
-            Destroy(gameObject);
+            StartCoroutine(OnDie());
+        }
+        else
+        {
+            StartCoroutine(Hit());
         }
     }
 
-    
+    IEnumerator Hit()
+    {
+        _spriteRenderer.material = _hitMaterial;
+        yield return new WaitForSeconds(0.05f);
+        _spriteRenderer.material = _originalMaterial;
+
+    }
+
+    IEnumerator OnDie()
+    {
+        animator.Play("enemy-die");
+
+        yield return new WaitForSeconds(3f);
+
+        Destroy(gameObject);
+    }
 }

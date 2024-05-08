@@ -13,6 +13,9 @@ public class EnemyBullet : MonoBehaviour
     public Vector3 gunTipPosition;
     public float destroyDistance = 10;
 
+    [SerializeField]
+    GameObject bulletEffect;
+
 
     public Vector3 Direction;//총알 방향
 
@@ -30,15 +33,12 @@ public class EnemyBullet : MonoBehaviour
         {                                                                             //   ㄴ얘는 transform.position - guntip(현재 이동한 거리)이다
             Destroy(gameObject);
         }
-
-
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-  
         Destroy(gameObject);
-
+        GameObject effect = Instantiate(bulletEffect);
+        effect.transform.transform.position = transform.position;
     }
-
-
 }
