@@ -299,7 +299,7 @@ public class Enemy : MonoBehaviour
     IEnumerator OnDie()
     {
         animator.Play("enemy-die");
-
+        GameManager.Instance.AddKillCount();
         yield return new WaitForSeconds(3f);
 
         Destroy(gameObject);

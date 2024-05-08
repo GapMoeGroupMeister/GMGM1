@@ -8,12 +8,12 @@ public class LogManager : MonoSingleton<LogManager>
     private void Awake()
     {
         playDataLog = DBManager.GetPlayLog();
-        if (playDataLog == null)
-            playDataLog = new PlayDataLog();
+        
     }
 
     public void AddPlayLog(int killAmount, float playTime)
     {
+        print("플레이 로그저장");
         playDataLog.playDataLog.Add(new PlayData(killAmount, playTime));
         DBManager.SavePlayLog(playDataLog);
     }

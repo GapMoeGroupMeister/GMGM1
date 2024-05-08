@@ -1,4 +1,5 @@
-﻿public class PlayData
+﻿[System.Serializable]
+public class PlayData
 {
     public string playTimeLog;
     public int killAmount;

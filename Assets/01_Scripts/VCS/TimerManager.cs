@@ -29,7 +29,7 @@ public class TimerManager : MonoBehaviour
 
     private void Refresh()
     {
-        int ms = (int)_currentTime * 100;
+        int ms = (int)(_currentTime * 100);
         int s = ms / 100;
         ms %= 100;
 

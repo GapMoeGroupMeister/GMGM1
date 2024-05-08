@@ -621,6 +621,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab81b5ad071402ba18f0ae54289b199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playDataLog:
+    playDataLog: []
 --- !u!4 &363672858
 Transform:
   m_ObjectHideFlags: 0
@@ -15102,6 +15104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b95f8bd2754003b59a5481e2a1e714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _killCountText: {fileID: 0}
   killCount: 0
 --- !u!1 &1316267178
 GameObject:
@@ -22743,7 +22746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _TimerText: {fileID: 228803632}
   _currentTime: 0
-  isPlayTimeCount: 0
+  isPlayTimeCount: 1
 --- !u!4 &2009364280
 Transform:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@
 using System.IO;
 using UnityEngine;
 
+[System.Serializable]
 public class PlayDataLog
 {
     public List<PlayData> playDataLog = new List<PlayData>();

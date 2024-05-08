@@ -1,11 +1,14 @@
 using System;
+using TMPro;
+using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
     public PlayerController playerController { get; private set; }
     public TimerManager timerManager { get; private set; }
-    
-    
+
+
+    [SerializeField] private TextMeshProUGUI _killCountText;
     public Action<int, int> OnGunRefreshEvent;
     public int killCount = 0;
 
@@ -15,6 +18,11 @@ public class GameManager : MonoSingleton<GameManager>
     {
         playerController = FindObjectOfType<PlayerController>();
         timerManager = FindObjectOfType<TimerManager>();
+    }
+
+    private void Start()
+    {
+        RefreshSkillCount();
     }
 
     private void OnDisable()
@@ -28,10 +36,35 @@ public class GameManager : MonoSingleton<GameManager>
         OnGunRefreshEvent?.Invoke(current, max);
     }
 
+    public void AddKillCount()
+    {
+        if (_isGameOver) return;
+
+        killCount++;
+        RefreshSkillCount();
+    }
+
+    private void RefreshSkillCount()
+    {
+        _killCountText.text = $"처치 : {killCount}";
+
+    }
+
+    public void Pause()
+    {
+        timerManager.Pause();
+    }
+
+    public void Resume()
+    {
+        timerManager.Resume();
+    }
+
     public void GameOver()
     {
         if (_isGameOver) return;
         _isGameOver = true;
+        timerManager.Pause();
         LogManager.Instance.AddPlayLog(killCount, timerManager._currentTime);
     }
 }
