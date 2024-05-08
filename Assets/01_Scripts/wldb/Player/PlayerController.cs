@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public Action<bool> _AnimaRun;
     public Action<bool> _AnimaJump;
     public Action<bool> _AnimaSliding;
+    
     [SerializeField]
     private PlayerState currentState;
     [SerializeField]
@@ -37,8 +38,10 @@ public class PlayerController : MonoBehaviour
     private float _jumpPower = 5f;  // ???? ????
     [SerializeField]
     private float _slidingPower = 3f;
+    float jumpPadPower = 30f;
     int currentHp = 100;
     int maxHp = 100;
+
 
     [SerializeField]
     private float inputx;
@@ -61,6 +64,7 @@ public class PlayerController : MonoBehaviour
     private Gun _currentGun;
     public Gun CurrentGun { get; private set; }
 
+    JumpPad _jumpPad;
 
     private void Awake()
     {
@@ -68,6 +72,8 @@ public class PlayerController : MonoBehaviour
         _rigid = GetComponent<Rigidbody2D>(); // Rigidbody????? Rigidbody2D ??????? ???
         SpriteRenderer = GetComponent<SpriteRenderer>();
         _currentGun = GetComponentInChildren<Gun>();
+        _jumpPad = FindAnyObjectByType<JumpPad>();
+
     }
 
     private void Start()
@@ -76,7 +82,13 @@ public class PlayerController : MonoBehaviour
         _playerInput.OnJumpEvent += Jump;
         _playerInput.OnSitEvent += Sliding;
         _playerInput.OnRunEvent += Run;
+        _jumpPad._ChackJumpPad += PressedJumpPad;
 
+    }
+
+    private void PressedJumpPad()
+    {
+        _rigid.velocity = Vector2.up *  jumpPadPower;
     }
 
     //private void OnDisable()
