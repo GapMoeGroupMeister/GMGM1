@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using EntityManage;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,7 @@ public enum PlayerState
 
 }
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
     public event Action<int, int> OnHealthChangedEvent;
     public Action<int, int> OnShootEvent;
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
     public Action<bool> _AnimaRun;
     public Action<bool> _AnimaJump;
     public Action<bool> _AnimaSliding;
+    public Action<bool> _AnimaDie;
     
     [SerializeField]
     private PlayerState currentState;
@@ -74,6 +76,7 @@ public class PlayerController : MonoBehaviour
         _currentGun = GetComponentInChildren<Gun>();
         _jumpPad = FindAnyObjectByType<JumpPad>();
 
+        
     }
 
     private void Start()
@@ -82,8 +85,10 @@ public class PlayerController : MonoBehaviour
         _playerInput.OnJumpEvent += Jump;
         _playerInput.OnSitEvent += Sliding;
         _playerInput.OnRunEvent += Run;
-        _jumpPad._ChackJumpPad += PressedJumpPad;
+        //_jumpPad._ChackJumpPad += PressedJumpPad;
 
+        currentHp = maxHp;
+        RefreshHealth();
     }
 
     private void PressedJumpPad()
@@ -100,6 +105,23 @@ public class PlayerController : MonoBehaviour
     public void RefreshHealth()
     {
         OnHealthChangedEvent?.Invoke(currentHp, maxHp);
+    }
+
+    public void TakeDamage(int amount)
+    {
+        currentHp -= amount;
+        RefreshHealth();
+        CheckDie();
+    }
+
+    public void RestoreHealth(int amount)
+    {
+        currentHp += amount;
+    }
+
+    void IDamageable.CheckDie()
+    {
+        CheckDie();
     }
 
     void Update()
@@ -128,17 +150,18 @@ public class PlayerController : MonoBehaviour
     {
         if (currentHp <= 0)
         {
-            Destroy(gameObject);
-            _gameOverUI.SetActive(true);
-            Time.timeScale = 0;
+            Die();
         }
     }
 
-
-    public void UseHeal(int amount)
+    private void Die()
     {
-        currentHp += amount;
+        GameManager.Instance.GameOver();
+        _AnimaDie?.Invoke(true);
+        //Destroy(gameObject);
+        
     }
+
 
     private void CheckAnim()
     {
@@ -221,7 +244,6 @@ public class PlayerController : MonoBehaviour
 
     private void Flip()
     {
-
         SpriteRenderer.flipX = transform.position.x > mousePos.x;
         
     }
@@ -257,6 +279,11 @@ public class PlayerController : MonoBehaviour
 
         }
 
+    }
+
+    public void SuperJump(float power)
+    {
+        _rigid.AddForce(Vector2.up * power, ForceMode2D.Impulse);
     }
 
     

@@ -19,6 +19,7 @@ public class PlayerAnimation : MonoBehaviour
         _playerController._AnimaRun += Run;
         _playerController._AnimaJump += Jump;
         _playerController._AnimaSliding += Sliding;
+        _playerController._AnimaDie += Die;
     }
 
     void Walk(bool isTrue)
@@ -40,5 +41,12 @@ public class PlayerAnimation : MonoBehaviour
     {
         _animator.SetBool("PlayerSliding", isTrue);
     }
+
+    void Die(bool isTrue)
+    {
+        _animator.SetBool("IsDie", isTrue);
+    }
+    
+    
 
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayDataLog
 {
-    public List<PlayData> playDataLog;
+    public List<PlayData> playDataLog = new List<PlayData>();
 }
 
 public class DBManager
@@ -15,8 +15,15 @@ public class DBManager
     public static GameSetting GetGameSetting()
     {
         string path = Path.Combine(Application.dataPath + LOCALPATH, "gameSetting.json");
-        string data = File.ReadAllText(path);
-        return JsonUtility.FromJson<GameSetting>(data);
+        if (File.Exists(path))
+        {
+            string data = File.ReadAllText(path);
+            return JsonUtility.FromJson<GameSetting>(data);
+        }
+
+        GameSetting newSetting = new GameSetting();
+        SaveGameSetting(newSetting);
+        return newSetting;
     }
 
     public static void SaveGameSetting(GameSetting gameSetting)
@@ -30,9 +37,15 @@ public class DBManager
     public static PlayDataLog GetPlayLog()
     {
         string path = Path.Combine(Application.dataPath + LOCALPATH, "playData.json");
-        string data = File.ReadAllText(path);
-        return JsonUtility.FromJson<PlayDataLog>(data);
+        if (File.Exists(path))
+        {
+            string data = File.ReadAllText(path);
+            return JsonUtility.FromJson<PlayDataLog>(data);
+        }
 
+        PlayDataLog newLog = new PlayDataLog();
+        SavePlayLog(newLog);
+        return newLog;
     }
 
     public static void SavePlayLog(PlayDataLog log)

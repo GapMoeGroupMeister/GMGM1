@@ -8,7 +8,8 @@ public class GameManager : MonoSingleton<GameManager>
     
     public Action<int, int> OnGunRefreshEvent;
     public int killCount = 0;
-    
+
+    private bool _isGameOver;
     
     private void Awake()
     {
@@ -29,6 +30,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GameOver()
     {
+        if (_isGameOver) return;
+        _isGameOver = true;
         LogManager.Instance.AddPlayLog(killCount, timerManager._currentTime);
     }
 }
