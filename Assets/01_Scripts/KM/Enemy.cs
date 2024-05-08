@@ -18,11 +18,7 @@ public class Enemy : MonoBehaviour
     {
         Left,
         Right
-    }
-
-
-    [SerializeField] private TextMeshPro stateText;
-    [SerializeField] private TextMeshPro hpText;
+    }    
 
     [SerializeField] private EnemySO _enemySO;
 
@@ -42,6 +38,7 @@ public class Enemy : MonoBehaviour
     
     private Material _originalMaterial;
     private SpriteRenderer _spriteRenderer;
+    private Animator animator;
 
 
     private EnemyState enemyState = EnemyState.Roaming;
@@ -72,8 +69,6 @@ public class Enemy : MonoBehaviour
 
     private void UpdateGun()
     {
-        //stateText.text += gun.ReloadString;
-
         gunFireDelay += Time.deltaTime;
 
         float playerDir = player.transform.position.x > transform.position.x ? 1 : -1;
@@ -128,6 +123,7 @@ public class Enemy : MonoBehaviour
                 }
             case EnemyState.Attack:
                 {
+                    animator.SetBool("isWalk", false);
                     _findEnemyMark.SetActive(false);
                     break;
                 }
@@ -136,9 +132,6 @@ public class Enemy : MonoBehaviour
 
     private void OnUpdateState()
     {
-        hpText.text = _hp.ToString();
-        stateText.text = enemyState.ToString();
-
         switch ( enemyState )
         {
             case EnemyState.Roaming:
@@ -178,6 +171,7 @@ public class Enemy : MonoBehaviour
                 if( wallDistance < playerDistance ) 
                 {
                     _findWallMark.SetActive(true);
+                    animator.SetBool("isWalk", false);
                     return;
                 }                
             }
@@ -189,6 +183,8 @@ public class Enemy : MonoBehaviour
         }
 
         _findWallMark.SetActive(false);
+
+        animator.SetBool("isWalk", true);
 
         //else
         //{
@@ -273,6 +269,8 @@ public class Enemy : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _originalMaterial = _spriteRenderer.material;
 
+        animator = GetComponent<Animator>();
+
         Vector3 pos = transform.position;
         moveRange.x = pos.x - _directionMoveDistance;
         moveRange.y = pos.x + _directionMoveDistance;
@@ -306,7 +304,6 @@ public class Enemy : MonoBehaviour
 
     IEnumerator OnDie()
     {
-        Animator animator = GetComponent<Animator>();
         animator.Play("enemy-die");
 
         yield return new WaitForSeconds(3f);
