@@ -18,7 +18,6 @@ namespace EntityManage.Enemy
             CurrentState.Enter();
 
         }
-    
 
         public void ChangeState(T newState, bool forceMode = false)
         {
