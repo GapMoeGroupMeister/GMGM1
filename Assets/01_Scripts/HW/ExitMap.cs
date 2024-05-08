@@ -9,7 +9,6 @@ public class ExitMap : MonoBehaviour
         if(collision.TryGetComponent<PlayerController>(out PlayerController player))
         {
             Transform mapTrm = MapManager.Instance.NextStage();
-            player.transform.position = mapTrm.Find("SpawnPoint").position;
         }
     }
 }
