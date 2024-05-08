@@ -21,4 +21,6 @@ public class GunSO : ScriptableObject
     public float destroyRange;//사정거리
 
     public Bullet bulletPrefab;//총알 프리팹
+
+    public AudioClip gunShootSound;    
 }
