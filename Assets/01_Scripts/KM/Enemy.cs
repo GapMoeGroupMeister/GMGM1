@@ -1,9 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 
 public enum EnemyState
@@ -31,7 +27,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _findEnemyMark;
     [SerializeField] private GameObject _findWallMark;
 
-    [SerializeField] private PlayerController player;
+    [SerializeField] private Transform playerTrm;
     [SerializeField] private Transform gunTip;
 
     [SerializeField] private Material _hitMaterial;
@@ -71,11 +67,11 @@ public class Enemy : MonoBehaviour
     {
         gunFireDelay += Time.deltaTime;
 
-        float playerDir = player.transform.position.x > transform.position.x ? 1 : -1;
+        float playerDir = playerTrm.transform.position.x > transform.position.x ? 1 : -1;
         
-        if( player != null )
+        if( playerTrm != null )
         {
-            Vector2 dir = ((Vector2)player.transform.position - (Vector2)transform.position).normalized;            
+            Vector2 dir = ((Vector2)playerTrm.position - (Vector2)transform.position).normalized;            
 
             if (playerInSight)
             {
@@ -157,12 +153,12 @@ public class Enemy : MonoBehaviour
         float dir = _direction == Direction.Left ? -1f : 1f;
 
         // �÷��̾ �þ� �Ÿ� �ȿ� ����
-        float playerDistance = Vector3.Distance(player.transform.position, transform.position);
+        float playerDistance = Vector3.Distance(playerTrm.position, transform.position);
         playerInSight = playerDistance <= _sight;
         
         if (playerInSight)
         {
-            float playerDir = player.transform.position.x > transform.position.x ? 1 : -1;
+            float playerDir = playerTrm.position.x > transform.position.x ? 1 : -1;
             RaycastHit2D hit = Physics2D.Raycast(currentPosition2, new Vector2(playerDir, 0), _sight, _wallLayer);
             if (hit.collider != null)
             {   // �þ� �ȿ� �ִµ� ���� ���� ����
@@ -210,17 +206,15 @@ public class Enemy : MonoBehaviour
 
     private void OnUpdateAttack()
     {
+        animator.SetBool("isWalk", false);
+
         UpdateDirection();
 
-        Transform tr = transform;
-        // ���� ���ʹ��� ��ġ�� ����
-        Vector2 currentPosition = tr.position;
-        Vector2 currentPosition2 = tr.position + new Vector3(0, -0.1f);
-        // ���� ���Ⱚ ����
+        Vector2 currentPosition = transform.position;
+        Vector2 currentPosition2 = transform.position + new Vector3(0, -0.1f);
         float dir = _direction == Direction.Left ? -1f : 1f;
 
-        float playerDistance = Vector3.Distance(player.transform.position, transform.position);
-        // �÷��̾ �þ� ������ ����
+        float playerDistance = Vector3.Distance(playerTrm.position, transform.position);
         if (playerDistance > _sight)
         {
             OnEnterState(EnemyState.Roaming);
@@ -232,7 +226,7 @@ public class Enemy : MonoBehaviour
 
     private float UpdateDirection()
     {
-        _direction = transform.position.x >= player.transform.position.x ? Direction.Left : Direction.Right;
+        _direction = transform.position.x >= playerTrm.position.x ? Direction.Left : Direction.Right;
         return SetDirectionScale();
     }
 
@@ -261,9 +255,9 @@ public class Enemy : MonoBehaviour
         _findEnemyMark.SetActive(false);
         _findWallMark.SetActive(false);
 
-        if(player == null )
+        if(playerTrm == null )
         {
-           player = GameObject.FindObjectOfType<PlayerController>();
+            playerTrm = GameManager.Instance.playerController.transform;
         }
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -305,7 +299,7 @@ public class Enemy : MonoBehaviour
     IEnumerator OnDie()
     {
         animator.Play("enemy-die");
-
+        GameManager.Instance.AddKillCount();
         yield return new WaitForSeconds(3f);
 
         Destroy(gameObject);
