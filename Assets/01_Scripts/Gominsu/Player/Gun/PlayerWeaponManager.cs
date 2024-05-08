@@ -86,6 +86,9 @@ public class PlayerWeaponManager : MonoBehaviour
             currentGunUI.i = currentGun;
             
         _gun = FindObjectOfType<Gun>();
+
+        
+
         audioSource.clip = _gun.gunSound;
         light = GameObject.Find("GunLight");
         light.SetActive(false);
