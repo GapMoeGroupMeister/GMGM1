@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerWeaponManager : MonoBehaviour
@@ -87,6 +86,9 @@ public class PlayerWeaponManager : MonoBehaviour
             currentGunUI.i = currentGun;
             
         _gun = FindObjectOfType<Gun>();
+
+        
+
         audioSource.clip = _gun.gunSound;
         light = GameObject.Find("GunLight");
         light.SetActive(false);
