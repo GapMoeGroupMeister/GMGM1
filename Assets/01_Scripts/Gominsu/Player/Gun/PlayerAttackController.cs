@@ -124,7 +124,16 @@ public class PlayerAttackController : MonoBehaviour
                 );
                 checkRenderer = transform.position.x > gun._mousePos.x;
             }
-                _renderer = checkRenderer != transform.position.x > gun._mousePos.x;
+
+        if (gun._mousePos.x < transform.position.x)
+        {
+            gun.transform.localScale = new Vector3(
+            gun.transform.localScale.x,
+                Mathf.Abs(gun.transform.localScale.y) * -1,
+                gun.transform.localScale.z
+                );
+        }
+        _renderer = checkRenderer != transform.position.x > gun._mousePos.x;
     }
 
     IEnumerator FireLightCheck()

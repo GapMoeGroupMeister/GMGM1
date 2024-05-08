@@ -210,6 +210,8 @@ public class Enemy : MonoBehaviour
 
     private void OnUpdateAttack()
     {
+        animator.SetBool("isWalk", false);
+
         UpdateDirection();
 
         Transform tr = transform;
