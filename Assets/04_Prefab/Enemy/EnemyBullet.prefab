@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2030243829
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 1496316681, guid: 3537b39371ceee946ae2d76ec5d48b59, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -143,7 +143,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -161,8 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 729f4ec06ac7d0943b25efc743ad4d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
-  gunTipPosition: {x: 0, y: 0, z: 0}
-  destroyDistance: 10
-  bulletEffect: {fileID: 4786362876144403721, guid: 903fc549e33589b4aa95fdaffe4d5db5, type: 3}
-  Direction: {x: 0, y: 0, z: 0}
+  _speed: 5
+  _lifeTime: 7
+  _destoryParticle: {fileID: -5379102048368888343, guid: 903fc549e33589b4aa95fdaffe4d5db5, type: 3}
