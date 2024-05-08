@@ -32,7 +32,9 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         _playerInput.MouseScrall += MouseScrallCheck;
         _playerInput.WeaponChange += ChangeWeapon;
-        
+
+        ChangeWeapon(1);
+
     }
     void ChangeWeapon(int idx)
     {
@@ -81,7 +83,6 @@ public class PlayerWeaponManager : MonoBehaviour
         gun.transform.position = transform.position;
 
         CurrentGun = gun;
-
         if( currentGunUI != null )
             currentGunUI.i = currentGun;
             

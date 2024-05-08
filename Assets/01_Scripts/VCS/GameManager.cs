@@ -11,8 +11,12 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private TextMeshProUGUI _killCountText;
     public Action<int, int> OnGunRefreshEvent;
     public int killCount = 0;
-
+    [SerializeField] private int _goalKillAmount = 100;
     private bool _isGameOver;
+
+    // 엑시트 탈때 이거 체크하고
+    // true일 시 엔딩
+    public bool IsGameClear => killCount >= _goalKillAmount && !_isGameOver;
     
     private void Awake()
     {
