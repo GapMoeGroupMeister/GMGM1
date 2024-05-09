@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using EntityManage;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public enum PlayerState
 {
@@ -40,7 +41,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     private float _jumpPower = 5f;  // ???? ????
     [SerializeField]
     private float _slidingPower = 3f;
-    float jumpPadPower = 30f;
     int currentHp = 100;
     int maxHp = 100;
 
@@ -68,15 +68,16 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     JumpPad _jumpPad;
 
+    [SerializeField] private TMP_Text _currentKillUI;
+    [SerializeField] private TMP_Text _currentTimeUI;
+
     private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
         _rigid = GetComponent<Rigidbody2D>(); // Rigidbody????? Rigidbody2D ??????? ???
         SpriteRenderer = GetComponent<SpriteRenderer>();
         _currentGun = GetComponentInChildren<Gun>();
-        _jumpPad = FindAnyObjectByType<JumpPad>();
-
-        
+        _jumpPad= FindAnyObjectByType<JumpPad>();
     }
 
     private void Start()
@@ -85,15 +86,20 @@ public class PlayerController : MonoBehaviour, IDamageable
         _playerInput.OnJumpEvent += Jump;
         _playerInput.OnSitEvent += Sliding;
         _playerInput.OnRunEvent += Run;
-        //_jumpPad._ChackJumpPad += PressedJumpPad;
+        
 
         currentHp = maxHp;
         RefreshHealth();
+
+        gameOverUI.SetActive(false);
     }
 
-    private void PressedJumpPad()
+
+
+    public void PressedJumpPad()
     {
-        _rigid.velocity = Vector2.up *  jumpPadPower;
+        _rigid.AddForce(Vector2.up * _jumpPad.jumpPadPower, ForceMode2D.Impulse);
+        
     }
 
     //private void OnDisable()
@@ -135,6 +141,9 @@ public class PlayerController : MonoBehaviour, IDamageable
         PlayerRoutine();
 
         Flip();
+
+        
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -160,6 +169,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         GameManager.Instance.GameOver();
         _AnimaDie?.Invoke(true);
         gameOverUI.SetActive(true);
+        _currentKillUI.text = $"킬 : {GameManager.Instance.killCount}";
+        _currentTimeUI.text = $"플레이 시간 : {Mathf.Floor(GameManager.Instance.timerManager._currentTime * 100f) / 100f}초";
+        if (GameManager.Instance.IsGameClear)
+            gameOverUI.SetActive(false);
+
+
         //Destroy(gameObject);
     }
 
