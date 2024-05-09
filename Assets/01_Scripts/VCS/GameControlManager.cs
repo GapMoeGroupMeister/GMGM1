@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class GameControlManager : MonoBehaviour
 {
+    [SerializeField]
     private bool _isOnMenuUI;
     public UnityEvent OnMenuShowEvent;
     public UnityEvent OnMenuOffEvent;

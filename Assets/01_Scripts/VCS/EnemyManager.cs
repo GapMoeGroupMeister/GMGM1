@@ -26,6 +26,7 @@ public class EnemyManager : MonoSingleton<EnemyManager>
     {
         foreach (Enemy e in _enemyList)
         {
+            if (e == null) continue;
             Destroy(e.gameObject);
         }
 
