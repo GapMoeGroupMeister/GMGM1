@@ -6317,6 +6317,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b95f8bd2754003b59a5481e2a1e714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _killCountText: {fileID: 0}
+  killCount: 0
+  _goalKillAmount: 100
 --- !u!1 &1316267178
 GameObject:
   m_ObjectHideFlags: 0
@@ -7078,6 +7081,10 @@ PrefabInstance:
       propertyPath: m_NotificationBehavior
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5095195991932623560, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
+      propertyPath: gameOverUI
+      value: 
+      objectReference: {fileID: 1842626638}
     - target: {fileID: 5095195991932623560, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
       propertyPath: _gameOverUI
       value: 
