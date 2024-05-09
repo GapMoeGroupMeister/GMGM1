@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29090e9a05e0aa54a8d61332eec4523b, type: 3}
   m_Name: AK47
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 13
   maxBulletCount: 30
   fireDelay: 0.1
-  reloadTime: 5
+  reloadTime: 2.4
   isContinueFire: 1
   bulletSpeed: 30
   destroyRange: 12
