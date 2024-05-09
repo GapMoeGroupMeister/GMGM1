@@ -181,18 +181,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   _speed: 4
-  _normalSpeed: 4
-  _runSpeed: 7
+  _normalSpeed: 6
+  _runSpeed: 8
   _sitSpeed: 2
   _jumpPower: 13
   _slidingPower: 3
   inputx: 0
-  _gameOverUI: {fileID: 0}
+  gameOverUI: {fileID: 0}
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 64
   _ray: 0.7
   isGround: 1
+  _currentKillUI: {fileID: 0}
+  _currentTimeUI: {fileID: 0}
 --- !u!114 &6062416390289312866
 MonoBehaviour:
   m_ObjectHideFlags: 0
