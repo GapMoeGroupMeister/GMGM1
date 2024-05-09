@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: GMGM
-  productName: Bullet100
+  productName: Kill45
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.06415099, g: 0.06415099, b: 0.06415099, a: 1}
@@ -163,7 +163,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Standalone: com.GMGM.Bullet100
+    Standalone: com.GMGM.Kill45
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -288,7 +288,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: d1c370b880696184494fa5cbc0a37c9a, type: 3}
+      m_Icon: {fileID: 2800000, guid: cdb4468ad47798f4ab2317f43c518329, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0

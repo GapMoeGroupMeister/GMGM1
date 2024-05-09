@@ -15,3 +15,4 @@ MonoBehaviour:
   stagePrefabs:
   - {fileID: 6249678287385697898, guid: 4b36884ac323d9d41a3c6fbdad04c65c, type: 3}
   - {fileID: 5002795768614395034, guid: 51bb9c8fb9635fc40937ae2a6338e409, type: 3}
+  - {fileID: 970787606301678155, guid: b56734267f67e574eb316e7161380d62, type: 3}
