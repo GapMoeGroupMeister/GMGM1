@@ -169,70 +169,26 @@ public partial class @MainInput: IInputActionCollection2, IDisposable
             ""id"": ""09024668-5768-4215-beb2-402dcc72811d"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
-                    ""type"": ""Value"",
-                    ""id"": ""1354cb63-8b0e-4aba-9eab-4ab95d79ca8e"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": ""NormalizeVector2"",
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""a52ed16a-5266-45d1-84b6-ca994beeabf5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""fb912dea-e286-4063-bca4-973626614b0e"",
-                    ""path"": ""2DVector"",
+                    ""name"": """",
+                    ""id"": ""9b50c532-192c-4e2a-a2eb-284d5cc2ab53"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""7ee09372-f2c8-4b48-92b8-9b1efef7ea77"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Window"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""014c9776-765d-402e-b343-0951ccf13ae5"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Window"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""5ddd671c-75c8-49c2-bd3d-8e4f02307cd6"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Window"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""1977159e-8d94-4b6b-8181-3078f47053e8"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Window"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -260,7 +216,7 @@ public partial class @MainInput: IInputActionCollection2, IDisposable
         m_PlayerControl_Sit = m_PlayerControl.FindAction("Sit", throwIfNotFound: true);
         // GameControl
         m_GameControl = asset.FindActionMap("GameControl", throwIfNotFound: true);
-        m_GameControl_Move = m_GameControl.FindAction("Move", throwIfNotFound: true);
+        m_GameControl_Menu = m_GameControl.FindAction("Menu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -400,12 +356,12 @@ public partial class @MainInput: IInputActionCollection2, IDisposable
     // GameControl
     private readonly InputActionMap m_GameControl;
     private List<IGameControlActions> m_GameControlActionsCallbackInterfaces = new List<IGameControlActions>();
-    private readonly InputAction m_GameControl_Move;
+    private readonly InputAction m_GameControl_Menu;
     public struct GameControlActions
     {
         private @MainInput m_Wrapper;
         public GameControlActions(@MainInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_GameControl_Move;
+        public InputAction @Menu => m_Wrapper.m_GameControl_Menu;
         public InputActionMap Get() { return m_Wrapper.m_GameControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -415,16 +371,16 @@ public partial class @MainInput: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_GameControlActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_GameControlActionsCallbackInterfaces.Add(instance);
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
+            @Menu.started += instance.OnMenu;
+            @Menu.performed += instance.OnMenu;
+            @Menu.canceled += instance.OnMenu;
         }
 
         private void UnregisterCallbacks(IGameControlActions instance)
         {
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
+            @Menu.started -= instance.OnMenu;
+            @Menu.performed -= instance.OnMenu;
+            @Menu.canceled -= instance.OnMenu;
         }
 
         public void RemoveCallbacks(IGameControlActions instance)
@@ -461,6 +417,6 @@ public partial class @MainInput: IInputActionCollection2, IDisposable
     }
     public interface IGameControlActions
     {
-        void OnMove(InputAction.CallbackContext context);
+        void OnMenu(InputAction.CallbackContext context);
     }
 }
