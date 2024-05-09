@@ -13,9 +13,10 @@ public class GameManager : MonoSingleton<GameManager>
     public int killCount = 0;
     [SerializeField] private int _goalKillAmount = 100;
     private bool _isGameOver;
-    [SerializeField] private GameObject _gameClearUI;
-    [SerializeField] private TMP_Text _currentKillCount;
-    [SerializeField] private TMP_Text _clearTime;
+    private GameClear _gameClear;
+    private GameOver GameOverUIManager;
+
+
 
     // 엑시트 탈때 이거 체크하고
     // true일 시 엔딩
@@ -26,12 +27,14 @@ public class GameManager : MonoSingleton<GameManager>
     {
         playerController = FindObjectOfType<PlayerController>();
         timerManager = FindObjectOfType<TimerManager>();
+        _gameClear = FindObjectOfType<GameClear>();
+        GameOverUIManager = FindObjectOfType<GameOver>();
     }
 
     private void Start()
     {
         RefreshSkillCount();
-        _gameClearUI.SetActive(false);
+        
     }
 
     private void OnDisable()
@@ -71,8 +74,10 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GameOver()
     {
+        
         if (_isGameOver) return;
         _isGameOver = true;
+        GameOverUIManager.GameOverUI();
         timerManager.Pause();
         LogManager.Instance.AddPlayLog(killCount, timerManager._currentTime);
         Time.timeScale = 0;
@@ -81,10 +86,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void GameClear()
     {
         GameOver();
-        _gameClearUI.SetActive(true);
-        _currentKillCount.text = $"킬 : {killCount}";
-        _clearTime.text = $"클리어 시간 : {Mathf.Floor(timerManager._currentTime * 100f) / 100f}초";
-
+        _gameClear.GameClearUI();
     }
 
     public void Quit()

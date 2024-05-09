@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class JumpPad : MonoBehaviour
 {
-    public float jumpPadPower = 30f;
+    [SerializeField] private float jumpPadPower = 30f;
 
     public bool chackJumpPad = false;
 
@@ -21,7 +21,7 @@ public class JumpPad : MonoBehaviour
     {
         if (chackJumpPad)
         {
-            _playerController.PressedJumpPad();
+            _playerController.SuperJump(jumpPadPower);
             chackJumpPad = false;
         }
     }
