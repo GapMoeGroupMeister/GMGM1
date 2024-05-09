@@ -9,6 +9,9 @@ public class ExitMap : MonoBehaviour
         if(collision.TryGetComponent<PlayerController>(out PlayerController player))
         {
             Transform mapTrm = MapManager.Instance.NextStage();
+            if (GameManager.Instance.IsGameClear)
+                GameManager.Instance.GameClear();
+
         }
     }
 }
