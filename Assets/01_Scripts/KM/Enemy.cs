@@ -298,6 +298,9 @@ public class Enemy : MonoBehaviour
 
     IEnumerator OnDie()
     {
+        _findWallMark.SetActive(false);
+        _findEnemyMark.SetActive(false);
+
         animator.Play("enemy-die");
         GameManager.Instance.AddKillCount();
         yield return new WaitForSeconds(3f);
