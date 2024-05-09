@@ -70,5 +70,6 @@ public class GameManager : MonoSingleton<GameManager>
         _isGameOver = true;
         timerManager.Pause();
         LogManager.Instance.AddPlayLog(killCount, timerManager._currentTime);
+        Time.timeScale = 0;
     }
 }
