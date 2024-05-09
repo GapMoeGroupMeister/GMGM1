@@ -293,7 +293,6 @@ public class Enemy : MonoBehaviour
         _spriteRenderer.material = _hitMaterial;
         yield return new WaitForSeconds(0.05f);
         _spriteRenderer.material = _originalMaterial;
-
     }
 
     IEnumerator OnDie()
@@ -303,8 +302,9 @@ public class Enemy : MonoBehaviour
 
         animator.Play("enemy-die");
         GameManager.Instance.AddKillCount();
+        EnemyManager.Instance.DeleteEnemy(this);
         yield return new WaitForSeconds(3f);
-
+        
         Destroy(gameObject);
     }
 }
