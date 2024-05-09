@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -9,9 +10,17 @@ public class GameControlManager : MonoBehaviour
     public UnityEvent OnMenuShowEvent;
     public UnityEvent OnMenuOffEvent;
 
-    
-    public void OnMenu()
+    private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnMenu_();
+        }
+    }
+
+    public void OnMenu_()
+    {
+       
         if (_isOnMenuUI)
         {
             _isOnMenuUI = false;

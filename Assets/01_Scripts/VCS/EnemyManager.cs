@@ -10,7 +10,8 @@ public class EnemyManager : MonoSingleton<EnemyManager>
     private List<Enemy> _enemyPrefabBase;
     [SerializeField] private TextMeshProUGUI _enemyAmountText;
     
-    public int AliveEnemy => _enemyList.Count;
+    //public int AliveEnemy => _enemyList.Count;
+    public int aliveEnemyCount = 0;
 
     private void Start()
     {
@@ -40,16 +41,19 @@ public class EnemyManager : MonoSingleton<EnemyManager>
             
         }
 
+        aliveEnemyCount = _enemyList.Count;
         UpdateEnemyAmount();
     }
 
     private void UpdateEnemyAmount()
     {
-        _enemyAmountText.text = $"<size=50>남은 적 : </size><color=red>{_enemyList.Count}";
+        
+        _enemyAmountText.text = $"<size=50>남은 적 : </size><color=red>{aliveEnemyCount}";
     }
     
     public void DeleteEnemy(Enemy enemy)
     {
+        aliveEnemyCount--;
         _enemyList.Remove(enemy);
         UpdateEnemyAmount();
     }
