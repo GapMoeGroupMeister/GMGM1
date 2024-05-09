@@ -49,8 +49,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private float inputx;
     private Vector2 mousePos;
 
-    [SerializeField]
-    private GameObject gameOverUI;
+    
     [SerializeField]
     private LayerMask _whatIsGround;
     [SerializeField]
@@ -68,8 +67,8 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     JumpPad _jumpPad;
 
-    [SerializeField] private TMP_Text _currentKillUI;
-    [SerializeField] private TMP_Text _currentTimeUI;
+
+
 
     private void Awake()
     {
@@ -78,6 +77,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         SpriteRenderer = GetComponent<SpriteRenderer>();
         _currentGun = GetComponentInChildren<Gun>();
         _jumpPad= FindAnyObjectByType<JumpPad>();
+        
     }
 
     private void Start()
@@ -91,16 +91,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         currentHp = maxHp;
         RefreshHealth();
 
-        gameOverUI.SetActive(false);
-    }
-
-
-
-    public void PressedJumpPad()
-    {
-        _rigid.AddForce(Vector2.up * _jumpPad.jumpPadPower, ForceMode2D.Impulse);
         
     }
+
+
+
+    
 
     //private void OnDisable()
     //{
@@ -166,14 +162,8 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Die()
     {
-        GameManager.Instance.GameOver();
         _AnimaDie?.Invoke(true);
-        gameOverUI.SetActive(true);
-        _currentKillUI.text = $"킬 : {GameManager.Instance.killCount}";
-        _currentTimeUI.text = $"플레이 시간 : {Mathf.Floor(GameManager.Instance.timerManager._currentTime * 100f) / 100f}초";
-        if (GameManager.Instance.IsGameClear)
-            gameOverUI.SetActive(false);
-
+        GameManager.Instance.GameOver();
 
         //Destroy(gameObject);
     }
