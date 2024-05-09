@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: Stage
   m_EditorClassIdentifier: 
   stagePrefabs:
-  - {fileID: 6249678287385697898, guid: 4b36884ac323d9d41a3c6fbdad04c65c, type: 3}
-  - {fileID: 5002795768614395034, guid: 51bb9c8fb9635fc40937ae2a6338e409, type: 3}
+  - {fileID: 7024074172553529205, guid: fad51603cdc05874fb32e4cc3381288b, type: 3}
+  - {fileID: 2845170648217701738, guid: e83055b84f2b66445adfd87bf45a525b, type: 3}
+  - {fileID: 999238943556840470, guid: db00b7144aec05f4689542c6511e889a, type: 3}
   - {fileID: 970787606301678155, guid: b56734267f67e574eb316e7161380d62, type: 3}
+  - {fileID: 8904842845731571734, guid: 8162bf80693b87f448cf67c1301d80ec, type: 3}
+  - {fileID: 6070396831453976309, guid: c974f2af17125834aba96c2d3f06a632, type: 3}
+  - {fileID: 73418472748590233, guid: 25d6fc31e513fcf41a4bf65596191e71, type: 3}
+  - {fileID: 81542690951809747, guid: 3893e164f947abd49be4fd380a944f72, type: 3}
+  - {fileID: 8382780063613763408, guid: ddd3c5124c9ef2845b90746d15152126, type: 3}

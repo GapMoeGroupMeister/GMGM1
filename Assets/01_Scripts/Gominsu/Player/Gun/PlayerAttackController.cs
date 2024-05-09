@@ -30,6 +30,8 @@ public class PlayerAttackController : MonoBehaviour
     }
     protected virtual void Update()
     {
+        if (GameManager.Instance.CanPlayerControl)
+            return;
         if (Time.timeScale == 0) return;
         if (_weaponManager.CurrentGun != null)
             gun = _weaponManager.CurrentGun.GetComponent<Gun>();
@@ -57,8 +59,6 @@ public class PlayerAttackController : MonoBehaviour
     }
     private void GunInput(bool Mouse0,bool MouseDown0)
     {
-        if (!GameManager.Instance.CanPlayerControl) return;
-
         if (gun != null) 
         {
             if (gun.currentBulletCount <= 0 && !gun._isReloading)

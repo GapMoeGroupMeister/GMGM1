@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2439020615864953167}
   - component: {fileID: 5245702436558008658}
   - component: {fileID: 5828680136439159985}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GasBarrier
   m_TagString: Object
   m_Icon: {fileID: 0}
