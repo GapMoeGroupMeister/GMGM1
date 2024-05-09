@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameControlManager : MonoBehaviour
 {
@@ -13,13 +14,21 @@ public class GameControlManager : MonoBehaviour
         if (_isOnMenuUI)
         {
             _isOnMenuUI = false;
-            OnMenuOffEvent?.Invoke();            
+            OnMenuOffEvent?.Invoke();  
+            GameManager.Instance.Resume();
         }
         else
         {
             _isOnMenuUI = true;
             OnMenuShowEvent?.Invoke();
+            GameManager.Instance.Pause();
 
         }
+    }
+
+    
+    public void Quit()
+    {
+        SceneManager.LoadScene("StartScene");
     }
 }
