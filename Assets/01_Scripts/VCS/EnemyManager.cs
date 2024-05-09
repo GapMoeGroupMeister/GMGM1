@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyManager : MonoSingleton<EnemyManager>
 {
     [SerializeField] 
-    private List<Enemy> _enemyList;
+    private List<Enemy> _enemyList = new List<Enemy>();
     [SerializeField]
     private List<Enemy> _enemyPrefabBase;
     [SerializeField] private TextMeshProUGUI _enemyAmountText;
