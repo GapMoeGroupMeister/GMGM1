@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cee95863eb6745b09aa581b820979185, type: 3}
   m_Name: AWP
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 2
   maxBulletCount: 20
   fireDelay: 0.5
   reloadTime: 1

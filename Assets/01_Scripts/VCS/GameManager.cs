@@ -16,6 +16,8 @@ public class GameManager : MonoSingleton<GameManager>
     private GameClear _gameClear;
     private GameOver GameOverUIManager;
 
+    // 설정 UI가 켜지거나 하면 false가 됨
+    public bool CanPlayerControl = true;
 
 
     // 엑시트 탈때 이거 체크하고
@@ -92,5 +94,15 @@ public class GameManager : MonoSingleton<GameManager>
     public void Quit()
     {
         Application.Quit();
+    }
+
+    public void SetPlayerControlOff()
+    {
+        CanPlayerControl = false;
+    }
+    
+    public void SetPlayerControlOn()
+    {
+        CanPlayerControl = true;
     }
 }

@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class TimerManager : MonoBehaviour
@@ -6,11 +7,24 @@ public class TimerManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _TimerText;
     public float _currentTime = 0;
     
-    [SerializeField] private bool isPlayTimeCount;
+    [SerializeField] private bool _isPlayTimeCount;
+    [SerializeField] private float _startOffsetTime = 2f;
 
+
+    private void Start()
+    {
+        StartCoroutine(TimerStartCoroutine());
+    }
+
+    private IEnumerator TimerStartCoroutine()
+    {
+        yield return new WaitForSeconds(_startOffsetTime);
+        _isPlayTimeCount = true;
+    }
+    
     private void Update()
     {
-        if (isPlayTimeCount)
+        if (_isPlayTimeCount)
         {
             _currentTime += Time.deltaTime;
             Refresh();
@@ -19,12 +33,12 @@ public class TimerManager : MonoBehaviour
 
     public void Pause()
     {
-        isPlayTimeCount = false;
+        _isPlayTimeCount = false;
     }
 
     public void Resume()
     {
-        isPlayTimeCount = true;
+        _isPlayTimeCount = true;
     }
 
     private void Refresh()

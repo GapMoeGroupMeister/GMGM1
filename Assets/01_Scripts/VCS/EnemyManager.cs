@@ -1,17 +1,17 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class EnemyManager : MonoSingleton<EnemyManager>
 {
     [SerializeField] 
-    private List<Enemy> _enemyList;
+    private List<Enemy> _enemyList = new List<Enemy>();
     [SerializeField]
     private List<Enemy> _enemyPrefabBase;
-
-    public int AliveEnemy => _enemyList.Count;
+    [SerializeField] private TextMeshProUGUI _enemyAmountText;
+    
+    //public int AliveEnemy => _enemyList.Count;
+    public int aliveEnemyCount = 0;
 
     private void Start()
     {
@@ -27,6 +27,7 @@ public class EnemyManager : MonoSingleton<EnemyManager>
     {
         foreach (Enemy e in _enemyList)
         {
+            if (e == null) continue;
             Destroy(e.gameObject);
         }
 
@@ -39,6 +40,22 @@ public class EnemyManager : MonoSingleton<EnemyManager>
             _enemyList.Add(randomEnemy);
             
         }
+
+        aliveEnemyCount = _enemyList.Count;
+        UpdateEnemyAmount();
+    }
+
+    private void UpdateEnemyAmount()
+    {
+        
+        _enemyAmountText.text = $"<size=50>남은 적 : </size><color=red>{aliveEnemyCount}";
+    }
+    
+    public void DeleteEnemy(Enemy enemy)
+    {
+        aliveEnemyCount--;
+        _enemyList.Remove(enemy);
+        UpdateEnemyAmount();
     }
     
 }
