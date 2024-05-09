@@ -152,7 +152,7 @@ BoxCollider2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
@@ -184,17 +184,14 @@ MonoBehaviour:
   _normalSpeed: 6
   _runSpeed: 8
   _sitSpeed: 2
-  _jumpPower: 13
+  _jumpPower: 15
   _slidingPower: 3
   inputx: 0
-  gameOverUI: {fileID: 0}
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 64
   _ray: 0.7
   isGround: 1
-  _currentKillUI: {fileID: 0}
-  _currentTimeUI: {fileID: 0}
 --- !u!114 &6062416390289312866
 MonoBehaviour:
   m_ObjectHideFlags: 0
