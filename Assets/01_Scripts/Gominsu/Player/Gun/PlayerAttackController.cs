@@ -30,6 +30,7 @@ public class PlayerAttackController : MonoBehaviour
     }
     protected virtual void Update()
     {
+        if (Time.timeScale == 0) return;
         if (_weaponManager.CurrentGun != null)
             gun = _weaponManager.CurrentGun.GetComponent<Gun>();
         if (gun != null) 
@@ -101,6 +102,7 @@ public class PlayerAttackController : MonoBehaviour
         Vector2 dir = (gun._mousePos - (Vector2)transform.position).normalized;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         gun.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        print("dd");
     }
 
     protected void FireHandler()

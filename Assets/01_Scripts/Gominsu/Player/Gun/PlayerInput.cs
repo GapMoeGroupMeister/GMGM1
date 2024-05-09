@@ -29,6 +29,8 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0) return;
+
         Mouse0 = Input.GetMouseButtonDown(0);
         MouseDown0 = Input.GetMouseButton(0);
 

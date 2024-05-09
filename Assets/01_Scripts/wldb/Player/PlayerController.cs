@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Vector2 mousePos;
 
     [SerializeField]
-    private GameObject _gameOverUI;
+    private GameObject gameOverUI;
     [SerializeField]
     private LayerMask _whatIsGround;
     [SerializeField]
@@ -126,6 +126,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     void Update()
     {
+        if (Time.timeScale == 0) return;
         Sliding();
         CheckGround();
         CheckMove();
@@ -158,8 +159,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         GameManager.Instance.GameOver();
         _AnimaDie?.Invoke(true);
+        gameOverUI.SetActive(true);
         //Destroy(gameObject);
-        
     }
 
 
