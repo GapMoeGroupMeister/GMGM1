@@ -15,6 +15,7 @@ public class LogUI : MonoBehaviour
     public void SetLog(PlayData data)
     {
         _playData = data;
+        if(_playData.killAmount >= 100) _killAmountText.color = Color.yellow;
         _killAmountText.text = _playData.killAmount.ToString();
         _playTimeText.text = GetTimerString();
         _playRecordedText.text = _playData.playTimeLog;

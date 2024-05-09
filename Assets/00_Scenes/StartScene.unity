@@ -4660,8 +4660,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6de9648a3ea84abcaa425b4e68494adc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _logUIPrefab: {fileID: 0}
-  _contentTrm: {fileID: 0}
+  _logUIPrefab: {fileID: 3952131561297731866, guid: 927f5a1f5dcc4874cad427f78d586802, type: 3}
+  _contentTrm: {fileID: 1416613331}
   _log:
     playDataLog: []
 --- !u!4 &1275526110
@@ -5185,7 +5185,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0006777373}
+  m_AnchoredPosition: {x: 0, y: -0.00008416176}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1416613332
@@ -10761,7 +10761,7 @@ MonoBehaviour:
   UIRectObject: {fileID: 1610299668}
   UITrnsObject: {fileID: 0}
   UIName: 
-  usePositionEffect: 0
+  usePositionEffect: 1
   DefaultPos: {x: 0, y: 1500}
   TargetPos: {x: 0, y: 0}
   duration: 0.2
@@ -15199,7 +15199,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1803035079}
   m_HandleRect: {fileID: 1803035078}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
