@@ -57,6 +57,8 @@ public class PlayerAttackController : MonoBehaviour
     }
     private void GunInput(bool Mouse0,bool MouseDown0)
     {
+        if (!GameManager.Instance.CanPlayerControl) return;
+
         if (gun != null) 
         {
             if (gun.currentBulletCount <= 0 && !gun._isReloading)
