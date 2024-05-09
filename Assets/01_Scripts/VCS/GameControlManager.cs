@@ -21,19 +21,29 @@ public class GameControlManager : MonoBehaviour
     public void OnMenu_()
     {
        
-        if (_isOnMenuUI)
-        {
-            _isOnMenuUI = false;
-            OnMenuOffEvent?.Invoke();  
-            GameManager.Instance.Resume();
-        }
-        else
-        {
-            _isOnMenuUI = true;
-            OnMenuShowEvent?.Invoke();
-            GameManager.Instance.Pause();
+        _isOnMenuUI = true;
+        OnMenuShowEvent?.Invoke();
+        GameManager.Instance.Pause();
+        GameManager.Instance.SetPlayerControlOff();
+        
+        // if (_isOnMenuUI)
+        // {
+        //     _isOnMenuUI = false;
+        //     OnMenuOffEvent?.Invoke();  
+        //     GameManager.Instance.Resume();
+        //     GameManager.Instance.SetPlayerControlOn();
+        // }
+        // else
+        // {
+        // }
+    }
 
-        }
+    public void OffMenu()
+    {
+        _isOnMenuUI = false;
+        OnMenuOffEvent?.Invoke();  
+        GameManager.Instance.Resume();
+        GameManager.Instance.SetPlayerControlOn();
     }
 
     
