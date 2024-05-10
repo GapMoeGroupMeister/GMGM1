@@ -280,7 +280,7 @@ public class Enemy : MonoBehaviour
         _hp -= amout;
         if (_hp <= 0)
         {
-            StartCoroutine(OnDie());
+            OnDie();
         }
         else
         {
@@ -295,7 +295,7 @@ public class Enemy : MonoBehaviour
         _spriteRenderer.material = _originalMaterial;
     }
 
-    IEnumerator OnDie()
+    void OnDie()
     {
         _findWallMark.SetActive(false);
         _findEnemyMark.SetActive(false);
@@ -303,8 +303,7 @@ public class Enemy : MonoBehaviour
         animator.Play("enemy-die");
         GameManager.Instance.AddKillCount();
         EnemyManager.Instance.DeleteEnemy(this);
-        yield return new WaitForSeconds(3f);
+        //yield return new WaitForSeconds(3f);
         
-        Destroy(gameObject);
     }
 }

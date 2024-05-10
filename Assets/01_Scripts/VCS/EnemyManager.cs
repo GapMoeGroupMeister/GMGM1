@@ -18,7 +18,7 @@ public class EnemyManager : MonoSingleton<EnemyManager>
         MapManager.Instance.OnStageChange += GenerateEnemy;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         //MapManager.Instance.OnStageChange -= GenerateEnemy;
     }
@@ -28,7 +28,8 @@ public class EnemyManager : MonoSingleton<EnemyManager>
         foreach (Enemy e in _enemyList)
         {
             if (e == null) continue;
-            Destroy(e.gameObject);
+            DestroyImmediate(e.gameObject , true);
+            //DeleteEnemy(e);
         }
 
         Transform[] SpawnPosTrms = MapManager.Instance.GetEnemyPositions();
@@ -36,8 +37,8 @@ public class EnemyManager : MonoSingleton<EnemyManager>
         foreach (Transform trm in SpawnPosTrms)
         {
             Enemy randomEnemy = _enemyPrefabBase[Random.Range(0, _enemyPrefabBase.Count)];
-            Instantiate(randomEnemy, trm.position, Quaternion.identity);
-            _enemyList.Add(randomEnemy);
+            Enemy randomEnemy_ = Instantiate(randomEnemy, trm.position, Quaternion.identity);
+            _enemyList.Add(randomEnemy_);
             
         }
 
@@ -54,6 +55,7 @@ public class EnemyManager : MonoSingleton<EnemyManager>
     public void DeleteEnemy(Enemy enemy)
     {
         aliveEnemyCount--;
+        Destroy(enemy.gameObject ,2);
         _enemyList.Remove(enemy);
         UpdateEnemyAmount();
     }

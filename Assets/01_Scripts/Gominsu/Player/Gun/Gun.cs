@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.AnimatedValues;
 using UnityEngine;
 
 //추상 클래스
