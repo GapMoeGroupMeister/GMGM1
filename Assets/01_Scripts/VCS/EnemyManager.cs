@@ -20,7 +20,7 @@ public class EnemyManager : MonoSingleton<EnemyManager>
 
     private void OnDestroy()
     {
-        MapManager.Instance.OnStageChange -= GenerateEnemy;
+        //MapManager.Instance.OnStageChange -= GenerateEnemy;
     }
 
     public void GenerateEnemy()

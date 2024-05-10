@@ -16,7 +16,7 @@ public class HealthGaugeUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameManager.Instance.playerController.OnHealthChangedEvent -= Refresh;
+        //GameManager.Instance.playerController.OnHealthChangedEvent -= Refresh;
     }
 
     public void Refresh(int currentValue, int maxValue)
