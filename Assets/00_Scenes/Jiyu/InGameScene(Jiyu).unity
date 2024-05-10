@@ -632,7 +632,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7892654220724110009, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -8.3
       objectReference: {fileID: 0}
     - target: {fileID: 7892654220724110009, guid: 9e379afb452bfe54eb7074cca143da51, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9814,6 +9814,8 @@ MonoBehaviour:
   _enemyList: []
   _enemyPrefabBase:
   - {fileID: 0}
+  _enemyAmountText: {fileID: 0}
+  aliveEnemyCount: 0
 --- !u!4 &778573810
 Transform:
   m_ObjectHideFlags: 0
@@ -15052,6 +15054,7 @@ MonoBehaviour:
   _killCountText: {fileID: 650939862}
   killCount: 0
   _goalKillAmount: 100
+  CanPlayerControl: 1
 --- !u!1 &1289060423
 GameObject:
   m_ObjectHideFlags: 0
@@ -15188,7 +15191,7 @@ Transform:
   m_GameObject: {fileID: 1323151006}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -8.3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -22531,7 +22534,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _TimerText: {fileID: 228803632}
   _currentTime: 0
-  isPlayTimeCount: 1
+  _isPlayTimeCount: 0
+  _startOffsetTime: 2
 --- !u!4 &2009364280
 Transform:
   m_ObjectHideFlags: 0
