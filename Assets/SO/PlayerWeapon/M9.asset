@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29090e9a05e0aa54a8d61332eec4523b, type: 3}
   m_Name: M9
   m_EditorClassIdentifier: 
-  damage: 7
+  damage: 1
   maxBulletCount: 9
-  fireDelay: 0.3
-  reloadTime: 1
+  fireDelay: 0.2
+  reloadTime: 0.5
   isContinueFire: 0
-  bulletSpeed: 20
+  bulletSpeed: 24
   destroyRange: 10
   bulletPrefab: {fileID: 1843989781348865363, guid: d260880515a2db1408bbbbca3a0183c9, type: 3}
   gunShootSound: {fileID: 8300000, guid: 205926140d44a6e45b96ffc0ffd31a23, type: 3}

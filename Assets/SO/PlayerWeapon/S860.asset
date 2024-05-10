@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29090e9a05e0aa54a8d61332eec4523b, type: 3}
   m_Name: S860
   m_EditorClassIdentifier: 
-  damage: 35
+  damage: 7
   maxBulletCount: 2
-  fireDelay: 1.3
+  fireDelay: 1
   reloadTime: 3
   isContinueFire: 0
   bulletSpeed: 20
