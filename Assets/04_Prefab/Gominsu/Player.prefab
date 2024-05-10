@@ -212,6 +212,7 @@ MonoBehaviour:
   CurrentGun: {fileID: 0}
   light: {fileID: 0}
   _gun: {fileID: 0}
+  audioSource: {fileID: 0}
   index: 1
   currentIndex: 1
 --- !u!95 &5914022392950667310
@@ -358,6 +359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hitMaterial: {fileID: 2100000, guid: 5146f32727b468f459afd80b91cb495b, type: 2}
+  _hitSound: {fileID: 8300000, guid: 2280b3c9492490e43ba1a9e6488405db, type: 3}
 --- !u!82 &6236621806395129225
 AudioSource:
   m_ObjectHideFlags: 0

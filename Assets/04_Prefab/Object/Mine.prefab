@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3966486995878551044}
   - component: {fileID: 5259529699928314812}
   - component: {fileID: 3525701566709009090}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mine
   m_TagString: Object
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6004314406317340247}
   - component: {fileID: 8789131273746639576}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
