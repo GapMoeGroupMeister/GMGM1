@@ -19,10 +19,15 @@ public class LogUIManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (PlayData data in _log.playDataLog)
+        for (int i = _log.playDataLog.Count-1; i >= 0; i--)
         {
             LogUI log = Instantiate(_logUIPrefab, _contentTrm);
-            log.SetLog(data);
+            log.SetLog(_log.playDataLog[i]);
         }
+
+        // foreach (PlayData data in _log.playDataLog)
+        // {
+        //    
+        // }
     }
 }
