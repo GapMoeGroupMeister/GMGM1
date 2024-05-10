@@ -1,44 +1,47 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EnemyBullet : MonoBehaviour
 {
     
-    Slider hpBar;
+    [SerializeField] private float _speed = 3;
+    [SerializeField] private float _lifeTime = 6;
 
-    public float speed = 3;
-
-    public Vector3 gunTipPosition;
-    public float destroyDistance = 10;
-
-
-    public Vector3 Direction;//총알 방향
+    private Rigidbody2D _rigid;
+    [SerializeField] private EffectObject _destoryParticle; 
+    private Vector2 _direction;
+    
+    private void Awake()
+    {
+        _rigid = GetComponent<Rigidbody2D>();
+    }
 
     public void Fire(Vector2 dir)
     {
-        Direction = dir;
-        gunTipPosition = transform.position;//쏠때 당시의 자신의 위치 = 총구의 위치 
+        _direction = dir;
+        _rigid.velocity = dir.normalized * _speed;
+        transform.right = dir;
+        StartCoroutine(BulletCoroutine());
     }
 
-    private void Update()
+    private IEnumerator BulletCoroutine()
     {
-        transform.position += Direction * speed * Time.deltaTime;
-
-        if (Vector2.Distance(gunTipPosition, transform.position) > destroyDistance)//만약 Vector2.Distance가 destroyDistance보다 크다면 총알을 삭제
-        {                                                                             //   ㄴ얘는 transform.position - guntip(현재 이동한 거리)이다
-            Destroy(gameObject);
-        }
-
-
+        yield return new WaitForSeconds(Random.Range(_lifeTime, _lifeTime+1f));
+        DestroyBullet();
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    private void DestroyBullet()
     {
-  
+        Instantiate(_destoryParticle, transform.position, Quaternion.identity);
         Destroy(gameObject);
 
     }
 
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        StopAllCoroutines();
+        DestroyBullet();
+        DestroyBullet();
+    }
 }

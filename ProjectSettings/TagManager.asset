@@ -7,6 +7,7 @@ TagManager:
   - Bullet
   - Enemy
   - EnemyBullet
+  - Object
   layers:
   - Default
   - TransparentFX
@@ -43,6 +44,18 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Tilemap
+    uniqueID: 28676061
+    locked: 0
+  - name: Object
+    uniqueID: 2264723467
+    locked: 0
+  - name: Particle
+    uniqueID: 3328856537
+    locked: 0
+  - name: Entity
+    uniqueID: 2940222639
     locked: 0
   - name: UI
     uniqueID: 2019390575

@@ -1,10 +1,11 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EffectObject : MonoBehaviour
 {
     [SerializeField] private ParticleSystem[] _particles;
-    
+    public UnityEvent onDestroyEvent;
     public float playTime = 2;
     private float _currentTime = 0;
 
@@ -19,7 +20,7 @@ public class EffectObject : MonoBehaviour
         LifeTime();
     }
 
-    public void Play()
+    public virtual void Play()
     {
         for (int i = 0; i < _particles.Length; i++)
         {
@@ -46,8 +47,9 @@ public class EffectObject : MonoBehaviour
 
     private void Die()
     {
+        onDestroyEvent?.Invoke();
         // 나중에 풀링으로 변경
-        gameObject.SetActive(false);
-        
+        //gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }

@@ -120,23 +120,23 @@
                 },
                 {
                     "name": "",
-                    "id": "d80fac72-29ff-4c04-89d0-08da0d0003f3",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Window",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "d807ef71-a1cc-4f02-8405-165f6b2e7d69",
                     "path": "<Keyboard>/leftCtrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "Window",
                     "action": "Sit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d80fac72-29ff-4c04-89d0-08da0d0003f3",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Window",
+                    "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -147,70 +147,26 @@
             "id": "09024668-5768-4215-beb2-402dcc72811d",
             "actions": [
                 {
-                    "name": "Move",
-                    "type": "Value",
-                    "id": "1354cb63-8b0e-4aba-9eab-4ab95d79ca8e",
-                    "expectedControlType": "Vector2",
-                    "processors": "NormalizeVector2",
+                    "name": "Menu",
+                    "type": "Button",
+                    "id": "a52ed16a-5266-45d1-84b6-ca994beeabf5",
+                    "expectedControlType": "Button",
+                    "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
-                    "name": "2D Vector",
-                    "id": "fb912dea-e286-4063-bca4-973626614b0e",
-                    "path": "2DVector",
+                    "name": "",
+                    "id": "9b50c532-192c-4e2a-a2eb-284d5cc2ab53",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
+                    "action": "Menu",
+                    "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "7ee09372-f2c8-4b48-92b8-9b1efef7ea77",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Window",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "014c9776-765d-402e-b343-0951ccf13ae5",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Window",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "5ddd671c-75c8-49c2-bd3d-8e4f02307cd6",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Window",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "1977159e-8d94-4b6b-8181-3078f47053e8",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Window",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 }
             ]
         }

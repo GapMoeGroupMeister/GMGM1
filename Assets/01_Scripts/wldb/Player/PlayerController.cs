@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using EntityManage;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public enum PlayerState
 {
@@ -10,15 +12,21 @@ public enum PlayerState
     Walk,
     Run,
     Jump,
-    Sit,
+    Sliding,
     Dash,
 
 }
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
     public event Action<int, int> OnHealthChangedEvent;
-    public Action<int, int> OnShootEvent; 
+    public Action<int, int> OnShootEvent;
+    public Action<bool> _AnimaWalk;
+    public Action<bool> _AnimaRun;
+    public Action<bool> _AnimaJump;
+    public Action<bool> _AnimaSliding;
+    public Action<bool> _AnimaDie;
+    
     [SerializeField]
     private PlayerState currentState;
     [SerializeField]
@@ -31,29 +39,35 @@ public class PlayerController : MonoBehaviour
     private float _sitSpeed = 2f;
     [SerializeField]
     private float _jumpPower = 5f;  // ???? ????
+    [SerializeField]
+    private float _slidingPower = 3f;
     int currentHp = 100;
     int maxHp = 100;
+
 
     [SerializeField]
     private float inputx;
     private Vector2 mousePos;
 
-    [SerializeField]
-    private GameObject _gameOverUI;
+    
     [SerializeField]
     private LayerMask _whatIsGround;
     [SerializeField]
     private float _ray = 1f;
 
     public bool isGround;
+    private bool checkSliding = false;
 
     private Rigidbody2D _rigid;  // Rigidbody ???
     private SpriteRenderer SpriteRenderer;
-    private Animator _anim;
     private PlayerInput _playerInput;
 
     private Gun _currentGun;
     public Gun CurrentGun { get; private set; }
+
+    JumpPad _jumpPad;
+
+
 
 
     private void Awake()
@@ -62,17 +76,27 @@ public class PlayerController : MonoBehaviour
         _rigid = GetComponent<Rigidbody2D>(); // Rigidbody????? Rigidbody2D ??????? ???
         SpriteRenderer = GetComponent<SpriteRenderer>();
         _currentGun = GetComponentInChildren<Gun>();
-        _anim = GetComponent<Animator>();
+        _jumpPad= FindAnyObjectByType<JumpPad>();
+        
     }
 
     private void Start()
     {
-        _playerInput.OnMoveMentEvent += Move;
+        _playerInput.OnMovementEvent += Move;
         _playerInput.OnJumpEvent += Jump;
-        _playerInput.OnSitEvent += Sit;
+        _playerInput.OnSitEvent += Sliding;
         _playerInput.OnRunEvent += Run;
+        
 
+        currentHp = maxHp;
+        RefreshHealth();
+
+        
     }
+
+
+
+    
 
     //private void OnDisable()
     //{
@@ -85,9 +109,28 @@ public class PlayerController : MonoBehaviour
         OnHealthChangedEvent?.Invoke(currentHp, maxHp);
     }
 
+    public void TakeDamage(int amount)
+    {
+        currentHp -= amount;
+        RefreshHealth();
+        CheckDie();
+    }
+
+    public void RestoreHealth(int amount)
+    {
+        currentHp += amount;
+    }
+
+    void IDamageable.CheckDie()
+    {
+        CheckDie();
+    }
+
     void Update()
     {
         
+        if (Time.timeScale == 0) return;
+        Sliding();
         CheckGround();
         CheckMove();
         CheckAnim();
@@ -95,6 +138,9 @@ public class PlayerController : MonoBehaviour
         PlayerRoutine();
 
         Flip();
+
+        
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -111,25 +157,28 @@ public class PlayerController : MonoBehaviour
     {
         if (currentHp <= 0)
         {
-            Destroy(gameObject);
-            _gameOverUI.SetActive(true);
-            Time.timeScale = 0;
+            Die();
         }
     }
 
-
-    public void UseHeal(int amount)
+    private void Die()
     {
-        currentHp += amount;
+        _AnimaDie?.Invoke(true);
+        GameManager.Instance.GameOver();
+
+        //Destroy(gameObject);
     }
+
 
     private void CheckAnim()
     {
-        if (inputx == 0)
-        {
-            currentState = PlayerState.Idle;
-        }
-        _anim.SetBool("PlayerWalk", inputx != 0 ? true : false);
+        _AnimaWalk?.Invoke(inputx != 0);
+
+        _AnimaRun?.Invoke(inputx != 0 && currentState == PlayerState.Run);
+
+        _AnimaJump?.Invoke(!isGround);
+
+        _AnimaSliding?.Invoke(checkSliding);
     }
 
     private void CheckGround()
@@ -150,10 +199,6 @@ public class PlayerController : MonoBehaviour
         {
             currentState = PlayerState.Walk;
         }
-        else if (x == 0)
-        {
-            _speed = _normalSpeed;
-        }
     }
 
     private void Run(bool LeftShift)
@@ -162,20 +207,31 @@ public class PlayerController : MonoBehaviour
         {
             if (currentState == PlayerState.Walk)
             {
-                _anim.SetBool("PlayerRun",true);
                 currentState = PlayerState.Run;
             }
         }
-        
     }
 
-    private void Sit(bool LeftControl)
+    private void Sliding(bool LeftControl)
     {
-        if (LeftControl)
+
+        if (checkSliding || !isGround)
         {
-            currentState = PlayerState.Sit;
+            return;
         }
+        _rigid.AddForce(new Vector2(transform.position.x > mousePos.x ? -1 : 1, 0) * _slidingPower, ForceMode2D.Impulse);
+        checkSliding = true;
+        currentState = PlayerState.Sliding;
+        StartCoroutine("CheckSliding");
     }
+
+    IEnumerator CheckSliding()
+    {
+        yield return new WaitForSeconds(1);
+        checkSliding = false;
+        currentState = PlayerState.Walk;
+    }
+    
 
     private void Jump(bool Space)
     {
@@ -183,53 +239,18 @@ public class PlayerController : MonoBehaviour
         {
             if (isGround)
             {
-                _anim.SetBool("PlayerJump", true);
                 _rigid.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
             }
         }
     }
 
-    //private void InputKey(float x, bool LeftShift, bool LeftControl, bool Space)
-    //{
-    //    currentState = PlayerState.Idle;
-    //    if (x != 0)
-    //    {
-    //        currentState = PlayerState.Walk;
-    //        inputx = x;
-    //    }
-
-
-    //    if (LeftShift && isGround)
-    //    {
-    //        if (currentState == PlayerState.Walk)
-    //        {
-    //            currentState = PlayerState.Run;
-    //            _anim.SetBool("PlayerRun", true);
-    //        }
-    //    }
-
-
-    //    if (LeftControl)
-    //    {
-    //        currentState = PlayerState.Sit;
-    //        _anim.SetBool("PlayerSit", true);
-    //    }
-
-
-
-    //    if (Space)
-    //    {
-    //        if (isGround)
-    //        {
-    //            _rigid.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-    //        }
-    //    }
-    //}
-
+    private void Sliding()
+    {
+        
+    }
 
     private void Flip()
     {
-
         SpriteRenderer.flipX = transform.position.x > mousePos.x;
         
     }
@@ -239,31 +260,37 @@ public class PlayerController : MonoBehaviour
         switch (currentState)
         {
             case PlayerState.Idle:
-                //_anim.SetBool("PlayerJump", false);
-                //_anim.SetBool("PlayerRun", false);
+                if (isGround) _rigid.velocity = Vector2.zero;
                 break;
 
             case PlayerState.Walk:
+                _AnimaSliding?.Invoke(false);
                 _speed = _normalSpeed;
                 _rigid.velocity = new Vector2(inputx * _speed, _rigid.velocity.y);
                 break;
 
             case PlayerState.Run:
+                _AnimaWalk?.Invoke(false);
                 _speed = _runSpeed;
                 _rigid.velocity = new Vector2(inputx * _speed, _rigid.velocity.y);
 
                 break;
 
-            case PlayerState.Sit:
-                _speed = _sitSpeed;
-                _rigid.velocity = new Vector2(inputx * _speed, _rigid.velocity.y);
-                transform.Translate(Vector3.down * 0.5f * Time.deltaTime);
+            case PlayerState.Sliding:
+                _AnimaWalk?.Invoke(false);
+                _AnimaRun?.Invoke(false);
                 break;
 
-            //case PlayerState.UseHeal:
-                
+
+                //case PlayerState.UseHeal:
+
         }
 
+    }
+
+    public void SuperJump(float power)
+    {
+        _rigid.AddForce(Vector2.up * power, ForceMode2D.Impulse);
     }
 
     

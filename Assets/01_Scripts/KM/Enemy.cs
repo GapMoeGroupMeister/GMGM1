@@ -1,7 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+
+public enum EnemyState
+{    
+    Roaming,
+    Attack
+}
 
 public class Enemy : MonoBehaviour
 {
@@ -11,11 +16,10 @@ public class Enemy : MonoBehaviour
         Right
     }    
 
-    [SerializeField] private int _enemyCode = 1;
+    [SerializeField] private EnemySO _enemySO;
 
     [SerializeField] private float _sight = 1;
     [SerializeField] private float _wallSight = 1;
-    [SerializeField] private float _wallSight2 = 1;
 
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private LayerMask _wallLayer;
@@ -23,135 +27,283 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _findEnemyMark;
     [SerializeField] private GameObject _findWallMark;
 
+    [SerializeField] private Transform playerTrm;
+    [SerializeField] private Transform gunTip;
+
+    [SerializeField] private Material _hitMaterial;
+    
+    private Material _originalMaterial;
+    private SpriteRenderer _spriteRenderer;
+    private Animator animator;
+
+
+    private EnemyState enemyState = EnemyState.Roaming;
+
     private float _moveSpeed = 3;
     private int _hp = 5;
     private float _directionMoveDistance = 6;
     private Vector2 moveRange;   
     private Direction _direction = Direction.Left;
+    
+    private float gunFireDelay = 0;
+    
+    bool playerInSight = false;
+
 
     void Start()
     {
-        EnemyTableData enemyData = EnemyTable.Instance.Find(_enemyCode);
-        _hp = enemyData.Enemy_HP;
-        _directionMoveDistance = enemyData.Enemy_RoamingRange;
-        _moveSpeed = enemyData.Enemy_MoveSpeed;
-
-        _findEnemyMark.SetActive(false);
-        _findWallMark.SetActive(false);
-
-        Vector3 pos = transform.position;
-        moveRange.x = pos.x - _directionMoveDistance;
-        moveRange.y = pos.x + _directionMoveDistance;
+        Setup();        
     }
 
     void Update()
     {
+        if (_hp <= 0)
+            return;
 
+        OnUpdateState();        
+    }
+
+    private void UpdateGun()
+    {
+        gunFireDelay += Time.deltaTime;
+
+        float playerDir = playerTrm.transform.position.x > transform.position.x ? 1 : -1;
+        
+        if( playerTrm != null )
+        {
+            Vector2 dir = ((Vector2)playerTrm.position - (Vector2)transform.position).normalized;            
+
+            if (playerInSight)
+            {
+                if (gunFireDelay >= 0.2f)
+                {
+                    EnemyBullet enemyBullet = GameObject.Instantiate(_enemySO.Bullet, gunTip.position, Quaternion.identity).GetComponent<EnemyBullet>();
+                    enemyBullet.Fire(dir.normalized);
+                    gunFireDelay = 0;
+                }
+            }
+        }
+    }
+
+    private void OnEnterState(EnemyState state)
+    {
+        if (state == enemyState)
+            return;
+
+        OnLeaveState(enemyState);
+        enemyState = state;
+
+        switch (enemyState)
+        {
+            case EnemyState.Roaming:
+                {                    
+                    break;
+                }
+            case EnemyState.Attack:
+                {
+                    gunFireDelay = 0;
+                    _findEnemyMark.SetActive(true);
+                    _findWallMark.SetActive(false);
+                    break;
+                }
+        }
+    }
+
+    private void OnLeaveState(EnemyState state)
+    {
+        switch (enemyState)
+        {
+            case EnemyState.Roaming:
+                {
+                    break;
+                }
+            case EnemyState.Attack:
+                {
+                    animator.SetBool("isWalk", false);
+                    _findEnemyMark.SetActive(false);
+                    break;
+                }
+        }
+    }
+
+    private void OnUpdateState()
+    {
+        switch ( enemyState )
+        {
+            case EnemyState.Roaming:
+                {
+                    OnUpdateRoaming();
+                    break;
+                }
+            case EnemyState.Attack: 
+                {
+                    OnUpdateAttack();
+                    break;
+                }
+        }
+    }
+
+    private void OnUpdateRoaming()
+    {
         Transform tr = transform;
-        // ÇöÀç ¿¡³Ê¹ÌÀÇ À§Ä¡¸¦ ¾ò¾î¿È
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Vector2 currentPosition = tr.position;
         Vector2 currentPosition2 = tr.position + new Vector3(0, -0.1f);
-        // ÇöÀç ¹æÇâ°ª ¼³Á¤
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â°ª ï¿½ï¿½ï¿½ï¿½
         float dir = _direction == Direction.Left ? -1f : 1f;
 
-        bool findWall1 = false;
-        bool findWall2 = false;
-        bool findPlayer = false;
-
-
-        // ÀÌµ¿ ¹æÇâÀ¸·Î Ray¸¦ ½÷¼­ Ãæµ¹ µÇ¸é ¹æÇâ ÀüÈ¯ (PlayerÃ£±â)
-        //RaycastHit2D hit2D = Physics2D.Raycast(currentPosition, new Vector2(dir, 0), _sight, _playerLayer);
-        //if (hit2D.collider != null)
-        //{
-        //    findPlayer = true;
-        //}
-        //RaycastHit2D hit = Physics2D.Raycast(currentPosition2, new Vector2(dir, 0), _wallSight, _wallLayer);
-        //if (hit.collider != null)
-        //{
-        //    findWall = true;
-        //}
-
-        RaycastHit2D hit2D = Physics2D.Raycast(currentPosition, new Vector2(dir, 0), _sight, _playerLayer);
-        if (hit2D.collider != null)
+        // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Ã¾ï¿½ ï¿½Å¸ï¿½ ï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½
+        float playerDistance = Vector3.Distance(playerTrm.position, transform.position);
+        playerInSight = playerDistance <= _sight;
+        
+        if (playerInSight)
         {
-            findPlayer = true;
-        }
-
-        if (findPlayer) 
-        {
-            RaycastHit2D hit = Physics2D.Raycast(currentPosition2, new Vector2(dir, 0), _wallSight, _wallLayer);
+            float playerDir = playerTrm.position.x > transform.position.x ? 1 : -1;
+            RaycastHit2D hit = Physics2D.Raycast(currentPosition2, new Vector2(playerDir, 0), _sight, _wallLayer);
             if (hit.collider != null)
+            {   // ï¿½Ã¾ï¿½ ï¿½È¿ï¿½ ï¿½Ö´Âµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                float wallDistance = Vector3.Distance(hit.collider.transform.position, transform.position);
+
+                if( wallDistance < playerDistance ) 
+                {
+                    _findWallMark.SetActive(true);
+                    animator.SetBool("isWalk", false);
+                    return;
+                }                
+            }
+            else
             {
-                findWall1 = true;
+                OnEnterState(EnemyState.Attack);
+                return;
             }
         }
 
-        if (!findPlayer)
-        {
-            RaycastHit2D hit2 = Physics2D.Raycast(currentPosition2, new Vector2(dir, 0), _wallSight2, _wallLayer);
-            if (hit2.collider != null)
-            {
-                findWall2 = true;
-            }
-        }
+        _findWallMark.SetActive(false);
 
-        Debug.DrawRay(currentPosition, new Vector2(dir, 0), Color.green);
-        Debug.DrawRay(currentPosition2, new Vector2(dir, 0), Color.blue);
+        animator.SetBool("isWalk", true);
 
-        print("wall " + findWall1 + " / player : " + findPlayer);
-
-        if (findPlayer && findWall1)
+        //else
+        //{
+        RaycastHit2D hit2 = Physics2D.Raycast(currentPosition2, new Vector2(dir, 0), _wallSight, _wallLayer);
+        if (hit2.collider != null)
         {
-            _findEnemyMark.SetActive(false);
-            _findWallMark.SetActive(true);
-            return;
-        }
-        else if (findPlayer)
-        {
-            _findEnemyMark.SetActive(true);
-            _findWallMark.SetActive(false);            
-            return;
-        }
-        else if (findWall2)
-        {
-            _findEnemyMark.SetActive(false);
-            _findWallMark.SetActive(false);
             dir = ChangeDirection();
-        }
-        else
-        {
-            _findEnemyMark.SetActive(false);
-            _findWallMark.SetActive(false);
-        }
+        }                
 
         float move = dir * _moveSpeed * Time.deltaTime;
 
-        // ÇØ´ç ¹æÇâÀ¸·Î ÀÌµ¿
+        // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
         currentPosition.x += move;
-        // ÀÌµ¿ °ª Àû¿ë
+        // ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         tr.position = currentPosition;
-        
-        // ÁöÁ¤µÈ °Å¸® ¸¸Å­ ÇØ´ç ¹æÇâÀ¸·Î ÀÌµ¿
+
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½Å­ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
         if (currentPosition.x <= moveRange.x || currentPosition.x >= moveRange.y)
         {
             ChangeDirection();
         }
     }
 
+    private void OnUpdateAttack()
+    {
+        animator.SetBool("isWalk", false);
+
+        UpdateDirection();
+
+        Vector2 currentPosition = transform.position;
+        Vector2 currentPosition2 = transform.position + new Vector3(0, -0.1f);
+        float dir = _direction == Direction.Left ? -1f : 1f;
+
+        float playerDistance = Vector3.Distance(playerTrm.position, transform.position);
+        if (playerDistance > _sight)
+        {
+            OnEnterState(EnemyState.Roaming);
+            return;
+        }
+        
+        UpdateGun();
+    }
+
+    private float UpdateDirection()
+    {
+        _direction = transform.position.x >= playerTrm.position.x ? Direction.Left : Direction.Right;
+        return SetDirectionScale();
+    }
+
     private float ChangeDirection()
     {
         _direction = _direction == Direction.Left ? Direction.Right : Direction.Left;
-        return _direction == Direction.Left ? -1 : 1;
+        return SetDirectionScale();
+    }
+
+    private float SetDirectionScale()
+    {
+        float dir = _direction == Direction.Left ? -1 : 1;
+        transform.localScale = new Vector3(dir, 1, 1);
+        return dir;
+    }
+
+    private void Setup()
+    {   
+        _hp = _enemySO.Enemy_HP;
+        _directionMoveDistance = _enemySO.Enemy_RoamingRange;
+        _moveSpeed = _enemySO.Enemy_MoveSpeed;
+
+        _sight = _enemySO.Sight;
+        _wallSight = _enemySO.WallSight;
+
+        _findEnemyMark.SetActive(false);
+        _findWallMark.SetActive(false);
+
+        if(playerTrm == null )
+        {
+            playerTrm = GameManager.Instance.playerController.transform;
+        }
+
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _originalMaterial = _spriteRenderer.material;
+
+        animator = GetComponent<Animator>();
+
+        Vector3 pos = transform.position;
+        moveRange.x = pos.x - _directionMoveDistance;
+        moveRange.y = pos.x + _directionMoveDistance;
+
+        SetDirectionScale();
     }
 
     public void Damage (int amout)
     {
+        if (_hp <= 0)
+            return;
+
         _hp -= amout;
         if (_hp <= 0)
         {
-            //Destroy(gameObject);
+            OnDie();
+        }
+        else
+        {
+            StartCoroutine(Hit());
         }
     }
 
-    
+    IEnumerator Hit()
+    {
+        _spriteRenderer.material = _hitMaterial;
+        yield return new WaitForSeconds(0.05f);
+        _spriteRenderer.material = _originalMaterial;
+    }
+
+    void OnDie()
+    {
+        _findWallMark.SetActive(false);
+        _findEnemyMark.SetActive(false);
+
+        animator.Play("enemy-die");
+        GameManager.Instance.AddKillCount();
+        EnemyManager.Instance.DeleteEnemy(this);
+        //yield return new WaitForSeconds(3f);
+        
+    }
 }

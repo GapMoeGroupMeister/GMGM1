@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9d1e534b6e190a46b6934debae17a86, type: 3}
+  m_Script: {fileID: 11500000, guid: cee95863eb6745b09aa581b820979185, type: 3}
   m_Name: AWP
   m_EditorClassIdentifier: 
-  damage: 30
-  maxBulletCount: 2
-  fireDelay: 2
-  reloadTime: 5
-  bulletSpeed: 30
-  destroyRange: 5
+  damage: 2
+  maxBulletCount: 20
+  fireDelay: 0.5
+  reloadTime: 1
+  bulletSpeed: 6
+  destroyRange: 15
   bulletPrefab: {fileID: 7174808125437742660, guid: 512b4eb5f0866504da2b09e362515987, type: 3}

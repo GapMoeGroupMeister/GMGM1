@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class PlayerAttackController : MonoBehaviour
 {
-    Gun gun;
+    public Gun gun;
     [SerializeField]
-    PlayerWeaponManager weaponManager;
+    PlayerWeaponManager _weaponManager;
+    SpriteRenderer _spriteRenderer;
+    AudioSource audioSource;
+
+
+    bool fireLight = true;
+    bool _renderer = true;
+    bool checkRenderer;
 
     private PlayerInput _playerInput;
 
     private void Awake()
     {
-        
+        audioSource = GetComponent<AudioSource>();
         _playerInput = GetComponent<PlayerInput>();
-        weaponManager = GetComponent<PlayerWeaponManager>();
+        _weaponManager = GetComponent<PlayerWeaponManager>();
     }
 
     private void Start()
@@ -23,19 +30,25 @@ public class PlayerAttackController : MonoBehaviour
     }
     protected virtual void Update()
     {
-        if (weaponManager.CurrentGun != null)
-            gun = weaponManager.CurrentGun.GetComponent<Gun>();
+        if (!GameManager.Instance.CanPlayerControl)
+            return;
+        if (Time.timeScale == 0) return;
+        if (_weaponManager.CurrentGun != null)
+            gun = _weaponManager.CurrentGun.GetComponent<Gun>();
         if (gun != null) 
         { 
         gun._currentTime += Time.deltaTime;
-        gun._mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//¸¶¿ì½º À§Ä¡¸¦ ¿ùµå ÁÂÇ¥·Î º¯È¯
+        gun._mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//ë§ˆìš°ìŠ¤ ìœ„ì¹˜ë¥¼ ì›”ë“œ ì¢Œí‘œë¡œ ë³€í™˜
         Rotate();
         GunRender();
+            _spriteRenderer = gun.GetComponent<SpriteRenderer>();
+            
+            Flip();
         }
     }
     private void GunRender()
     {
-        if (gun._player.transform.position.x > gun._mousePos.x)
+        if (transform.position.x > gun._mousePos.x)
         {
             gun.transform.position = new Vector3(transform.position.x + -0.7f, transform.position.y, 0);
         }
@@ -44,7 +57,7 @@ public class PlayerAttackController : MonoBehaviour
             gun.transform.position = new Vector3(transform.position.x + 0.7f, transform.position.y, 0);
         }
     }
-    private void GunInput(bool Mouse0,bool MouseDown0,bool Mouse1)
+    private void GunInput(bool Mouse0,bool MouseDown0)
     {
         if (gun != null) 
         {
@@ -53,28 +66,35 @@ public class PlayerAttackController : MonoBehaviour
                 gun._isReloading = true;
                 gun.Reload();
             }
-            if (Mouse1)//¿ìÅ¬¸¯
-            {
-                //knife.Slash();
-            }
             if (!gun.IsCoolTime)
-            {
                 return;
-            }
             if (gun.isContinueFire)
             {
-                if (MouseDown0)//ÁÂÅ¬¸¯ È¦µå
+                if (MouseDown0)//ì¢Œí´ë¦­ í™€ë“œ
                 {
                     gun._currentTime = 0;
                     FireHandler();
+                    if (fireLight)
+                    {
+                        if (_weaponManager.light != null && !gun._isReloading)
+                        {
+                            _weaponManager.light.SetActive(true);
+                            StartCoroutine(FireLightCheck());
+                        }
+                    }
                 }
             }
             else
             {
-                if (Mouse0)//ÁÂÅ¬¸¯
+                if (Mouse0)//ì¢Œí´ë¦­
                 {
                     gun._currentTime = 0;
                     FireHandler();
+                    if (_weaponManager.light != null && !gun._isReloading)
+                    {
+                        _weaponManager.light.SetActive(true);
+                        StartCoroutine(FireLightCheck());
+                    }
                 }
             } 
         }
@@ -83,7 +103,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         Vector2 dir = (gun._mousePos - (Vector2)transform.position).normalized;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        gun.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+        gun.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
     protected void FireHandler()
@@ -92,6 +112,38 @@ public class PlayerAttackController : MonoBehaviour
         if (gun.reloadCheck == false) return;
         gun.currentBulletCount--;
         GameManager.Instance.playerController.OnShootEvent?.Invoke(gun.currentBulletCount, gun.maxBulletCount);
+        audioSource.PlayOneShot(audioSource.clip);
         gun.Fire(dir.normalized);
+    }
+
+    private void Flip()
+    {
+            if (_renderer)
+            {
+            gun.transform.localScale = new Vector3(
+                gun.transform.localScale.x,
+                Mathf.Abs(gun.transform.localScale.y) * transform.position.x > gun._mousePos.x ? -1 : 1,
+                gun.transform.localScale.z
+                );
+                checkRenderer = transform.position.x > gun._mousePos.x;
+            }
+
+        if (gun._mousePos.x < transform.position.x)
+        {
+            gun.transform.localScale = new Vector3(
+            gun.transform.localScale.x,
+                Mathf.Abs(gun.transform.localScale.y) * -1,
+                gun.transform.localScale.z
+                );
+        }
+        _renderer = checkRenderer != transform.position.x > gun._mousePos.x;
+    }
+
+    IEnumerator FireLightCheck()
+    {
+        fireLight = false;
+        yield return new WaitForSeconds(0.02f);
+        _weaponManager.light.SetActive(false);
+        fireLight = true;
     }
 }

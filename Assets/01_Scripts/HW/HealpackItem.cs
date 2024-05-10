@@ -10,6 +10,6 @@ public class HealpackItem : Item
     {
         base.GetItem(player);
 
-        player.UseHeal(_healAmount);
+        player.RestoreHealth(_healAmount);
     }
 }
