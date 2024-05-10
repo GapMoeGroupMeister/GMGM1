@@ -9,6 +9,12 @@ namespace StartScene
 
         private int clickAmount = 0;
         private float _alpha = 0;
+
+        private void Awake()
+        {
+            Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
+        }
+
         public void LoadInGameScene()
         {
             SceneManager.LoadScene("00_Scenes/InGameScene");
@@ -28,7 +34,7 @@ namespace StartScene
         public void Quit()
         {
             Application.Quit();
-            UnityEditor.EditorApplication.isPlaying = false;
+            //UnityEditor.EditorApplication.isPlaying = false;
         }
     }
 }
