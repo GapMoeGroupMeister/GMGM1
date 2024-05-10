@@ -10,12 +10,18 @@ public class PlayDataLog
 
 public class DBManager
 {
-    private const string LOCALPATH = "/SaveData/";
+    private static string LOCALPATH = Application.dataPath+"/SaveData";
     
     
     public static GameSetting GetGameSetting()
     {
-        string path = Path.Combine(Application.dataPath + LOCALPATH, "gameSetting.json");
+        string path = Path.Combine(LOCALPATH, "gameSetting.json");
+        if (!Directory.Exists(LOCALPATH))
+        {
+            Debug.Log("폴더가 존재하지 않습니다.");
+            Debug.Log("폴더를 생성합니다.");
+            Directory.CreateDirectory(LOCALPATH);
+        }
         if (File.Exists(path))
         {
             string data = File.ReadAllText(path);
@@ -29,15 +35,27 @@ public class DBManager
 
     public static void SaveGameSetting(GameSetting gameSetting)
     {
+        if (!Directory.Exists(LOCALPATH))
+        {
+            Debug.Log("폴더가 존재하지 않습니다.");
+            Debug.Log("폴더를 생성합니다.");
+            Directory.CreateDirectory(LOCALPATH);
+        }
         string json = JsonUtility.ToJson(gameSetting);
-        string path = Path.Combine(Application.dataPath + LOCALPATH, "gameSetting.json");
+        string path = Path.Combine(LOCALPATH, "gameSetting.json");
         File.WriteAllText(path, json);
 
     }
 
     public static PlayDataLog GetPlayLog()
     {
-        string path = Path.Combine(Application.dataPath + LOCALPATH, "playData.json");
+        if (!Directory.Exists(LOCALPATH))
+        {
+            Debug.Log("폴더가 존재하지 않습니다.");
+            Debug.Log("폴더를 생성합니다.");
+            Directory.CreateDirectory(LOCALPATH);
+        }
+        string path = Path.Combine(LOCALPATH, "playData.json");
         if (File.Exists(path))
         {
             string data = File.ReadAllText(path);
@@ -51,8 +69,14 @@ public class DBManager
 
     public static void SavePlayLog(PlayDataLog log)
     {
+        if (!Directory.Exists(LOCALPATH))
+        {
+            Debug.Log("폴더가 존재하지 않습니다.");
+            Debug.Log("폴더를 생성합니다.");
+            Directory.CreateDirectory(LOCALPATH);
+        }
         string json = JsonUtility.ToJson(log);
-        string path = Path.Combine(Application.dataPath + LOCALPATH, "playData.json");
+        string path = Path.Combine(LOCALPATH, "playData.json");
         File.WriteAllText(path, json);
 
     }
