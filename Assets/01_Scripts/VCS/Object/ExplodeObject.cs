@@ -7,6 +7,7 @@ public class ExplodeObject : EffectObject
     [SerializeField] private int _damage = 5;
     [SerializeField] private LayerMask _damageTargetLayer;
 
+    
     public override void Play()
     {
         base.Play();
