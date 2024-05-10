@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -104,5 +105,12 @@ public class GameManager : MonoSingleton<GameManager>
     public void SetPlayerControlOn()
     {
         CanPlayerControl = true;
+    }
+
+    public void ExitInGame()
+    {
+        SceneManager.LoadScene("StartScene");
+        Time.timeScale = 1;
+
     }
 }

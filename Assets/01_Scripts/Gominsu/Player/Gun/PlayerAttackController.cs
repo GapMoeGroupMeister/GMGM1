@@ -38,7 +38,7 @@ public class PlayerAttackController : MonoBehaviour
         if (gun != null) 
         { 
         gun._currentTime += Time.deltaTime;
-        gun._mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//¸¶¿ì½º À§Ä¡¸¦ ¿ùµå ÁÂÇ¥·Î º¯È¯
+        gun._mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//ë§ˆìš°ìŠ¤ ìœ„ì¹˜ë¥¼ ì›”ë“œ ì¢Œí‘œë¡œ ë³€í™˜
         Rotate();
         GunRender();
             _spriteRenderer = gun.GetComponent<SpriteRenderer>();
@@ -70,7 +70,7 @@ public class PlayerAttackController : MonoBehaviour
                 return;
             if (gun.isContinueFire)
             {
-                if (MouseDown0)//ÁÂÅ¬¸¯ È¦µå
+                if (MouseDown0)//ì¢Œí´ë¦­ í™€ë“œ
                 {
                     gun._currentTime = 0;
                     FireHandler();
@@ -86,7 +86,7 @@ public class PlayerAttackController : MonoBehaviour
             }
             else
             {
-                if (Mouse0)//ÁÂÅ¬¸¯
+                if (Mouse0)//ì¢Œí´ë¦­
                 {
                     gun._currentTime = 0;
                     FireHandler();
