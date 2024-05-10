@@ -11,7 +11,7 @@ public class PlayerWeaponManager : MonoBehaviour
     public GameObject light;
     public Gun _gun;
     PlayerInput _playerInput;
-    AudioSource audioSource;
+    public AudioSource audioSource;
     bool changeCheck = false;
     int _gunPrefab = 0;
     int currentGun = 0;

@@ -8,12 +8,15 @@ public class PlayerHit : MonoBehaviour
     [SerializeField]
     private Material _hitMaterial;
     private SpriteRenderer _spriteRenderer;
+    PlayerWeaponManager _weaponManager;
+    [SerializeField] private AudioClip _hitSound;
 
 
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _originalMaterial = _spriteRenderer.material;
+        _weaponManager = GetComponent<PlayerWeaponManager>();
     }
 
 
@@ -22,6 +25,9 @@ public class PlayerHit : MonoBehaviour
         if (collision.gameObject.CompareTag("EnemyBullet"))
         {
             StartCoroutine(Hit());
+            _weaponManager.audioSource.clip = _hitSound;
+            _weaponManager.audioSource.PlayOneShot(_weaponManager.audioSource.clip);
+            _weaponManager.audioSource.clip = _weaponManager._gun.gunSound;
         }
     }
 
