@@ -9,7 +9,7 @@ public class M9 : Gun
     {
         Bullet bullet = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity);
         bullet.Fire(direction.normalized);
-        bullet.SetDefault(bulletSpeed, destroyRange);
+        bullet.SetDefault(bulletSpeed, destroyRange, damage);
         
         
     }

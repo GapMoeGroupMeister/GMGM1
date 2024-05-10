@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     void Update()
     {
-        if (!GameManager.Instance.CanPlayerControl) return;
+        
         if (Time.timeScale == 0) return;
         Sliding();
         CheckGround();
