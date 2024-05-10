@@ -110,6 +110,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void ExitInGame()
     {
         SceneManager.LoadScene("StartScene");
-        
+        Time.timeScale = 1;
+
     }
 }
