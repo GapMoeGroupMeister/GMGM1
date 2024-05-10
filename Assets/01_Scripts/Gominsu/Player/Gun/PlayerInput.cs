@@ -29,7 +29,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.CanPlayerControl) return;
+        if (!GameManager.Instance.CanPlayerControl) return;
 
         Mouse0 = Input.GetMouseButtonDown(0);
         MouseDown0 = Input.GetMouseButton(0);
@@ -56,7 +56,7 @@ public class PlayerInput : MonoBehaviour
 
     public void OnJump(InputValue value)
     {
-        
+        if (!GameManager.Instance.CanPlayerControl) return;
         bool jump = value.isPressed;
         OnJumpEvent?.Invoke(jump);
     }
@@ -69,6 +69,7 @@ public class PlayerInput : MonoBehaviour
 
     public void OnSit(InputValue value)
     {
+
         bool sit = value.isPressed;
         OnSitEvent?.Invoke(sit);
     }

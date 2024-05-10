@@ -30,7 +30,7 @@ public class PlayerAttackController : MonoBehaviour
     }
     protected virtual void Update()
     {
-        if (GameManager.Instance.CanPlayerControl)
+        if (!GameManager.Instance.CanPlayerControl)
             return;
         if (Time.timeScale == 0) return;
         if (_weaponManager.CurrentGun != null)
