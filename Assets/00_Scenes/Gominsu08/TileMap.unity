@@ -10710,6 +10710,8 @@ MonoBehaviour:
   _enemyList: []
   _enemyPrefabBase:
   - {fileID: 0}
+  _enemyAmountText: {fileID: 0}
+  aliveEnemyCount: 0
 --- !u!4 &778573810
 Transform:
   m_ObjectHideFlags: 0
@@ -16161,9 +16163,7 @@ MonoBehaviour:
   _killCountText: {fileID: 650939862}
   killCount: 0
   _goalKillAmount: 100
-  _gameClearUI: {fileID: 2078149892}
-  _currentKillCount: {fileID: 469126002}
-  _clearTime: {fileID: 634208169}
+  CanPlayerControl: 1
 --- !u!1 &1289060423
 GameObject:
   m_ObjectHideFlags: 0
@@ -16195,6 +16195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stageSO: {fileID: 11400000, guid: 5d03bb2a7929fda41b52172a71e827de, type: 2}
   _fadeImage: {fileID: 473327205}
+  _currentStagePrefab: {fileID: 0}
   player: {fileID: 658750252}
 --- !u!4 &1289060425
 Transform:
@@ -23935,7 +23936,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _TimerText: {fileID: 228803632}
   _currentTime: 0
-  isPlayTimeCount: 1
+  _isPlayTimeCount: 0
+  _startOffsetTime: 2
 --- !u!4 &2009364280
 Transform:
   m_ObjectHideFlags: 0

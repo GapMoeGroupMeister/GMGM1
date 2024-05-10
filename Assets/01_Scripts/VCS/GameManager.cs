@@ -16,6 +16,7 @@ public class GameManager : MonoSingleton<GameManager>
     private bool _isGameOver;
     private GameClear _gameClear;
     private GameOver GameOverUIManager;
+    private AudioSource _audio;
 
     // 설정 UI가 켜지거나 하면 false가 됨
     public bool CanPlayerControl = true;
@@ -32,6 +33,7 @@ public class GameManager : MonoSingleton<GameManager>
         timerManager = FindObjectOfType<TimerManager>();
         _gameClear = FindObjectOfType<GameClear>();
         GameOverUIManager = FindObjectOfType<GameOver>();
+        _audio = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -89,7 +91,9 @@ public class GameManager : MonoSingleton<GameManager>
     public void GameClear()
     {
         GameOver();
+        _audio.Stop();
         _gameClear.GameClearUI();
+        
     }
 
     public void Quit()
