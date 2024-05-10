@@ -212,8 +212,8 @@ MonoBehaviour:
   CurrentGun: {fileID: 0}
   light: {fileID: 0}
   _gun: {fileID: 0}
-  index: 0
-  currentIndex: 0
+  index: 1
+  currentIndex: 1
 --- !u!95 &5914022392950667310
 Animator:
   serializedVersion: 5

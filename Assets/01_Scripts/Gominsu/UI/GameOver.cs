@@ -20,8 +20,7 @@ public class GameOver : MonoBehaviour
         gameOverUI.SetActive(true);
         _currentKillUI.text = $"킬 : {GameManager.Instance.killCount}";
         _currentTimeUI.text = $"플레이 시간 : {Mathf.Floor(GameManager.Instance.timerManager._currentTime * 100f) / 100f}초";
-        if (GameManager.Instance.IsGameClear)
-            gameOverUI.SetActive(false);
+            
     }
 
 }

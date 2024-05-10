@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private int damage= 1;
-    private float speed = 3;
+    private int damage;
+    private float speed;
 
     [SerializeField] GameObject bulletEffect;
     [SerializeField] GameObject _hitEffect;
@@ -20,10 +20,11 @@ public class Bullet : MonoBehaviour
 
     public Vector3 Direction;//총알 방향
 
-    public void SetDefault(float speed, float destroyDistance)
+    public void SetDefault(float speed, float destroyDistance,int damage)
     {
         this.speed = speed;
         this.destroyDistance = destroyDistance;
+        this.damage = damage;
     }
     
 
