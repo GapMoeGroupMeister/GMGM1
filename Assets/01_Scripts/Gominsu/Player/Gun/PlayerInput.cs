@@ -14,7 +14,7 @@ public class PlayerInput : MonoBehaviour
     public Action<Vector2> MouseScrall;
     public Action<int> WeaponChange;
 
-    public float inputx = 0;
+    public float inputx = 1;
     public bool LeftShift;
     public bool LeftControl;
     public bool Space;

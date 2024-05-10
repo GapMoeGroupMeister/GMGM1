@@ -20,15 +20,13 @@ public class AK47 : Gun
     {
         base.Awake();
 
-
-
     }
 
     public override void Fire(Vector2 direction)
     {
         Bullet bullet = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity);
         bullet.Fire(direction.normalized);
-        bullet.SetDefault(bulletSpeed, destroyRange);
+        bullet.SetDefault(bulletSpeed, destroyRange, damage);
     }
     public override void Reload()
     {
