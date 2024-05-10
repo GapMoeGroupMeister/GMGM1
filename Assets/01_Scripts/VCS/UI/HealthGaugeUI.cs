@@ -14,7 +14,7 @@ public class HealthGaugeUI : MonoBehaviour
         GameManager.Instance.playerController.OnHealthChangedEvent += Refresh;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         GameManager.Instance.playerController.OnHealthChangedEvent -= Refresh;
     }

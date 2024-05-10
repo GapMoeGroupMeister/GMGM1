@@ -1,7 +1,5 @@
 using DG.Tweening;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -13,6 +11,7 @@ public class MapManager : MonoSingleton<MapManager>
     [SerializeField]
     private Image _fadeImage;
 
+    [SerializeField]
     private GameObject _currentStagePrefab;
 
     public event Action OnStageChange;
