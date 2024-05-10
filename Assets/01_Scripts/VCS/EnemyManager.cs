@@ -25,7 +25,6 @@ public class EnemyManager : MonoSingleton<EnemyManager>
 
     public void GenerateEnemy()
     {
-        print("generate New Enemy");
         foreach (Enemy e in _enemyList)
         {
             if (e == null) continue;
@@ -56,9 +55,8 @@ public class EnemyManager : MonoSingleton<EnemyManager>
     public void DeleteEnemy(Enemy enemy)
     {
         aliveEnemyCount--;
-        enemy.StopAllCoroutines();
         Destroy(enemy.gameObject ,2);
-        //_enemyList.Remove(enemy);
+        _enemyList.Remove(enemy);
         UpdateEnemyAmount();
     }
     
