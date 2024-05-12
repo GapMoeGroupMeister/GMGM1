@@ -12,6 +12,7 @@ namespace StartScene
 
         private void Awake()
         {
+            Time.timeScale = 1;
             Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
         }
 
