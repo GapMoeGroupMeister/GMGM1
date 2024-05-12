@@ -43,7 +43,7 @@ public class PlayerAttackController : MonoBehaviour
         GunRender();
         _spriteRenderer = gun.GetComponent<SpriteRenderer>();
         Flip();
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetMouseButtonDown(1))
             {
                 if(gun.currentBulletCount != gun.maxBulletCount)
                 {

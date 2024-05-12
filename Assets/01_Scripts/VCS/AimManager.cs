@@ -25,7 +25,7 @@ public class AimManager : MonoBehaviour
         
         _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         _aimMarkTrm.position = _mousePos;
-        if (!gun._gun.reloadCheck)
+        if (!gun._gun.reloadCheck || gun._gun.currentBulletCount == 0)
         {
             _spriteRenderer.color = Color.gray;
         }
