@@ -15,7 +15,7 @@ MonoBehaviour:
   damage: 7
   maxBulletCount: 2
   fireDelay: 1
-  reloadTime: 3
+  reloadTime: 2
   isContinueFire: 0
   bulletSpeed: 20
   destroyRange: 10

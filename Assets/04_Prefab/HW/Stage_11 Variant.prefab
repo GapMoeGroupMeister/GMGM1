@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c570910a2fe7fc4bad6c7661e3777b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPadPower: 32
+  jumpPadPower: 40
   chackJumpPad: 0
 --- !u!1 &1511788176420573016
 GameObject:
@@ -66286,7 +66286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c570910a2fe7fc4bad6c7661e3777b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPadPower: 32
+  jumpPadPower: 40
   chackJumpPad: 0
 --- !u!1 &8382780063613763408
 GameObject:

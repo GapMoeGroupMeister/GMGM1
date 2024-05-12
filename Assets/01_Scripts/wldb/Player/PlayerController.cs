@@ -54,6 +54,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     private LayerMask _whatIsGround;
     [SerializeField]
     private float _ray = 1f;
+    private float _timeInAir;
+    public float extraGravity = 35f;
+    public float gravitiDelay = 0.15f;
 
     public bool isGround;
     private bool checkSliding = false;
@@ -68,7 +71,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     JumpPad _jumpPad;
 
 
-
+    private void FixedUpdate()
+    {
+        ApplyExtraGravity();
+    }
 
     private void Awake()
     {
@@ -139,8 +145,14 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         Flip();
 
-        
-        
+        if (!isGround)
+        {
+            _timeInAir += Time.deltaTime;
+        }
+        else
+        {
+            _timeInAir = 0;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -240,7 +252,15 @@ public class PlayerController : MonoBehaviour, IDamageable
             if (isGround)
             {
                 _rigid.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
+
             }
+        }
+    }
+    private void ApplyExtraGravity()
+    {
+        if (_timeInAir > gravitiDelay)
+        {
+            _rigid.AddForce(new Vector2(0, -extraGravity));
         }
     }
 

@@ -41,9 +41,17 @@ public class PlayerAttackController : MonoBehaviour
         gun._mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//마우스 위치를 월드 좌표로 변환
         Rotate();
         GunRender();
-            _spriteRenderer = gun.GetComponent<SpriteRenderer>();
-            
-            Flip();
+        _spriteRenderer = gun.GetComponent<SpriteRenderer>();
+        Flip();
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                if(gun.currentBulletCount != gun.maxBulletCount)
+                {
+                gun.Reload();
+                }
+
+            }
+
         }
     }
     private void GunRender()
@@ -64,7 +72,9 @@ public class PlayerAttackController : MonoBehaviour
             if (gun.currentBulletCount <= 0 && !gun._isReloading)
             {
                 gun._isReloading = true;
-                gun.Reload();
+                gun.reloadCheck = false;
+                //gun.Reload();
+                return;
             }
             if (!gun.IsCoolTime)
                 return;
@@ -78,7 +88,8 @@ public class PlayerAttackController : MonoBehaviour
                     {
                         if (_weaponManager.light != null && !gun._isReloading)
                         {
-                            _weaponManager.light.SetActive(true);
+                            if (gun.reloadCheck)
+                                _weaponManager.light.SetActive(true);
                             StartCoroutine(FireLightCheck());
                         }
                     }
@@ -92,7 +103,8 @@ public class PlayerAttackController : MonoBehaviour
                     FireHandler();
                     if (_weaponManager.light != null && !gun._isReloading)
                     {
-                        _weaponManager.light.SetActive(true);
+                        if (gun.reloadCheck)
+                            _weaponManager.light.SetActive(true);
                         StartCoroutine(FireLightCheck());
                     }
                 }
