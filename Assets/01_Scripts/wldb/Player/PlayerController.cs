@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField]
     private float _ray = 1f;
     private float _timeInAir;
-    public float extraGravity = 35f;
+    public float extraGravity = 25f;
     public float gravitiDelay = 0.15f;
 
     public bool isGround;
