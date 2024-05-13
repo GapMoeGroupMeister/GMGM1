@@ -18,6 +18,11 @@ public class MapManager : MonoSingleton<MapManager>
 
     public PlayerController player;
 
+    int currentMapNumber = -1;
+
+    int rand;
+
+
     private void Awake()
     {
         player = FindObjectOfType<PlayerController>();
@@ -39,7 +44,13 @@ public class MapManager : MonoSingleton<MapManager>
         _fadeImage.color = Color.clear;
         _fadeImage.DOColor(Color.black, 1).OnComplete(() => {
             Destroy(_currentStagePrefab);
-            int rand = Random.Range(0, _stageSO.stagePrefabs.Count);
+            rand = Random.Range(0, _stageSO.stagePrefabs.Count);
+            while (rand == currentMapNumber)
+            {
+                rand = Random.Range(0, _stageSO.stagePrefabs.Count);
+            }
+            currentMapNumber = rand;
+
             _currentStagePrefab = Instantiate(_stageSO.stagePrefabs[rand]);
             player.transform.position = _currentStagePrefab.transform.Find("SpawnPoint").position;
             _fadeImage.gameObject.SetActive(false);
