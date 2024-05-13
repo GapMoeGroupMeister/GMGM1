@@ -72,8 +72,7 @@ public class PlayerAttackController : MonoBehaviour
             if (gun.currentBulletCount <= 0 && !gun._isReloading)
             {
                 gun._isReloading = true;
-                gun.reloadCheck = false;
-                //gun.Reload();
+                gun.Reload();
                 return;
             }
             if (!gun.IsCoolTime)
