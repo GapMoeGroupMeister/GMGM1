@@ -36,6 +36,9 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Animator animator;
 
+    private Collider2D _collider2D;
+    private Rigidbody2D _rigid;
+
 
     private EnemyState enemyState = EnemyState.Roaming;
 
@@ -49,6 +52,12 @@ public class Enemy : MonoBehaviour
     
     bool playerInSight = false;
 
+
+    private void Awake()
+    {
+        _rigid = GetComponent<Rigidbody2D>();
+        _collider2D = GetComponent<Collider2D>();
+    }
 
     void Start()
     {
@@ -299,7 +308,10 @@ public class Enemy : MonoBehaviour
     {
         _findWallMark.SetActive(false);
         _findEnemyMark.SetActive(false);
-
+        _collider2D.isTrigger = true;
+        _rigid.simulated = false;
+        
+                
         animator.Play("enemy-die");
         GameManager.Instance.AddKillCount();
         EnemyManager.Instance.DeleteEnemy(this);
