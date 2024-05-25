@@ -19,6 +19,7 @@ public abstract class Gun : MonoBehaviour
     public float _currentTime = 0;
     public GunSO gunSO;
     public Bullet bulletPrefab;//ÃÑ¾ó ÇÁ¸®Æé
+    public HandGrenade handGrenadePrefab;//¼ö·ùÅº ÇÁ¸®Æé
     public Transform gunTip;//ÃÑ±¸ À§Ä¡
     public PlayerController _player;
     public Vector2 _mousePos;//¸¶¿ì½º À§Ä¡
@@ -38,6 +39,7 @@ public abstract class Gun : MonoBehaviour
         bulletPrefab = gunSO.bulletPrefab;
         currentBulletCount = maxBulletCount;
         gunSound = gunSO.gunShootSound;
+        handGrenadePrefab = gunSO.handGrenadePrefab;
     }
     protected virtual void Start()
     {
@@ -59,5 +61,5 @@ public abstract class Gun : MonoBehaviour
         currentBulletCount = maxBulletCount;
         GameManager.Instance.playerController.OnShootEvent?.Invoke(currentBulletCount, maxBulletCount);
 
-    }
+    } 
 }

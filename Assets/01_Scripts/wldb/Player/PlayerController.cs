@@ -272,7 +272,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Flip()
     {
         SpriteRenderer.flipX = transform.position.x > mousePos.x;
-        
     }
 
     private void PlayerRoutine()

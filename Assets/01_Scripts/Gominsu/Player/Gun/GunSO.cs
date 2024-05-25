@@ -22,5 +22,7 @@ public class GunSO : ScriptableObject
 
     public Bullet bulletPrefab;//총알 프리팹
 
+    public HandGrenade handGrenadePrefab;//수류탄 프리펩\
+
     public AudioClip gunShootSound;    
 }
